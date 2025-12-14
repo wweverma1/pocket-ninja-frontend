@@ -1,0 +1,68 @@
+{
+  "app": {
+    "name": "Pocket Ninja",
+    "tagline": "Small steps, big savings"
+  },
+  "nav": {
+    "home": "Home",
+    "bestDeals": "Best Deals",
+    "howItWorks": "How It Works",
+    "about": "About",
+    "compare": "Compare",
+    "upload": "Upload",
+    "campaigns": "Campaigns",
+    "profile": "Profile"
+  },
+  "home": {
+    "welcome": "Find the Best Deals in Sapporo",
+    "savingsPromise": "* Save up to 30% on your bills",
+    "subtitle": "Compare prices across stores and make every yen count",
+    "startSaving": "Start Saving",
+    "getStarted": "Get Started",
+    "leaderboardTitle": "Today's Best Deals",
+    "leaderboardSubtitle": "See what's hot and where to save right now!",
+    "leaderboardProductAvgPrice": "Avg Price",
+    "leaderboardProductBestPrice": "Best Price",
+    "leaderboardProductDiscount": "OFF",
+    "joinNow": "View Store"
+  },
+  "howItWorks": {
+    "title": "How It Works",
+    "subtitle": "Three simple steps to start saving on everyday items",
+    "step1": {
+      "title": "Add Your Items",
+      "description": "Create your shopping cart with the products you need"
+    },
+    "step2": {
+      "title": "Compare Prices",
+      "description": "Instantly see which nearby store offers the best price"
+    },
+    "step3": {
+      "title": "Save Money",
+      "description": "Shop smart and keep more money in your pocket"
+    }
+  },
+  "developerNote": {
+    "title": "A Note From the Developer",
+    "content": "Pocket Ninja works best when we all contribute. Every receipt you upload helps everyone in Sapporo save money. Together, we can build a community where smart shopping is easy and accessible for all. Thank you for being part of this journey!",
+    "joinCommunity": "Join the Community"
+  },
+  "auth": {
+    "loginComingSoon": "login coming soon!",
+    "welcome": "Welcome to Pocket Ninja",
+    "subtitle": "Sign in to start saving on your daily shopping",
+    "loginWith": "Continue with {{provider}}",
+    "terms": "By continuing, you agree to our Terms of Service and Privacy Policy"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "retry": "Retry",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "close": "Close",
+    "share": "Share"
+  }
+}

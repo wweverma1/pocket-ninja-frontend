@@ -1,0 +1,68 @@
+{
+  "app": {
+    "name": "Pocket Ninja",
+    "tagline": "小さな一歩、大きな節約"
+  },
+  "nav": {
+    "home": "ホーム",
+    "bestDeals": "お得情報",
+    "howItWorks": "使い方",
+    "about": "について",
+    "compare": "比較",
+    "upload": "アップロード",
+    "campaigns": "キャンペーン",
+    "profile": "プロフィール"
+  },
+  "home": {
+    "welcome": "札幌で最安値を見つけよう",
+    "savingsPromise": "※ 最大30%の節約が可能",
+    "subtitle": "店舗間の価格を比較して、賢くお買い物",
+    "startSaving": "節約を始める",
+    "getStarted": "始める",
+    "leaderboardTitle": "今日のベストセール",
+    "leaderboardSubtitle": "今すぐチェック！最新のお得情報はここ！",
+    "leaderboardProductAvgPrice": "平均価格",
+    "leaderboardProductBestPrice": "最安値",
+    "leaderboardProductDiscount": "割引",
+    "joinNow": "ストアを見る"
+  },
+  "howItWorks": {
+    "title": "使い方",
+    "subtitle": "3つの簡単なステップで日用品の節約を始めましょう",
+    "step1": {
+      "title": "商品を追加",
+      "description": "必要な商品でショッピングカートを作成"
+    },
+    "step2": {
+      "title": "価格を比較",
+      "description": "近くのどの店舗が最安値か瞬時に確認"
+    },
+    "step3": {
+      "title": "お金を節約",
+      "description": "賢くショッピングして、もっとお金を貯めよう"
+    }
+  },
+  "developerNote": {
+    "title": "開発者からのメッセージ",
+    "content": "Pocket Ninjaは、みんなが協力することで最高の力を発揮します。あなたがアップロードするレシート一枚一枚が、札幌の皆さんの節約に繋がります。一緒に、誰もが賢くお買い物できるコミュニティを作りましょう。ご参加いただき、ありがとうございます！",
+    "joinCommunity": "コミュニティに参加"
+  },
+  "auth": {
+    "loginComingSoon": "ログイン機能は近日公開！",
+    "welcome": "Pocket Ninjaへようこそ",
+    "subtitle": "サインインして日々のお買い物で節約を始めましょう",
+    "loginWith": "{{provider}}で続ける",
+    "terms": "続行することで、利用規約とプライバシーポリシーに同意したことになります"
+  },
+  "common": {
+    "loading": "読み込み中...",
+    "error": "エラーが発生しました",
+    "retry": "再試行",
+    "cancel": "キャンセル",
+    "save": "保存",
+    "delete": "削除",
+    "edit": "編集",
+    "close": "閉じる",
+    "share": "シェア"
+  }
+}
