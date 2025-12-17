@@ -19,10 +19,7 @@ function App() {
         <Header />
         <Box component="main" sx={{ flexGrow: 1, pb: 10 }}>
           <Routes>
-            {/* Home is for guests; if logged in, redirect to dashboard */}
             <Route path="/" element={!isLoggedIn ? <Home /> : <Navigate to="/dashboard" />} />
-            
-            {/* Dashboard is for logged in users; if guest, redirect to home */}
             <Route path="/dashboard" element={isLoggedIn ? <Dashboard /> : <Navigate to="/" />} />
             
             <Route path="/auth/success" element={<AuthSuccessHandler />} />
