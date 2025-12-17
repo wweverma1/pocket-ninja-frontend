@@ -1,45 +1,56 @@
 import React from 'react';
-import { 
-  Dialog, 
-  DialogTitle, 
-  DialogContent, 
-  Button, 
-  Box, 
-  IconButton, 
-  Typography, 
-  useTheme,
-  Divider
-} from '@mui/material';
+import * as Dialog from '@radix-ui/react-dialog';
+import { Box, Typography, Button, Divider } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGoogle, faLine } from '@fortawesome/free-brands-svg-icons';
-import { faXmark, faBolt, faLock } from '@fortawesome/free-solid-svg-icons';
+import { faGoogle, faYahoo, faLine } from '@fortawesome/free-brands-svg-icons';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { useTranslation } from 'react-i18next';
+import { useAuth } from '../../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
+
+const BACKEND_BASE_URL = import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:5000';
 
 const LoginDialog = ({ open, onOpenChange }) => {
   const { t } = useTranslation();
-  const theme = useTheme();
+  const { login } = useAuth();
+  const navigate = useNavigate();
 
   const handleLogin = (provider) => {
-    const API_BASE = import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:5000';
-    const url = `${API_BASE}/auth/redirect/${provider}`;
-    
-    // Popup dimensions and centering logic
-    const width = 500;
-    const height = 650;
-    const left = window.screen.width / 2 - width / 2;
-    const top = window.screen.height / 2 - height / 2;
+    if (provider === 'Yahoo') {
+      toast.success(`${provider} ${t('auth.loginComingSoon')}`, {
+        duration: 3000,
+        position: 'bottom-center',
+      });
+      return;
+    }
 
-    window.open(
-      url,
+    const redirectPath = `${BACKEND_BASE_URL}/auth/redirect/${provider.toLowerCase()}`;
+    
+    // Opens popup at top-left (0,0)
+    const popup = window.open(
+      redirectPath,
       'pocket_ninja_auth',
-      `width=${width},height=${height},top=${top},left=${left},scrollbars=yes,status=yes`
+      'width=500,height=650,top=0,left=0,scrollbars=yes,status=yes'
     );
 
-    // Listener for message from the success handler
     const handleMessage = (event) => {
       if (event.origin !== window.location.origin) return;
+      
       if (event.data?.type === 'AUTH_COMPLETE') {
+        const { userData, token } = event.data;
+        localStorage.setItem('authToken', token);
+        login(userData);
+        
         onOpenChange(false);
+        toast.success(t('common.loginSuccess') || 'Login Successful!', { position: 'bottom-center' });
+        
+        if (userData.isNewUser) navigate('/onboarding');
+        else navigate('/dashboard');
+
+        window.removeEventListener('message', handleMessage);
+      } else if (event.data?.type === 'AUTH_ERROR') {
+        toast.error(event.data.message, { position: 'bottom-center' });
         window.removeEventListener('message', handleMessage);
       }
     };
@@ -48,93 +59,53 @@ const LoginDialog = ({ open, onOpenChange }) => {
   };
 
   return (
-    <Dialog 
-      open={open} 
-      onClose={() => onOpenChange(false)} 
-      maxWidth="xs" 
-      fullWidth
-      PaperProps={{
-        sx: { borderRadius: 3, p: 1 }
-      }}
-    >
-      <DialogTitle sx={{ m: 0, p: 2, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-          <Box 
-            sx={{ 
-              width: 32, 
-              height: 32, 
-              bgcolor: 'primary.main', 
-              borderRadius: '50%', 
-              display: 'flex', 
-              alignItems: 'center', 
-              justifyContent: 'center' 
-            }}
-          >
-            <FontAwesomeIcon icon={faBolt} style={{ color: 'white', fontSize: '0.9rem' }} />
+    <Dialog.Root open={open} onOpenChange={onOpenChange}>
+      <Dialog.Portal>
+        <Dialog.Overlay
+          style={{
+            position: 'fixed', inset: 0, backgroundColor: 'rgba(0, 0, 0, 0.6)',
+            zIndex: 9998, backdropFilter: 'blur(4px)', animation: 'fadeIn 0.3s ease-out',
+          }}
+        />
+        <Dialog.Content
+          style={{
+            position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
+            width: '90vw', maxWidth: '450px', maxHeight: '85vh', zIndex: 9999,
+            backgroundColor: 'white', borderRadius: '16px', padding: '24px',
+            boxShadow: '0 20px 60px rgba(0,0,0,0.3)', animation: 'slideUp 0.3s ease-out',
+          }}
+        >
+          <Box sx={{ position: 'relative' }}>
+            <Dialog.Close asChild>
+              <Button sx={{ position: 'absolute', top: -8, right: -8, minWidth: 'auto', width: 40, height: 40, borderRadius: '50%', color: 'text.secondary' }}>
+                <FontAwesomeIcon icon={faTimes} />
+              </Button>
+            </Dialog.Close>
+            <Dialog.Title asChild>
+              <Typography variant="h5" fontWeight={700} gutterBottom textAlign="center">{t('auth.welcome')}</Typography>
+            </Dialog.Title>
+            <Dialog.Description asChild>
+              <Typography variant="body2" color="text.secondary" textAlign="center" sx={{ mb: 3 }}>{t('auth.subtitle')}</Typography>
+            </Dialog.Description>
+
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+              <Button variant="contained" fullWidth onClick={() => handleLogin('LINE')} startIcon={<FontAwesomeIcon icon={faLine} />} sx={{ backgroundColor: '#00B900', color: 'white', py: 1.5, textTransform: 'none', fontWeight: 600, '&:hover': { backgroundColor: '#00A000' } }}>
+                {t('auth.loginWith', { provider: 'LINE' })}
+              </Button>
+              <Button variant="outlined" fullWidth onClick={() => handleLogin('Google')} startIcon={<FontAwesomeIcon icon={faGoogle} />} sx={{ borderColor: '#4285F4', color: '#4285F4', py: 1.5, textTransform: 'none', fontWeight: 600, '&:hover': { borderColor: '#357AE8', backgroundColor: 'rgba(66, 133, 244, 0.04)' } }}>
+                {t('auth.loginWith', { provider: 'Google' })}
+              </Button>
+              <Button variant="outlined" fullWidth onClick={() => handleLogin('Yahoo')} startIcon={<FontAwesomeIcon icon={faYahoo} />} sx={{ borderColor: '#6001D2', color: '#6001D2', py: 1.5, textTransform: 'none', fontWeight: 600, '&:hover': { borderColor: '#5001B2', backgroundColor: 'rgba(96, 1, 210, 0.04)' } }}>
+                {t('auth.loginWith', { provider: 'Yahoo' })}
+              </Button>
+            </Box>
+            <Divider sx={{ my: 3 }} />
+            <Typography variant="caption" color="text.secondary" textAlign="center" display="block">{t('auth.terms')}</Typography>
           </Box>
-          <Typography variant="h6" fontWeight={700}>
-            {t('auth.welcome')}
-          </Typography>
-        </Box>
-        <IconButton onClick={() => onOpenChange(false)} size="small">
-          <FontAwesomeIcon icon={faXmark} />
-        </IconButton>
-      </DialogTitle>
-      
-      <DialogContent sx={{ p: 2, pb: 4 }}>
-        <Typography variant="body2" color="text.secondary" sx={{ mb: 4 }}>
-          {t('auth.subtitle')}
-        </Typography>
-
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-          <Button 
-            variant="outlined" 
-            fullWidth 
-            size="large"
-            onClick={() => handleLogin('google')}
-            startIcon={<FontAwesomeIcon icon={faGoogle} />}
-            sx={{ 
-              py: 1.5, 
-              textTransform: 'none', 
-              fontWeight: 600,
-              borderColor: '#ddd',
-              color: '#555',
-              '&:hover': { borderColor: '#bbb', bgcolor: '#f9f9f9' }
-            }}
-          >
-            {t('auth.loginWith', { provider: 'Google' })}
-          </Button>
-
-          <Button 
-            variant="contained" 
-            fullWidth 
-            size="large"
-            onClick={() => handleLogin('line')}
-            startIcon={<FontAwesomeIcon icon={faLine} />}
-            sx={{ 
-              py: 1.5, 
-              textTransform: 'none', 
-              fontWeight: 600,
-              bgcolor: '#00B900',
-              '&:hover': { bgcolor: '#009900' }
-            }}
-          >
-            {t('auth.loginWith', { provider: 'LINE' })}
-          </Button>
-        </Box>
-
-        <Divider sx={{ my: 4 }}>
-          <Typography variant="caption" color="text.secondary" sx={{ px: 1 }}>
-            <FontAwesomeIcon icon={faLock} style={{ marginRight: 4 }} />
-            {t('auth.secureLogin') || 'Secure Login'}
-          </Typography>
-        </Divider>
-
-        <Typography variant="caption" color="text.secondary" textAlign="center" display="block">
-          {t('auth.terms')}
-        </Typography>
-      </DialogContent>
-    </Dialog>
+          <style>{`@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } } @keyframes slideUp { from { opacity: 0; transform: translate(-50%, -45%); } to { opacity: 1; transform: translate(-50%, -50%); } }`}</style>
+        </Dialog.Content>
+      </Dialog.Portal>
+    </Dialog.Root>
   );
 };
 

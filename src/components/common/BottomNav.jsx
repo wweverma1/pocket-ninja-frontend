@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { BottomNavigation, BottomNavigationAction, Paper, Box, Typography, useTheme } from '@mui/material';
+import { BottomNavigation, BottomNavigationAction, Paper, Box, Typography } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faTableColumns,
+  faHome,
   faChartLine,
   faUpload,
   faUsers,
@@ -17,7 +18,6 @@ const BottomNav = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
-  const theme = useTheme();
   const [value, setValue] = useState(0);
   const { isLoggedIn } = useAuth();
 
@@ -44,13 +44,35 @@ const BottomNav = () => {
   if (!isLoggedIn) {
     return (
       <Paper
-        sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: theme.zIndex.appBar, backgroundColor: 'primary.main', color: 'white', borderRadius: 0 }}
+        sx={{
+          position: 'fixed',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          zIndex: 1000,
+          backgroundColor: 'primary.main',
+          color: 'white',
+          boxShadow: '0px -2px 8px rgba(0,0,0,0.1)',
+          borderRadius: 0
+        }}
         elevation={0}
       >
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', py: 2, gap: 1 }}>
-          <Typography variant="body2" sx={{ fontSize: '0.85rem', opacity: 0.9 }}>Developed with</Typography>
-          <FontAwesomeIcon icon={faHeart} style={{ color: theme.palette.secondary.main, fontSize: '0.9rem' }} />
-          <Typography variant="body2" sx={{ fontSize: '0.85rem', opacity: 0.9 }}>in Sapporo</Typography>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            py: 1.5,
+            gap: 1,
+          }}
+        >
+          <Typography variant="body2" sx={{ fontSize: '0.85rem' }}>
+            Developed with
+          </Typography>
+          <FontAwesomeIcon icon={faHeart} style={{ color: '#E74C3C', fontSize: '1rem' }} />
+          <Typography variant="body2" sx={{ fontSize: '0.85rem' }}>
+            in Sapporo
+          </Typography>
         </Box>
       </Paper>
     );
@@ -58,7 +80,13 @@ const BottomNav = () => {
 
   return (
     <Paper
-      sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: theme.zIndex.appBar, borderTop: `1px solid ${theme.palette.divider}` }}
+      sx={{
+        position: 'fixed',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        zIndex: 1000,
+      }}
       elevation={4}
     >
       <BottomNavigation
@@ -66,15 +94,21 @@ const BottomNav = () => {
         onChange={handleChange}
         showLabels
         sx={{
-          height: { xs: 65, md: 75 },
-          '& .Mui-selected': { color: 'secondary.main' },
+          '& .MuiBottomNavigationAction-root': {
+            minWidth: 'auto',
+            padding: '6px 12px',
+          },
+          '& .MuiBottomNavigationAction-label': {
+            fontSize: '0.7rem',
+            marginTop: '4px',
+          },
         }}
       >
         {navItems.map((item, index) => (
           <BottomNavigationAction
             key={index}
             label={item.label}
-            icon={<FontAwesomeIcon icon={item.icon} style={{ fontSize: '1.2rem' }} />}
+            icon={<FontAwesomeIcon icon={item.icon} />}
           />
         ))}
       </BottomNavigation>
