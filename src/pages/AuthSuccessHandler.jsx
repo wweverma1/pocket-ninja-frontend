@@ -2,9 +2,11 @@ import React, { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Box, CircularProgress, Typography } from '@mui/material';
 import { useAuth } from '../context/AuthContext';
+import { useTranslation } from 'react-i18next';
 import { toast } from 'react-hot-toast';
 
 const AuthSuccessHandler = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
   const { login } = useAuth();
@@ -12,51 +14,50 @@ const AuthSuccessHandler = () => {
   useEffect(() => {
     const handleAuthSuccess = () => {
       try {
-        // 1. Extract params from URL (adjust based on your backend implementation)
         const params = new URLSearchParams(location.search);
         const token = params.get('token');
-        const userDataStr = params.get('user');
+        const isNewUser = params.get('is_new_user') === 'true';
+        const username = params.get('username');
 
-        if (token && userDataStr) {
-          const userData = JSON.parse(decodeURIComponent(userDataStr));
-          
-          // 2. Store token for API interceptor (from src/services/api.js)
+        if (token) {
+          // Store token for Bearer authentication
           localStorage.setItem('authToken', token);
           
-          // 3. Update global AuthContext state
+          const userData = { 
+            username: username || 'Ninja', 
+            token: token,
+            isNewUser: isNewUser
+          };
+
           login(userData);
-          
-          toast.success('Successfully logged in!');
-          
-          // 4. Redirect to Dashboard
-          navigate('/dashboard', { replace: true });
+
+          // Communicate with parent window and close popup
+          if (window.opener) {
+            window.opener.postMessage({ type: 'AUTH_COMPLETE', isNewUser }, window.location.origin);
+            window.close();
+          } else {
+            // Fallback for direct redirection
+            navigate(isNewUser ? '/onboarding' : '/dashboard', { replace: true });
+          }
         } else {
-          throw new Error('Missing authentication data');
+          toast.error(t('common.error'));
+          if (window.opener) window.close();
+          else navigate('/');
         }
       } catch (error) {
-        console.error('Auth success handling failed:', error);
-        toast.error('Authentication failed. Please try again.');
-        navigate('/', { replace: true });
+        console.error('Auth processing failed:', error);
+        toast.error(t('common.error'));
+        if (window.opener) window.close();
       }
     };
 
     handleAuthSuccess();
-  }, [location, login, navigate]);
+  }, [location, login, navigate, t]);
 
   return (
-    <Box 
-      sx={{ 
-        display: 'flex', 
-        flexDirection: 'column', 
-        alignItems: 'center', 
-        justifyContent: 'center', 
-        height: '80vh' 
-      }}
-    >
-      <CircularProgress size={60} thickness={4} sx={{ mb: 2 }} />
-      <Typography variant="h6" fontWeight={600}>
-        Finalizing your login...
-      </Typography>
+    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh', gap: 2 }}>
+      <CircularProgress size={40} thickness={4} />
+      <Typography variant="body1" fontWeight={500}>{t('common.loading')}</Typography>
     </Box>
   );
 };

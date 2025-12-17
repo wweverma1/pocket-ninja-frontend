@@ -11,7 +11,8 @@
     "compare": "比較",
     "upload": "アップロード",
     "campaigns": "キャンペーン",
-    "profile": "プロフィール"
+    "profile": "プロフィール",
+    "dashboard": "ダッシュボード"
   },
   "home": {
     "welcome": "札幌で最安値を見つけよう",
@@ -49,10 +50,12 @@
   },
   "auth": {
     "loginComingSoon": "ログイン機能は近日公開！",
-    "welcome": "Pocket Ninjaへようこそ",
-    "subtitle": "サインインして日々のお買い物で節約を始めましょう",
+    "welcome": "おかえりなさい",
+    "subtitle": "サインインして札幌での節約を始めましょう",
     "loginWith": "{{provider}}で続ける",
-    "terms": "続行することで、利用規約とプライバシーポリシーに同意したことになります"
+    "secureLogin": "安全なログイン",
+    "terms": "続行することで、利用規約に同意したことになります。",
+    "failureTitle": "認証に失敗しました"
   },
   "common": {
     "loading": "読み込み中...",
@@ -63,6 +66,21 @@
     "delete": "削除",
     "edit": "編集",
     "close": "閉じる",
-    "share": "シェア"
+    "share": "シェア",
+    "logout": "ログアウト",
+    "switchLanguage": "言語を切り替える",
+    "shareMessage": "Pocket Ninjaをチェック！札幌で最安値を見つけて節約しよう！"
+  },
+  "dashboard": {
+    "welcome": "おかえりなさい",
+    "subtitle": "今日は札幌のどこで節約しますか？"
+  },
+  "onboarding": {
+    "title": "忍者ネームを決めよう",
+    "subtitle": "これは札幌でのあなたの恒久的なユーザー名になります。",
+    "placeholder": "ユーザー名",
+    "submit": "節約を始める",
+    "success": "プロフィールの設定が完了しました！",
+    "error": "そのユーザー名は既に使用されています。"
   }
 }

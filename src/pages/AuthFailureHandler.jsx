@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Box, Typography, Button, Container } from '@mui/material';
+import { Box, Typography, Button, CircularProgress } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-hot-toast';
@@ -13,44 +13,42 @@ const AuthFailureHandler = () => {
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
-    const errorMsg = params.get('message') || 'Authentication failed';
+    const errorMsg = params.get('error') || params.get('message') || t('common.error');
     
-    toast.error(errorMsg);
-  }, [location]);
+    // Notify the parent window that auth failed
+    if (window.opener) {
+      window.opener.postMessage({ type: 'AUTH_ERROR', message: errorMsg }, window.location.origin);
+      window.close();
+    } else {
+      // Fallback for direct window usage
+      toast.error(errorMsg);
+      navigate('/', { replace: true });
+    }
+  }, [location, navigate, t]);
 
   return (
-    <Container maxWidth="sm">
-      <Box 
-        sx={{ 
-          display: 'flex', 
-          flexDirection: 'column', 
-          alignItems: 'center', 
-          justifyContent: 'center', 
-          height: '70vh',
-          textAlign: 'center'
-        }}
-      >
-        <FontAwesomeIcon 
-          icon={faTriangleExclamation} 
-          style={{ fontSize: '4rem', color: '#E74C3C', marginBottom: '24px' }} 
-        />
-        <Typography variant="h4" fontWeight={700} gutterBottom>
-          Oops! Something went wrong.
-        </Typography>
-        <Typography variant="body1" color="text.secondary" sx={{ mb: 4 }}>
-          We couldn't complete your login. This might be due to a cancelled request or a temporary server issue.
-        </Typography>
-        <Button 
-          variant="contained" 
-          color="primary" 
-          size="large"
-          onClick={() => navigate('/')}
-          sx={{ px: 4, fontWeight: 700 }}
-        >
-          Return to Home
-        </Button>
-      </Box>
-    </Container>
+    <Box 
+      sx={{ 
+        display: 'flex', 
+        flexDirection: 'column', 
+        alignItems: 'center', 
+        justifyContent: 'center', 
+        height: '100vh',
+        textAlign: 'center',
+        p: 3
+      }}
+    >
+      <FontAwesomeIcon 
+        icon={faTriangleExclamation} 
+        style={{ fontSize: '3rem', color: '#E74C3C', marginBottom: '16px' }} 
+      />
+      <Typography variant="h6" fontWeight={600}>
+        {t('auth.failureTitle') || 'Authentication Failed'}
+      </Typography>
+      <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+        {t('common.loading')}
+      </Typography>
+    </Box>
   );
 };
 

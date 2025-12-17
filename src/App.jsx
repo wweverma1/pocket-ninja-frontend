@@ -24,6 +24,11 @@ function App() {
             
             <Route path="/auth/success" element={<AuthSuccessHandler />} />
             <Route path="/auth/failure" element={<AuthFailureHandler />} />
+
+            <Route 
+              path="/onboarding" 
+              element={isLoggedIn && user?.isNewUser ? <Onboarding /> : <Navigate to="/" />} 
+            />
             
             {/* Placeholder routes for future features */}
             <Route path="/compare" element={isLoggedIn ? <Box sx={{p:4}}>Compare Page</Box> : <Navigate to="/" />} />
