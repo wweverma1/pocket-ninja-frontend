@@ -13,9 +13,29 @@ const AuthSuccessHandler = () => {
     const username = searchParams.get('username');
 
     if (token && window.opener) {
-      const userData = { token, username: username || 'Ninja', isNewUser };
-      // Communicate to main window context
-      window.opener.postMessage({ type: 'AUTH_COMPLETE', userData, token }, window.location.origin);
+      // Create user data object
+      const userData = { 
+        token, 
+        username: username || 'Ninja', 
+        isNewUser 
+      };
+
+      // If returning user, persist the finalized username
+      if (!isNewUser && username) {
+        localStorage.setItem('username', username);
+      }
+
+      // Send data to main window context, including the suggested username for onboarding
+      window.opener.postMessage(
+        { 
+          type: 'AUTH_COMPLETE', 
+          userData, 
+          token,
+          suggestedUsername: username // Pass for Onboarding UI
+        }, 
+        window.location.origin
+      );
+      
       window.close();
     }
   }, [searchParams]);

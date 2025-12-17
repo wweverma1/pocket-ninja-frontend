@@ -69,7 +69,8 @@
     "share": "シェア",
     "logout": "ログアウト",
     "switchLanguage": "言語を切り替える",
-    "shareMessage": "Pocket Ninjaをチェック！札幌で最安値を見つけて節約しよう！"
+    "shareMessage": "Pocket Ninjaをチェック！札幌で最安値を見つけて節約しよう！",
+    "loginSuccess": "おかえりなさい、ニンジャ！"
   },
   "dashboard": {
     "welcome": "おかえりなさい",
@@ -80,7 +81,7 @@
     "subtitle": "これはあなたの永続的なユーザー名になります。",
     "placeholder": "ユーザー名",
     "submit": "節約を始める",
-    "success": "プロフィールの設定が完了しました！",
+    "success": "忍者プロフィールの設定が完了しました！",
     "error": "そのユーザー名は既に使用されています。"
   }
 }

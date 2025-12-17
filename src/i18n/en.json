@@ -69,7 +69,8 @@
     "share": "Share",
     "logout": "Logout",
     "switchLanguage": "Switch Language",
-    "shareMessage": "Check out Pocket Ninja - Find the best deals in Sapporo!"
+    "shareMessage": "Check out Pocket Ninja - Find the best deals in Sapporo!",
+    "loginSuccess": "Welcome back, Ninja!"
   },
   "dashboard": {
     "welcome": "Welcome back",
@@ -80,7 +81,7 @@
     "subtitle": "This will be your permanent username.",
     "placeholder": "Username",
     "submit": "Start Saving",
-    "success": "Profile set up complete!",
-    "error": "Username is already taken."
+    "success": "Your ninja profile is ready!",
+    "error": "This username is already taken."
   }
 }
