@@ -16,7 +16,7 @@ const Onboarding = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  // Route protection: Only new users should be here
+  // Route protection: Only logged in new users should be here
   if (!isLoggedIn || !user?.isNewUser) {
     return <Navigate to="/" replace />;
   }
@@ -25,15 +25,16 @@ const Onboarding = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      await authAPI.onboard(username); // Uses Step 3 backend spec
+      // Call Step 3 endpoint: POST /user/onboard
+      await authAPI.onboard(username);
       
       // Update local state: isNewUser is now false
       login({ ...user, username, isNewUser: false });
       
-      toast.success(t('onboarding.success') || 'Welcome to the community!');
+      toast.success(t('onboarding.success'));
       navigate('/dashboard', { replace: true });
     } catch (error) {
-      const errorMsg = error.response?.data?.message || t('onboarding.error') || 'Username taken';
+      const errorMsg = error.response?.data?.message || t('onboarding.error');
       toast.error(errorMsg);
     } finally {
       setLoading(false);

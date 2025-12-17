@@ -50,8 +50,8 @@
   },
   "auth": {
     "loginComingSoon": "login coming soon!",
-    "welcome": "Welcome back",
-    "subtitle": "Sign in to start saving in Sapporo",
+    "welcome": "Welcome",
+    "subtitle": "Sign in to start saving today",
     "loginWith": "Continue with {{provider}}",
     "secureLogin": "Secure Connection",
     "terms": "By continuing, you agree to our Terms of Service.",
@@ -77,7 +77,7 @@
   },
   "onboarding": {
     "title": "Pick Your Ninja Name",
-    "subtitle": "This will be your permanent username in Sapporo.",
+    "subtitle": "This will be your permanent username.",
     "placeholder": "Username",
     "submit": "Start Saving",
     "success": "Profile set up complete!",
