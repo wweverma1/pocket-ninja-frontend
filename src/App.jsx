@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { Box } from '@mui/material';
+import { Box, CircularProgress } from '@mui/material';
 import { Toaster } from 'react-hot-toast';
 import Header from './components/common/Header';
 import BottomNav from './components/common/BottomNav';
@@ -12,7 +12,15 @@ import AuthFailureHandler from './pages/AuthFailureHandler';
 import { useAuth } from './context/AuthContext';
 
 function App() {
-  const { isLoggedIn, user } = useAuth();
+  const { isLoggedIn, loading } = useAuth();
+
+  if (loading) {
+    return (
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+        <CircularProgress />
+      </Box>
+    );
+  }
 
   return (
     <Router>
@@ -20,21 +28,25 @@ function App() {
         <Header />
         <Box component="main" sx={{ flexGrow: 1, pb: 8 }}>
           <Routes>
-            <Route path="/" element={!isLoggedIn ? <Home /> : <Navigate to="/dashboard" />} />
+            <Route path="/" element={!isLoggedIn ? <Home /> : <Navigate to="/dashboard" replace />} />
+            
             <Route path="/auth/success" element={<AuthSuccessHandler />} />
             <Route path="/auth/failure" element={<AuthFailureHandler />} />
+            
             <Route 
               path="/dashboard" 
-              element={isLoggedIn ? <Dashboard /> : <Navigate to="/" />} 
+              element={isLoggedIn ? <Dashboard /> : <Navigate to="/" replace />} 
             />
+            
             <Route 
               path="/onboarding" 
-              element={isLoggedIn && user?.isNewUser ? <Onboarding /> : <Navigate to="/" />} 
+              element={isLoggedIn ? <Onboarding /> : <Navigate to="/" replace />} 
             />
-            <Route path="/compare" element={isLoggedIn ? <Box sx={{p:4}}>Compare Page</Box> : <Navigate to="/" />} />
-            <Route path="/upload" element={isLoggedIn ? <Box sx={{p:4}}>Upload Page</Box> : <Navigate to="/" />} />
-            <Route path="/campaigns" element={isLoggedIn ? <Box sx={{p:4}}>Campaigns Page</Box> : <Navigate to="/" />} />
-            <Route path="/profile" element={isLoggedIn ? <Box sx={{p:4}}>Profile Page</Box> : <Navigate to="/" />} />
+            
+            <Route path="/compare" element={isLoggedIn ? <Box sx={{p:4}}>Compare Page</Box> : <Navigate to="/" replace />} />
+            <Route path="/upload" element={isLoggedIn ? <Box sx={{p:4}}>Upload Page</Box> : <Navigate to="/" replace />} />
+            <Route path="/campaigns" element={isLoggedIn ? <Box sx={{p:4}}>Campaigns Page</Box> : <Navigate to="/" replace />} />
+            <Route path="/profile" element={isLoggedIn ? <Box sx={{p:4}}>Profile Page</Box> : <Navigate to="/" replace />} />
           </Routes>
         </Box>
         <BottomNav />

@@ -27,7 +27,6 @@ const LoginDialog = ({ open, onOpenChange }) => {
 
     const redirectPath = `${BACKEND_BASE_URL}/auth/redirect/${provider.toLowerCase()}`;
     
-    // Opens popup at top-left (0,0)
     const popup = window.open(
       redirectPath,
       'pocket_ninja_auth',
@@ -38,15 +37,24 @@ const LoginDialog = ({ open, onOpenChange }) => {
       if (event.origin !== window.location.origin) return;
       
       if (event.data?.type === 'AUTH_COMPLETE') {
-        const { userData, token } = event.data;
-        localStorage.setItem('authToken', token);
-        login(userData);
+        const { token, suggestedUsername, isNewUser } = event.data;
+
+        // 1. Update Authentication State
+        login(suggestedUsername, token);
         
+        // 2. Close UI elements
         onOpenChange(false);
         toast.success(t('common.loginSuccess') || 'Login Successful!', { position: 'bottom-center' });
         
-        if (userData.isNewUser) navigate('/onboarding');
-        else navigate('/dashboard');
+        // 3. Navigate - using a small timeout ensures the Router state 
+        // is ready and isn't overridden by App.jsx's root redirect
+        setTimeout(() => {
+          if (isNewUser) {
+            navigate('/onboarding', { state: { suggestedUsername }, replace: true });
+          } else {
+            navigate('/dashboard', { replace: true });
+          }
+        }, 100);
 
         window.removeEventListener('message', handleMessage);
       } else if (event.data?.type === 'AUTH_ERROR') {

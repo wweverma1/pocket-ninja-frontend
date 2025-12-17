@@ -13,34 +13,43 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Check localStorage for auth status
-    const authStatus = localStorage.getItem('isLoggedIn') === 'true';
-    const userData = localStorage.getItem('userData');
+    // Check localStorage for direct keys
+    const token = localStorage.getItem('authToken');
+    const username = localStorage.getItem('username');
     
-    if (authStatus && userData) {
+    if (token && username) {
       setIsLoggedIn(true);
-      setUser(JSON.parse(userData));
+      setUser({ username });
     }
+    setLoading(false);
   }, []);
 
-  const login = (userData) => {
+  const login = (username, token) => {
     setIsLoggedIn(true);
-    setUser(userData);
+    setUser({ username });
     localStorage.setItem('isLoggedIn', 'true');
-    localStorage.setItem('userData', JSON.stringify(userData));
+    localStorage.setItem('username', username);
+    localStorage.setItem('authToken', token);
   };
 
   const logout = () => {
     setIsLoggedIn(false);
     setUser(null);
     localStorage.removeItem('isLoggedIn');
-    localStorage.removeItem('userData');
+    localStorage.removeItem('username');
+    localStorage.removeItem('authToken');
+  };
+
+  const updateUsername = (newUsername) => {
+    setUser({ username: newUsername });
+    localStorage.setItem('username', newUsername);
   };
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, user, login, logout }}>
+    <AuthContext.Provider value={{ isLoggedIn, user, login, logout, updateUsername, loading }}>
       {children}
     </AuthContext.Provider>
   );
