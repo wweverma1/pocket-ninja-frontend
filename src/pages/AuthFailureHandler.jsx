@@ -1,31 +1,56 @@
-import React from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { Box, Typography, Button } from '@mui/material';
+import React, { useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { Box, Typography, Button, Container } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
-import { globalStyles } from '../theme/globalStyles';
+import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
+import { toast } from 'react-hot-toast';
+import { useTranslation } from 'react-i18next';
 
 const AuthFailureHandler = () => {
-  const [searchParams] = useSearchParams();
-  const error = searchParams.get('error') || 'An unknown error occurred during authentication.';
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { t } = useTranslation();
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const errorMsg = params.get('message') || 'Authentication failed';
+    
+    toast.error(errorMsg);
+  }, [location]);
 
   return (
-    <Box sx={{ ...globalStyles.pageContainer, textAlign: 'center', py: 10 }}>
-      <FontAwesomeIcon icon={faCircleExclamation} style={{ fontSize: '3rem', color: '#E74C3C', marginBottom: '16px' }} />
-      <Typography variant="h4" fontWeight={700} color="secondary.main" gutterBottom>
-        Authentication Failed
-      </Typography>
-      <Typography variant="body1" color="text.secondary" sx={{ mb: 4 }}>
-        Error details: {error}
-      </Typography>
-      <Button 
-        variant="contained" 
-        color="primary" 
-        onClick={() => window.location.href = '/'}
+    <Container maxWidth="sm">
+      <Box 
+        sx={{ 
+          display: 'flex', 
+          flexDirection: 'column', 
+          alignItems: 'center', 
+          justifyContent: 'center', 
+          height: '70vh',
+          textAlign: 'center'
+        }}
       >
-        Go to Home
-      </Button>
-    </Box>
+        <FontAwesomeIcon 
+          icon={faTriangleExclamation} 
+          style={{ fontSize: '4rem', color: '#E74C3C', marginBottom: '24px' }} 
+        />
+        <Typography variant="h4" fontWeight={700} gutterBottom>
+          Oops! Something went wrong.
+        </Typography>
+        <Typography variant="body1" color="text.secondary" sx={{ mb: 4 }}>
+          We couldn't complete your login. This might be due to a cancelled request or a temporary server issue.
+        </Typography>
+        <Button 
+          variant="contained" 
+          color="primary" 
+          size="large"
+          onClick={() => navigate('/')}
+          sx={{ px: 4, fontWeight: 700 }}
+        >
+          Return to Home
+        </Button>
+      </Box>
+    </Container>
   );
 };
 

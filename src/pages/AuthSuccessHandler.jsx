@@ -1,52 +1,62 @@
 import React, { useEffect } from 'react';
-import { useSearchParams, useNavigate } from 'react-router-dom';
-import { Box, Typography } from '@mui/material';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { Box, CircularProgress, Typography } from '@mui/material';
 import { useAuth } from '../context/AuthContext';
-import { globalStyles } from '../theme/globalStyles';
-import toast from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 
 const AuthSuccessHandler = () => {
-  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const { login } = useAuth();
 
   useEffect(() => {
-    const token = searchParams.get('token');
-    // const isNewUser = searchParams.get('is_new_user') === 'true'; // Not used in AuthContext yet
+    const handleAuthSuccess = () => {
+      try {
+        // 1. Extract params from URL (adjust based on your backend implementation)
+        const params = new URLSearchParams(location.search);
+        const token = params.get('token');
+        const userDataStr = params.get('user');
 
-    if (token) {
-      // In a real application, you would typically use the token to fetch
-      // the user's profile, but for now, we'll store the token and mock user data
-      
-      // MOCK USER DATA (Replace with actual user data logic using the token later)
-      const mockUserData = { 
-        token: token,
-        username: 'AuthUser',
-        // Other profile details
-      }; 
+        if (token && userDataStr) {
+          const userData = JSON.parse(decodeURIComponent(userDataStr));
+          
+          // 2. Store token for API interceptor (from src/services/api.js)
+          localStorage.setItem('authToken', token);
+          
+          // 3. Update global AuthContext state
+          login(userData);
+          
+          toast.success('Successfully logged in!');
+          
+          // 4. Redirect to Dashboard
+          navigate('/dashboard', { replace: true });
+        } else {
+          throw new Error('Missing authentication data');
+        }
+      } catch (error) {
+        console.error('Auth success handling failed:', error);
+        toast.error('Authentication failed. Please try again.');
+        navigate('/', { replace: true });
+      }
+    };
 
-      login(mockUserData);
-      
-      toast.success('Login Successful!', {
-        duration: 3000,
-        position: 'bottom-center',
-      });
-      
-      // Redirect to dashboard or home page after successful login
-      navigate('/'); 
-    } else {
-      toast.error('Login failed: Token missing.', {
-        duration: 5000,
-        position: 'bottom-center',
-      });
-      navigate('/auth/failure?error=token_missing');
-    }
-  }, [searchParams, navigate, login]);
+    handleAuthSuccess();
+  }, [location, login, navigate]);
 
   return (
-    <Box sx={{ ...globalStyles.pageContainer, textAlign: 'center', py: 10 }}>
-      <Typography variant="h5">Processing Login...</Typography>
-      <Typography variant="body1" color="text.secondary">Please wait while we log you in.</Typography>
+    <Box 
+      sx={{ 
+        display: 'flex', 
+        flexDirection: 'column', 
+        alignItems: 'center', 
+        justifyContent: 'center', 
+        height: '80vh' 
+      }}
+    >
+      <CircularProgress size={60} thickness={4} sx={{ mb: 2 }} />
+      <Typography variant="h6" fontWeight={600}>
+        Finalizing your login...
+      </Typography>
     </Box>
   );
 };
