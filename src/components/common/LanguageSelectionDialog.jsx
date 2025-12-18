@@ -62,8 +62,7 @@ const LanguageSelectionDialog = () => {
             animation: 'slideUp 0.3s ease-out',
           }}
         >
-          <Box sx={{ position: 'relative', textAlign: 'center', mb: 3 }}>
-            {/* FIXED: Added Close Button to match LoginDialog */}
+          <Box sx={{ position: 'relative' }}>
             <Dialog.Close asChild>
               <Button
                 sx={{
@@ -81,106 +80,87 @@ const LanguageSelectionDialog = () => {
               </Button>
             </Dialog.Close>
 
-            <Box
-              sx={{
-                width: 80,
-                height: 80,
-                borderRadius: '50%',
-                // FIXED: Using theme color for consistency
-                backgroundColor: theme.palette.primary.main, 
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                margin: '0 auto',
-                mb: 2,
-              }}
-            >
+            <Box sx={{ textAlign: 'center', mb: 3 }}>
               <FontAwesomeIcon
                 icon={faLanguage}
-                style={{ fontSize: '2.5rem', color: 'white' }}
+                style={{ fontSize: '2.5rem', color: theme.palette.primary.main, marginBottom: '16px' }}
               />
+              <Dialog.Title asChild>
+                <Typography variant="h5" fontWeight={700} gutterBottom>
+                  Choose Your Language
+                </Typography>
+              </Dialog.Title>
+              <Typography variant="h6" fontWeight={700} gutterBottom sx={{ mt: -1 }}>
+                言語を選択してください
+              </Typography>
+              <Dialog.Description asChild>
+                <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+                  Select your preferred language / お好みの言語を選択
+                </Typography>
+              </Dialog.Description>
             </Box>
-            
-            <Dialog.Title asChild>
-              <Typography variant="h5" fontWeight={700} gutterBottom>
-                Choose Your Language
-              </Typography>
-            </Dialog.Title>
-            <Typography variant="h6" fontWeight={700} gutterBottom>
-              言語を選択してください
-            </Typography>
-            <Dialog.Description asChild>
-              <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-                Select your preferred language / お好みの言語を選択
-              </Typography>
-            </Dialog.Description>
-          </Box>
 
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-            <Card
-              sx={{
-                cursor: 'pointer',
-                transition: 'all 0.3s ease',
-                border: '2px solid transparent',
-                '&:hover': {
-                  // FIXED: Using theme color for consistency
-                  borderColor: theme.palette.primary.main, 
-                  transform: 'scale(1.02)',
-                },
-              }}
-              onClick={() => handleLanguageSelect('ja')}
-            >
-              <CardContent sx={{ textAlign: 'center', py: 3 }}>
-                <Typography variant="h4" sx={{ mb: 1 }}>
-                  🇯🇵
-                </Typography>
-                <Typography variant="h6" fontWeight={600}>
-                  日本語
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Japanese
-                </Typography>
-              </CardContent>
-            </Card>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+              <Card
+                sx={{
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  border: '2px solid transparent',
+                  '&:hover': {
+                    borderColor: theme.palette.primary.main,
+                    transform: 'translateY(-2px)',
+                    boxShadow: 3
+                  },
+                }}
+                onClick={() => handleLanguageSelect('ja')}
+              >
+                <CardContent sx={{ textAlign: 'center', py: 2 }}>
+                  <Typography variant="h4" sx={{ mb: 1 }}>
+                    🇯🇵
+                  </Typography>
+                  <Typography variant="h6" fontWeight={600}>
+                    日本語
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Japanese
+                  </Typography>
+                </CardContent>
+              </Card>
 
-            <Card
-              sx={{
-                cursor: 'pointer',
-                transition: 'all 0.3s ease',
-                border: '2px solid transparent',
-                '&:hover': {
-                  // FIXED: Using theme color for consistency
-                  borderColor: theme.palette.primary.main, 
-                  transform: 'scale(1.02)',
-                },
-              }}
-              onClick={() => handleLanguageSelect('en')}
-            >
-              <CardContent sx={{ textAlign: 'center', py: 3 }}>
-                <Typography variant="h4" sx={{ mb: 1 }}>
-                  🇬🇧
-                </Typography>
-                <Typography variant="h6" fontWeight={600}>
-                  English
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  英語
-                </Typography>
-              </CardContent>
-            </Card>
+              <Card
+                sx={{
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  border: '2px solid transparent',
+                  '&:hover': {
+                    borderColor: theme.palette.primary.main,
+                    transform: 'translateY(-2px)',
+                    boxShadow: 3
+                  },
+                }}
+                onClick={() => handleLanguageSelect('en')}
+              >
+                <CardContent sx={{ textAlign: 'center', py: 2 }}>
+                  <Typography variant="h4" sx={{ mb: 1 }}>
+                    🇬🇧
+                  </Typography>
+                  <Typography variant="h6" fontWeight={600}>
+                    English
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    英語
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Box>
           </Box>
 
           <style>
             {`
               @keyframes fadeIn {
-                from {
-                  opacity: 0;
-                }
-                to {
-                  opacity: 1;
-                }
+                from { opacity: 0; }
+                to { opacity: 1; }
               }
-              
               @keyframes slideUp {
                 from {
                   opacity: 0;
