@@ -10,8 +10,7 @@
     "compare": "比較",
     "upload": "アップロード",
     "campaigns": "キャンペーン",
-    "profile": "プロフィール",
-    "dashboard": "ダッシュボード"
+    "profile": "プロフィール"
   },
   "home": {
     "welcome": "札幌で最安値を見つけよう",
@@ -74,17 +73,19 @@
     "developedWith": "Developed with",
     "inSapporo": "in Sapporo"
   },
-  "dashboard": {
-    "welcome": "おかえりなさい、{{username}}！",
-    "subtitle": "今日は札幌のどこで節約しますか？"
-  },
-  "onboarding": {
-    "title": "忍者ネームを決めよう",
-    "subtitle": "これはあなたの永続的なユーザー名になります。",
-    "placeholder": "ユーザー名",
-    "submit": "節約を始める",
-    "success": "忍者プロフィールの設定が完了しました！",
-    "error": "そのユーザー名は既に使用されています。"
+  "profile": {
+    "joinedAt": "参加日",
+    "rankScore": "忍者ランク",
+    "estimatedSavings": "推定節約額",
+    "contributions": "貢献数",
+    "expenditure": "支出額",
+    "thisMonth": "今月",
+    "rating": "評価",
+    "monthlyStats": "今月の記録",
+    "saved": "節約額",
+    "uploads": "レシート数",
+    "editUsername": "忍者ネームの変更",
+    "usernameLabel": "新しいユーザー名"
   },
   "pages": {
     "compare": "比較ページ",

@@ -17,7 +17,7 @@ import {
   Divider,
 } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faBolt, faShareNodes, faLanguage, faRightToBracket } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faBolt, faShareNodes, faLanguage, faRightToBracket, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../context/AuthContext';
 import LanguageToggle from './LanguageToggle';
@@ -30,7 +30,7 @@ const Header = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn, logout } = useAuth();
 
   const loggedOutMenuItems = [
     { label: t('nav.bestDeals'), id: 'leaderboard' },
@@ -39,7 +39,6 @@ const Header = () => {
   ];
 
   const loggedInMenuItems = [
-    { label: t('nav.dashboard'), path: '/dashboard' },
     { label: t('nav.compare'), path: '/compare' },
     { label: t('nav.upload'), path: '/upload' },
     { label: t('nav.campaigns'), path: '/campaigns' },
@@ -62,6 +61,12 @@ const Header = () => {
       }
     }
     setDrawerOpen(false);
+  };
+
+  const handleLogout = () => {
+    logout();
+    setDrawerOpen(false);
+    navigate('/');
   };
 
   const handleShare = () => {
@@ -115,7 +120,11 @@ const Header = () => {
               <IconButton color="inherit" onClick={handleShare} aria-label="share" sx={{ p: 1 }}>
                 <FontAwesomeIcon icon={faShareNodes} />
               </IconButton>
-              {!isLoggedIn && (
+              {isLoggedIn ? (
+                <Button variant="contained" color="secondary" onClick={handleLogout} sx={{ ml: 1, fontWeight: 600, textTransform: 'none' }}>
+                  {t('common.logout')}
+                </Button>
+              ) : (
                 <Button variant="contained" color="secondary" onClick={() => setLoginOpen(true)} sx={{ ml: 1, fontWeight: 600, textTransform: 'none' }}>
                   {t('home.getStarted')}
                 </Button>
@@ -177,6 +186,25 @@ const Header = () => {
                   </Box>
                 </ListItemButton>
               </ListItem>
+              
+              {isLoggedIn && (
+                <ListItem disablePadding>
+                  <ListItemButton 
+                    onClick={handleLogout} 
+                    sx={{ 
+                      backgroundColor: theme.palette.error.main, 
+                      color: theme.palette.error.contrastText, 
+                      '&:hover': { backgroundColor: theme.palette.error.dark },
+                      mt: 1
+                    }}
+                  >
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                      <FontAwesomeIcon icon={faSignOutAlt} />
+                      <ListItemText primary={t('common.logout')} primaryTypographyProps={{ fontWeight: 600 }} />
+                    </Box>
+                  </ListItemButton>
+                </ListItem>
+              )}
             </List>
           </Box>
           

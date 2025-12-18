@@ -10,8 +10,7 @@
     "compare": "Compare",
     "upload": "Upload",
     "campaigns": "Campaigns",
-    "profile": "Profile",
-    "dashboard": "Dashboard"
+    "profile": "Profile"
   },
   "home": {
     "welcome": "Find the Best Deals in Sapporo",
@@ -74,17 +73,19 @@
     "developedWith": "Developed with",
     "inSapporo": "in Sapporo"
   },
-  "dashboard": {
-    "welcome": "Welcome back, {{username}}!",
-    "subtitle": "Ready to save more today in Sapporo?"
-  },
-  "onboarding": {
-    "title": "Pick Your Ninja Name",
-    "subtitle": "This will be your permanent username.",
-    "placeholder": "Username",
-    "submit": "Start Saving",
-    "success": "Your ninja profile is ready!",
-    "error": "This username is already taken."
+  "profile": {
+    "joinedAt": "Ninja since",
+    "rankScore": "Ninja Rank",
+    "estimatedSavings": "Est. Savings",
+    "contributions": "Contributions",
+    "expenditure": "Spent",
+    "thisMonth": "this month",
+    "rating": "Rating",
+    "monthlyStats": "This Month",
+    "saved": "Saved",
+    "uploads": "Receipts",
+    "editUsername": "Edit Ninja Name",
+    "usernameLabel": "New Username"
   },
   "pages": {
     "compare": "Compare Page",

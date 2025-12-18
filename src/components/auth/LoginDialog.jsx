@@ -9,7 +9,7 @@ import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
-const BACKEND_BASE_URL = import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:5000';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 const LoginDialog = ({ open, onOpenChange }) => {
   const { t } = useTranslation();
@@ -25,7 +25,7 @@ const LoginDialog = ({ open, onOpenChange }) => {
       return;
     }
 
-    const redirectPath = `${BACKEND_BASE_URL}/auth/redirect/${provider.toLowerCase()}`;
+    const redirectPath = `${API_BASE_URL}/auth/redirect/${provider.toLowerCase()}`;
     const popup = window.open(
       redirectPath,
       'pocket_ninja_auth',
@@ -39,13 +39,15 @@ const LoginDialog = ({ open, onOpenChange }) => {
         login(suggestedUsername, token);
         onOpenChange(false);
         toast.success(t('common.loginSuccess'), { position: 'bottom-center' });
+        
         setTimeout(() => {
           if (isNewUser) {
-            navigate('/onboarding', { state: { suggestedUsername }, replace: true });
+            navigate('/profile', { replace: true });
           } else {
-            navigate('/dashboard', { replace: true });
+            navigate('/compare', { replace: true });
           }
         }, 100);
+        
         window.removeEventListener('message', handleMessage);
       } else if (event.data?.type === 'AUTH_ERROR') {
         toast.error(event.data.message, { position: 'bottom-center' });

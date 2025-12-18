@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { BottomNavigation, BottomNavigationAction, Paper, Box, Typography } from '@mui/material';
+import { BottomNavigation, BottomNavigationAction, Paper, Box, Typography, useTheme } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faTableColumns,
   faChartLine,
   faUpload,
   faUsers,
@@ -19,9 +18,9 @@ const BottomNav = () => {
   const location = useLocation();
   const [value, setValue] = useState(0);
   const { isLoggedIn } = useAuth();
+  const theme = useTheme();
 
   const navItems = [
-    { label: t('nav.dashboard'), icon: faTableColumns, path: '/dashboard' },
     { label: t('nav.compare'), icon: faChartLine, path: '/compare' },
     { label: t('nav.upload'), icon: faUpload, path: '/upload' },
     { label: t('nav.campaigns'), icon: faUsers, path: '/campaigns' },
@@ -95,12 +94,21 @@ const BottomNav = () => {
         sx={{
           '& .MuiBottomNavigationAction-root': {
             minWidth: 'auto',
-            padding: '6px 12px',
+            padding: '6px 8px', // Reduced horizontal padding
           },
           '& .MuiBottomNavigationAction-label': {
-            fontSize: '0.7rem',
+            fontSize: '0.65rem', // Smaller base font size
             marginTop: '4px',
+            '&.Mui-selected': {
+              fontSize: '0.75rem', // Controlled growth for selected state
+            }
           },
+          '& .Mui-selected': {
+            color: theme.palette.primary.main,
+          },
+          '& .Mui-selected svg': {
+            color: theme.palette.primary.main,
+          }
         }}
       >
         {navItems.map((item, index) => (

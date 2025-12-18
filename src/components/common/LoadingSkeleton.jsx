@@ -55,21 +55,33 @@ export const ListSkeleton = ({ count = 5 }) => {
 // Profile skeleton
 export const ProfileSkeleton = () => {
   return (
-    <Box sx={{ p: 3 }}>
-      <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
-        <MUISkeleton variant="circular" width={80} height={80} sx={{ mr: 2 }} />
-        <Box sx={{ flexGrow: 1 }}>
-          <Skeleton height={28} width="50%" />
-          <Skeleton height={20} width="30%" />
+    <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%', gap: 3 }}>
+      {/* Header Skeleton */}
+      <Box sx={{ p: 3, borderRadius: 4, bgcolor: '#f5f5f5', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <MUISkeleton variant="circular" width={90} height={90} sx={{ mb: 2 }} />
+        <Skeleton height={32} width={200} style={{ marginBottom: 8 }} />
+        <Box sx={{ display: 'flex', gap: 2 }}>
+          <Skeleton height={20} width={100} />
+          <Skeleton height={20} width={60} />
         </Box>
       </Box>
-      <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 2 }}>
-        {Array(4).fill(0).map((_, index) => (
-          <Card key={index} sx={{ p: 2 }}>
-            <Skeleton height={20} width="60%" />
-            <Skeleton height={32} width="40%" style={{ marginTop: 8 }} />
-          </Card>
-        ))}
+
+      {/* Grid Skeleton */}
+      <Box sx={{ flexGrow: 1 }}>
+        <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' }, gap: 2, height: '100%' }}>
+          {Array(4).fill(0).map((_, index) => (
+            <Card key={index} sx={{ p: 2, borderRadius: 3, height: '100%', minHeight: '140px', display: 'flex', flexDirection: 'column' }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
+                <MUISkeleton variant="circular" width={36} height={36} />
+                <Skeleton height={20} width="60%" />
+              </Box>
+              <Box sx={{ mt: 'auto' }}>
+                <Skeleton height={36} width="80%" />
+                <Skeleton height={16} width="40%" style={{ marginTop: 8 }} />
+              </Box>
+            </Card>
+          ))}
+        </Box>
       </Box>
     </Box>
   );
