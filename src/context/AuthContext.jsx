@@ -23,14 +23,9 @@ export const AuthProvider = ({ children }) => {
     // Check localStorage for direct keys
     const token = localStorage.getItem('authToken');
     const username = localStorage.getItem('username');
-    let avatar = localStorage.getItem('userAvatar');
     
     if (token && username) {
-      // Ensure avatar exists for existing users
-      if (!avatar) {
-        avatar = getRandomEmoji();
-        localStorage.setItem('userAvatar', avatar);
-      }
+      avatar = getRandomEmoji();
       setIsLoggedIn(true);
       setUser({ username, avatar });
     }
@@ -38,12 +33,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = (username, token) => {
-    let avatar = localStorage.getItem('userAvatar');
-    if (!avatar) {
-      avatar = getRandomEmoji();
-      localStorage.setItem('userAvatar', avatar);
-    }
-
+    avatar = getRandomEmoji();
     setIsLoggedIn(true);
     setUser({ username, avatar });
     localStorage.setItem('isLoggedIn', 'true');
@@ -57,8 +47,6 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('username');
     localStorage.removeItem('authToken');
-    // We optionally keep userAvatar to persist identity across sessions, 
-    // or remove it. Keeping it is usually better for UX.
   };
 
   const updateUsername = (newUsername) => {
