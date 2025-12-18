@@ -35,10 +35,24 @@ const LoginDialog = ({ open, onOpenChange }) => {
     const handleMessage = (event) => {
       if (event.origin !== window.location.origin) return;
       if (event.data?.type === 'AUTH_COMPLETE') {
-        const { token, suggestedUsername, isNewUser } = event.data;
-        login(suggestedUsername, token);
+        const { token, username, isNewUser } = event.data;
+        login(username, token);
         onOpenChange(false);
-        toast.success(t('common.loginSuccess'), { position: 'bottom-center' });
+
+        if (isNewUser)
+        {
+          toast.success(t('common.loginSuccessNewUser', { username: username }), {
+            duration: 3000,
+            position: 'bottom-center',
+          });
+        }
+        else
+        {
+          toast.success(t('common.loginSuccess', { username: username }), {
+            duration: 3000,
+            position: 'bottom-center',
+          });
+        }
         
         setTimeout(() => {
           if (isNewUser) {
@@ -50,7 +64,7 @@ const LoginDialog = ({ open, onOpenChange }) => {
         
         window.removeEventListener('message', handleMessage);
       } else if (event.data?.type === 'AUTH_ERROR') {
-        toast.error(event.data.message, { position: 'bottom-center' });
+        toast.error(event.data.message, { duration: 3000, position: 'bottom-center' });
         window.removeEventListener('message', handleMessage);
       }
     };

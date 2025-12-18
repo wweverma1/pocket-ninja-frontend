@@ -52,7 +52,6 @@
     "welcome": "いらっしゃいませ",
     "subtitle": "サインインして節約を始めましょう",
     "loginWith": "{{provider}}で続ける",
-    "secureLogin": "安全なログイン",
     "terms": "続行することで、利用規約に同意したことになります。",
     "failureTitle": "認証に失敗しました"
   },
@@ -69,7 +68,8 @@
     "logout": "ログアウト",
     "switchLanguage": "言語を切り替える",
     "shareMessage": "Pocket Ninjaをチェック！札幌で最安値を見つけて節約しよう！",
-    "loginSuccess": "おかえりなさい、ニンジャ！",
+    "loginSuccess": "おかえりなさい、{{username}}！",
+    "loginSuccessNewUser": "ようこそ、{{username}}！",
     "developedWith": "Developed with",
     "inSapporo": "in Sapporo"
   },

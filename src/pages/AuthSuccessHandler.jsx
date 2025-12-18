@@ -18,8 +18,8 @@ const AuthSuccessHandler = () => {
         { 
           type: 'AUTH_COMPLETE', 
           token,
-          isNewUser,
-          suggestedUsername: username || 'Ninja'
+          username: username,
+          isNewUser
         }, 
         window.location.origin
       );

@@ -30,11 +30,11 @@ const Profile = () => {
       if (response.errorStatus === 0) {
         setProfileData(response.result);
       } else {
-        toast.error(response.message[i18n.language] || response.message.en);
+        toast.error(response.message[i18n.language] || response.message.en, { duration: 3000, position: 'bottom-center' });
       }
     } catch (error) {
       console.error('Failed to fetch profile', error);
-      toast.error(t('common.error'));
+      toast.error(t('common.error'), { duration: 3000, position: 'bottom-center' });
     } finally {
       setLoading(false);
     }
@@ -48,16 +48,16 @@ const Profile = () => {
       const response = await userAPI.updateProfile({ username: newUsername });
       
       if (response.errorStatus === 0) {
-        toast.success(response.message[i18n.language] || response.message.en);
+        toast.success(response.message[i18n.language] || response.message.en, { duration: 3000, position: 'bottom-center' });
         updateUsername(response.result.username);
         setProfileData(prev => ({ ...prev, username: response.result.username }));
         setIsEditDialogOpen(false);
       } else {
-        toast.error(response.message[i18n.language] || response.message.en);
+        toast.error(response.message[i18n.language] || response.message.en, { duration: 3000, position: 'bottom-center' });
       }
     } catch (error) {
       console.error('Failed to update username', error);
-      toast.error(t('common.error'));
+      toast.error(t('common.error'), { duration: 3000, position: 'bottom-center' });
     } finally {
       setUpdating(false);
     }
