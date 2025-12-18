@@ -68,8 +68,8 @@
     "logout": "Logout",
     "switchLanguage": "Switch Language",
     "shareMessage": "Check out Pocket Ninja - Find the best deals in Sapporo and save around 30% on your bills!",
-    "loginSuccess": "Welcome back, {{username}}!",
-    "loginSuccessNewUser": "Welcome, {{username}}!",
+    "loginSuccess": "Welcome back {{username}}!",
+    "loginSuccessNewUser": "Welcome {{username}}!",
     "developedWith": "Developed with",
     "inSapporo": "in Sapporo"
   },
