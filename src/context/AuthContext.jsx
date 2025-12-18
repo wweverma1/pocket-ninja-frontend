@@ -25,7 +25,7 @@ export const AuthProvider = ({ children }) => {
     const username = localStorage.getItem('username');
     
     if (token && username) {
-      avatar = getRandomEmoji();
+      const avatar = getRandomEmoji();
       setIsLoggedIn(true);
       setUser({ username, avatar });
     }
@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = (username, token) => {
-    avatar = getRandomEmoji();
+    const avatar = getRandomEmoji();
     setIsLoggedIn(true);
     setUser({ username, avatar });
     localStorage.setItem('isLoggedIn', 'true');
