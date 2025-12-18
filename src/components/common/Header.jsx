@@ -132,50 +132,63 @@ const Header = () => {
       </AppBar>
 
       <Drawer anchor="left" open={drawerOpen} onClose={handleDrawerToggle} sx={{ '& .MuiDrawer-paper': { width: 250 } }}>
-        <Box sx={{ p: 2, display: 'flex', alignItems: 'center' }}>
-          <FontAwesomeIcon icon={faBolt} style={{ fontSize: '1.5rem', marginRight: '12px' }} />
-          <Typography variant="h6" fontWeight={700}>{t('app.name')}</Typography>
-        </Box>
-        <Divider />
-        <List>
-          {!isLoggedIn && (
-            <>
+        <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+          <Box sx={{ p: 2, display: 'flex', alignItems: 'center' }}>
+            <FontAwesomeIcon icon={faBolt} style={{ fontSize: '1.5rem', marginRight: '12px' }} />
+            <Typography variant="h6" fontWeight={700}>{t('app.name')}</Typography>
+          </Box>
+          <Divider />
+          <Box sx={{ flexGrow: 1 }}>
+            <List>
+              {!isLoggedIn && (
+                <>
+                  <ListItem disablePadding>
+                    <ListItemButton onClick={() => { setLoginOpen(true); setDrawerOpen(false); }} sx={{ backgroundColor: theme.palette.secondary.main, color: theme.palette.secondary.contrastText, '&:hover': { backgroundColor: theme.palette.secondary.dark } }}>
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                        <FontAwesomeIcon icon={faRightToBracket} />
+                        <ListItemText primary={t('home.getStarted')} primaryTypographyProps={{ fontWeight: 600 }}/>
+                      </Box>
+                    </ListItemButton>
+                  </ListItem>
+                  <Divider sx={{ my: 1 }} />
+                </>
+              )}
+              {menuItems.map((item, index) => (
+                <ListItem key={index} disablePadding>
+                  <ListItemButton onClick={() => handleNavigation(item)}>
+                    <ListItemText primary={item.label} />
+                  </ListItemButton>
+                </ListItem>
+              ))}
+              <Divider sx={{ my: 1 }} />
               <ListItem disablePadding>
-                <ListItemButton onClick={() => { setLoginOpen(true); setDrawerOpen(false); }} sx={{ backgroundColor: theme.palette.secondary.main, color: theme.palette.secondary.contrastText, '&:hover': { backgroundColor: theme.palette.secondary.dark } }}>
-                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                    <FontAwesomeIcon icon={faRightToBracket} />
-                    <ListItemText primary={t('home.getStarted')} primaryTypographyProps={{ fontWeight: 600 }}/>
+                <ListItemButton onClick={toggleLanguage}>
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexGrow: 1 }}>
+                    <FontAwesomeIcon icon={faLanguage} />
+                    <ListItemText primary={i18n.language === 'en' ? '日本語' : 'English'} secondary={t('common.switchLanguage')} primaryTypographyProps={{ fontWeight: 600 }} />
                   </Box>
                 </ListItemButton>
               </ListItem>
-              <Divider sx={{ my: 1 }} />
-            </>
-          )}
-          {menuItems.map((item, index) => (
-            <ListItem key={index} disablePadding>
-              <ListItemButton onClick={() => handleNavigation(item)}>
-                <ListItemText primary={item.label} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-          <Divider sx={{ my: 1 }} />
-          <ListItem disablePadding>
-            <ListItemButton onClick={toggleLanguage}>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexGrow: 1 }}>
-                <FontAwesomeIcon icon={faLanguage} />
-                <ListItemText primary={i18n.language === 'en' ? '日本語' : 'English'} secondary={t('common.switchLanguage')} primaryTypographyProps={{ fontWeight: 600 }} />
-              </Box>
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton onClick={handleShare}>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                <FontAwesomeIcon icon={faShareNodes} />
-                <ListItemText primary={t('common.share')} />
-              </Box>
-            </ListItemButton>
-          </ListItem>
-        </List>
+              <ListItem disablePadding>
+                <ListItemButton onClick={handleShare}>
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <FontAwesomeIcon icon={faShareNodes} />
+                    <ListItemText primary={t('common.share')} />
+                  </Box>
+                </ListItemButton>
+              </ListItem>
+            </List>
+          </Box>
+          
+          <Box sx={{ mt: 'auto' }}>
+            <Divider />
+            <Box sx={{ p: 2, textAlign: 'center' }}>
+              <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 500 }}>
+                Pocket Ninja v1.0
+              </Typography>
+            </Box>
+          </Box>
+        </Box>
       </Drawer>
       <LoginDialog open={loginOpen} onOpenChange={setLoginOpen} />
     </>
