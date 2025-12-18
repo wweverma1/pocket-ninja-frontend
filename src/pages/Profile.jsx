@@ -153,7 +153,7 @@ const Profile = () => {
               color="#2ecc71" 
               title={t('profile.estimatedSavings')} 
               value={`¥${profileData.estimatedTotalSavings.toLocaleString()}`}
-              monthlyValue={`+¥${profileData.monthlyStats.savings.toLocaleString()}`}
+              monthlyValue={`¥${profileData.monthlyStats.savings.toLocaleString()}`}
               monthlyLabel={t('profile.thisMonth')}
             />
           </Grid>
@@ -165,7 +165,7 @@ const Profile = () => {
               color="#3498db" 
               title={t('profile.contributions')} 
               value={profileData.totalContributions} 
-              monthlyValue={`+${profileData.monthlyStats.contributions}`}
+              monthlyValue={`${profileData.monthlyStats.contributions}`}
               monthlyLabel={t('profile.thisMonth')}
             />
           </Grid>
@@ -177,7 +177,7 @@ const Profile = () => {
               color="#e74c3c" 
               title={t('profile.expenditure')} 
               value={`¥${profileData.totalExpenditure.toLocaleString()}`}
-              monthlyValue={`+¥${profileData.monthlyStats.expenditure.toLocaleString()}`}
+              monthlyValue={`¥${profileData.monthlyStats.expenditure.toLocaleString()}`}
               monthlyLabel={t('profile.thisMonth')}
             />
           </Grid>
