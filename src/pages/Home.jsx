@@ -54,7 +54,6 @@ const Home = () => {
       setLeaderboard(data.slice(0, 5));
     } catch (error) {
       console.error('Error fetching leaderboard:', error);
-      // Mock data for development
       setLeaderboard([
         {
           productName: 'コカ・コーラ 500ml',
@@ -109,17 +108,13 @@ const Home = () => {
     return null;
   }
 
-  // Define highlight color from theme
   const highlightColor = theme.palette.secondary.main;
-  
-  // Define CSS for sketch highlight effect (Snowfall CSS removed)
   const highlightCSS = `
     .circle-sketch-highlight {
       position: relative;
       display: inline-block;
       text-decoration: none;
     }
-
     .circle-sketch-highlight:before {
       content: "";
       z-index: -1;
@@ -137,7 +132,6 @@ const Home = () => {
       border-radius: 50%;
       padding: 0.1em 0.25em;
     }
-
     .circle-sketch-highlight:after {
       content: "";
       z-index: -1;
@@ -158,22 +152,15 @@ const Home = () => {
     }
   `;
 
-  // --- NEW BACKGROUND LOGIC ---
   const darkOverlay = `radial-gradient(circle at center, ${theme.palette.primary.dark}e6 0%, ${theme.palette.primary.main}66 100%)`;
-  // --- END NEW BACKGROUND LOGIC ---
 
   return (
     <Box sx={globalStyles.pageContainer}>
-      {/* Inject custom CSS for the highlight effect */}
       <style>{highlightCSS}</style>
-      
       <LanguageSelectionDialog />
-
-      {/* Hero Section */}
       <Box
         id="hero"
         sx={{
-          // MODIFIED: Replaced gradient/snowfall with image + dark gradient overlay
           backgroundImage: `${darkOverlay}, url(/pocket-ninja-background.png)`,
           backgroundSize: 'cover',
           backgroundPosition: { xs: '10% 50%', md: 'center' },
@@ -187,44 +174,15 @@ const Home = () => {
         }}
       >
         <Container maxWidth="md" sx={{ position: 'relative', zIndex: 1 }}>
-          <Typography
-            variant="h1"
-            sx={{
-              mb: 2,
-              fontWeight: 800,
-              fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' },
-            }}
-          >
+          <Typography variant="h1" sx={{ mb: 2, fontWeight: 800, fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' } }}>
             {t('home.welcome')}
           </Typography>
-          
-          <Typography
-            variant="h6"
-            sx={{
-              mb: 1,
-              opacity: 0.95,
-              fontWeight: 400,
-              fontSize: { xs: '1rem', sm: '1.25rem' },
-            }}
-          >
+          <Typography variant="h6" sx={{ mb: 1, opacity: 0.95, fontWeight: 400, fontSize: { xs: '1rem', sm: '1.25rem' } }}>
             {t('home.subtitle')}
           </Typography>
-
-          <Typography
-            variant="body2"
-            sx={{
-              mb: 4,
-              opacity: 0.85,
-              fontSize: { xs: '0.875rem', sm: '1rem' },
-              fontStyle: 'italic',
-            }}
-          >
-            {/* APPLIED: Circle sketch highlight effect */}
-            <span className="circle-sketch-highlight">
-              {t('home.savingsPromise')}
-            </span>
+          <Typography variant="body2" sx={{ mb: 4, opacity: 0.85, fontSize: { xs: '0.875rem', sm: '1rem' }, fontStyle: 'italic' }}>
+            <span className="circle-sketch-highlight">{t('home.savingsPromise')}</span>
           </Typography>
-          
           <Button
             variant="contained"
             size="large"
@@ -251,47 +209,17 @@ const Home = () => {
       </Box>
 
       <Container maxWidth="lg" sx={{ mt: { xs: 4, md: 6 }, mb: 8 }}>
-        {/* Best Value Leaderboard Section */}
         <Box id="leaderboard" sx={{ mb: { xs: 6, md: 8 }, scrollMarginTop: '80px' }}>
-          {/* Section Header */}
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              flexDirection: 'column',
-              mb: 4,
-              textAlign: 'center',
-            }}
-          >
+          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', mb: 4, textAlign: 'center' }}>
             <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-              <Box
-                sx={{
-                  width: { xs: 40, sm: 50 },
-                  height: { xs: 40, sm: 50 },
-                  borderRadius: '50%',
-                  backgroundColor: `${theme.palette.secondary.main}15`,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  mr: 2,
-                }}
-              >
-                <FontAwesomeIcon
-                  icon={faTrophy}
-                  style={{ fontSize: isMobile ? '1.25rem' : '1.5rem', color: theme.palette.secondary.main }}
-                />
+              <Box sx={{ width: { xs: 40, sm: 50 }, height: { xs: 40, sm: 50 }, borderRadius: '50%', backgroundColor: `${theme.palette.secondary.main}15`, display: 'flex', alignItems: 'center', justifyContent: 'center', mr: 2 }}>
+                <FontAwesomeIcon icon={faTrophy} style={{ fontSize: isMobile ? '1.25rem' : '1.5rem', color: theme.palette.secondary.main }} />
               </Box>
-              <Typography variant="h2" fontWeight={700}>
-                {t('home.leaderboardTitle')}
-              </Typography>
+              <Typography variant="h2" fontWeight={700}>{t('home.leaderboardTitle')}</Typography>
             </Box>
-            <Typography variant="body1" color="text.secondary" maxWidth="600px">
-              {t('home.leaderboardSubtitle')}
-            </Typography>
+            <Typography variant="body1" color="text.secondary" maxWidth="600px">{t('home.leaderboardSubtitle')}</Typography>
           </Box>
 
-          {/* Leaderboard Items */}
           {loading ? (
             <ListSkeleton count={3} />
           ) : (
@@ -303,118 +231,34 @@ const Home = () => {
                   sx={{
                     mb: 2,
                     transition: 'all 0.3s ease',
-                    ...(
-                      !isLoggedIn && {
-                        cursor: 'pointer',
-                        '&:hover': {
-                          boxShadow: 6,
-                          transform: 'translateY(-2px)',
-                        },
-                      }
-                    ),
-                    ...(
-                      isLoggedIn && {
-                        '&:hover': {
-                          boxShadow: 3,
-                          transform: 'translateX(4px)',
-                        },
-                      }
-                    )
+                    ...(!isLoggedIn && { cursor: 'pointer', '&:hover': { boxShadow: 6, transform: 'translateY(-2px)' } }),
+                    ...(isLoggedIn && { '&:hover': { boxShadow: 3, transform: 'translateX(4px)' } })
                   }}
                 >
                   <CardContent sx={{ p: { xs: 2, sm: 3 } }}>
-                    {/* UPDATED: Flexbox for space-between layout on desktop */}
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        flexDirection: { xs: 'column', sm: 'row' },
-                        alignItems: { xs: 'flex-start', sm: 'center' },
-                        justifyContent: { sm: 'space-between' },
-                        gap: { xs: 2, sm: 1 },
-                      }}
-                    >
-                      {/* 1. Index + Names (Left Group) */}
-                      <Box 
-                        sx={{ 
-                          display: 'flex', 
-                          alignItems: 'center', 
-                          flexShrink: 0,
-                          // FIXED: Assign max width for product names column on desktop
-                          width: { xs: '100%', sm: '35%' }, 
-                        }}
-                      >
-                        {/* A1. Index/Avatar */}
-                        <Avatar
-                          sx={{
-                            bgcolor:
-                              index === 0 ? '#FFD700' : index === 1 ? '#C0C0C0' : index === 2 ? '#CD7F32' : theme.palette.grey[400],
-                            color: 'white',
-                            fontWeight: 700,
-                            width: 40,
-                            height: 40,
-                            mr: 2,
-                            flexShrink: 0
-                          }}
-                        >
+                    <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, alignItems: { xs: 'flex-start', sm: 'center' }, justifyContent: { sm: 'space-between' }, gap: { xs: 2, sm: 1 } }}>
+                      <Box sx={{ display: 'flex', alignItems: 'center', flexShrink: 0, width: { xs: '100%', sm: '35%' } }}>
+                        <Avatar sx={{ bgcolor: index === 0 ? '#FFD700' : index === 1 ? '#C0C0C0' : index === 2 ? '#CD7F32' : theme.palette.grey[400], color: 'white', fontWeight: 700, width: 40, height: 40, mr: 2, flexShrink: 0 }}>
                           #{index + 1}
                         </Avatar>
-                        {/* A2. Product Names */}
                         <Box sx={{ minWidth: 0 }}>
-                          <Typography
-                            variant="h6"
-                            fontWeight={600}
-                            sx={{
-                              fontSize: { xs: '0.95rem', sm: '1.1rem' },
-                              lineHeight: 1.2,
-                              // FIXED: Allow long names to wrap
-                              overflowWrap: 'break-word',
-                            }}
-                          >
+                          <Typography variant="h6" fontWeight={600} sx={{ fontSize: { xs: '0.95rem', sm: '1.1rem' }, lineHeight: 1.2, overflowWrap: 'break-word' }}>
                             {item.productName}
                           </Typography>
-                          <Typography 
-                            variant="body2" 
-                            color="text.secondary" 
-                            sx={{ 
-                                fontSize: { xs: '0.8rem', sm: '0.875rem' },
-                                // FIXED: Allow long names to wrap
-                                overflowWrap: 'break-word',
-                            }}
-                          >
+                          <Typography variant="body2" color="text.secondary" sx={{ fontSize: { xs: '0.8rem', sm: '0.875rem' }, overflowWrap: 'break-word' }}>
                             {item.englishName}
                           </Typography>
                         </Box>
                       </Box>
 
-                      {/* 2. Price Info + Discount (Middle Group) - ORDER SWAPPED */}
-                      <Box
-                        sx={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: { xs: 2, sm: 3 },
-                          justifyContent: { xs: 'space-between', sm: 'flex-start' },
-                          width: { xs: '100%', sm: 'auto' }, // Full width on mobile
-                          flexShrink: 0,
-                          ml: { xs: 0, sm: 3 }, // Slight margin push on desktop
-                        }}
-                      >
-                        {/* B1. Price Info (Max/Best Price) */}
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 2, sm: 3 }, justifyContent: { xs: 'space-between', sm: 'flex-start' }, width: { xs: '100%', sm: 'auto' }, flexShrink: 0, ml: { xs: 0, sm: 3 } }}>
                         <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
-                          {/* Max Price */}
                           <Box sx={{ textAlign: 'right', lineHeight: 1.2 }}>
                             <Typography variant="caption" color="text.secondary" display="block">{t('home.leaderboardProductAvgPrice')}</Typography>
-                            <Typography
-                              variant="body1"
-                              sx={{
-                                textDecoration: 'line-through',
-                                color: 'text.secondary',
-                                fontSize: { xs: '0.9rem', sm: '1rem' },
-                              }}
-                            >
+                            <Typography variant="body1" sx={{ textDecoration: 'line-through', color: 'text.secondary', fontSize: { xs: '0.9rem', sm: '1rem' } }}>
                               <FontAwesomeIcon icon={faYenSign} style={{ fontSize: '0.75rem' }} />{item.maxPrice}
                             </Typography>
                           </Box>
-                          {/* Best Price */}
                           <Box sx={{ textAlign: 'right', lineHeight: 1.2 }}>
                             <Typography variant="caption" color="success.main" display="block">{t('home.leaderboardProductBestPrice')}</Typography>
                             <Typography variant="h6" color="success.main" fontWeight={700} sx={{ fontSize: { xs: '1.1rem', sm: '1.25rem' } }}>
@@ -422,41 +266,23 @@ const Home = () => {
                             </Typography>
                           </Box>
                         </Box>
-                        
-                        {/* B2. Discount Chip */}
-                        <Chip
-                          label={`${item.savingsPercent.toFixed(1)}% ${t('home.leaderboardProductDiscount')}`}
-                          sx={{
-                            ...globalStyles.savingsTag,
-                            fontSize: { xs: '0.8rem', sm: '0.875rem' },
-                            fontWeight: 700,
-                          }}
-                        />
-
+                        <Chip label={`${item.savingsPercent.toFixed(1)}% ${t('home.leaderboardProductDiscount')}`} sx={{ ...globalStyles.savingsTag, fontSize: { xs: '0.8rem', sm: '0.875rem' }, fontWeight: 700 }} />
                       </Box>
 
-                      {/* 3. Store Action Button (Right Group) */}
                       <Box sx={{ width: { xs: '100%', sm: 'auto' }, textAlign: { xs: 'center', sm: 'right' } }}>
                         {isLoggedIn ? (
                           <Button variant="contained" size="small" color="primary" sx={{ textTransform: 'none', px: 2 }}>
                             <FontAwesomeIcon icon={faStore} style={{ marginRight: 8 }} />
-                            {i18n.language === 'ja' ? '店舗を見る' : 'View Store'}
+                            {t('home.viewStore')}
                           </Button>
                         ) : (
-                          <Button
-                            variant="contained"
-                            size="small"
-                            color="secondary"
-                            onClick={() => setLoginOpen(true)}
-                            sx={{ textTransform: 'none', px: 2 }}
-                          >
+                          <Button variant="contained" size="small" color="secondary" onClick={() => setLoginOpen(true)} sx={{ textTransform: 'none', px: 2 }}>
                             <FontAwesomeIcon icon={faLock} style={{ marginRight: 8 }} />
                             {t('home.joinNow')}
                           </Button>
                         )}
                       </Box>
                     </Box>
-                    {/* END UPDATED LAYOUT */}
                   </CardContent>
                 </Card>
               ))}
@@ -464,146 +290,49 @@ const Home = () => {
           )}
         </Box>
 
-        {/* How It Works Section (Icon properties restored, description width limited) */}
         <Box id="howItWorks" sx={{ mb: { xs: 6, md: 8 }, scrollMarginTop: '80px' }}>
           <Box sx={{ textAlign: 'center', mb: 4 }}>
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 2 }}>
-                {/* ICON BOX: Restored original sizing/color scheme */}
-                <Box
-                    sx={{
-                        width: { xs: 40, sm: 50 },
-                        height: { xs: 40, sm: 50 },
-                        borderRadius: '50%',
-                        backgroundColor: `${theme.palette.secondary.main}15`,
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        mr: 2,
-                    }}
-                >
-                    <FontAwesomeIcon
-                      icon={faCircleQuestion}
-                      style={{ fontSize: isMobile ? '1.25rem' : '1.5rem', color: theme.palette.secondary.main }}
-                    />
+                <Box sx={{ width: { xs: 40, sm: 50 }, height: { xs: 40, sm: 50 }, borderRadius: '50%', backgroundColor: `${theme.palette.secondary.main}15`, display: 'flex', alignItems: 'center', justifyContent: 'center', mr: 2 }}>
+                    <FontAwesomeIcon icon={faCircleQuestion} style={{ fontSize: isMobile ? '1.25rem' : '1.5rem', color: theme.palette.secondary.main }} />
                 </Box>
-                <Typography variant="h2" fontWeight={700}>
-                    {t('howItWorks.title')}
-                </Typography>
+                <Typography variant="h2" fontWeight={700}>{t('howItWorks.title')}</Typography>
             </Box>
-            <Typography variant="body1" color="text.secondary" maxWidth="600px" mx="auto">
-              {t('howItWorks.subtitle')}
-            </Typography>
+            <Typography variant="body1" color="text.secondary" maxWidth="600px" mx="auto">{t('howItWorks.subtitle')}</Typography>
           </Box>
 
-          <Grid 
-            container 
-            spacing={3}
-            // MODIFIED: Explicitly center items on mobile (xs)
-            sx={{ justifyContent: { xs: 'center', md: 'space-between' } }}
-          >
+          <Grid container spacing={3} sx={{ justifyContent: { xs: 'center', md: 'space-between' } }}>
             {howItWorksSteps.map((step, index) => (
               <Grid xs={12} md={4} key={index}>
-                <Card
-                  sx={{
-                    height: '100%',
-                    // Content inside card is centered by default, but explicitly keeping it here for safety
-                    textAlign: 'center',
-                    p: { xs: 3, sm: 4 },
-                    position: 'relative',
-                  }}
-                >
-                  <Box
-                    sx={{
-                      width: { xs: 70, sm: 80 },
-                      height: { xs: 70, sm: 80 },
-                      borderRadius: '50%',
-                      backgroundColor: `${theme.palette.primary.main}15`,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      margin: '0 auto',
-                      mb: 2,
-                      position: 'relative',
-                    }}
-                  >
-                    <Typography
-                      sx={{
-                        position: 'absolute',
-                        top: -10,
-                        right: -10,
-                        backgroundColor: theme.palette.secondary.main,
-                        color: 'white',
-                        width: 30,
-                        height: 30,
-                        borderRadius: '50%',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        fontWeight: 700,
-                        fontSize: '0.9rem',
-                      }}
-                    >
+                <Card sx={{ height: '100%', textAlign: 'center', p: { xs: 3, sm: 4 }, position: 'relative' }}>
+                  <Box sx={{ width: { xs: 70, sm: 80 }, height: { xs: 70, sm: 80 }, borderRadius: '50%', backgroundColor: `${theme.palette.primary.main}15`, display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto', mb: 2, position: 'relative' }}>
+                    <Typography sx={{ position: 'absolute', top: -10, right: -10, backgroundColor: theme.palette.secondary.main, color: 'white', width: 30, height: 30, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: '0.9rem' }}>
                       {index + 1}
                     </Typography>
-                    <FontAwesomeIcon
-                      icon={step.icon}
-                      style={{ fontSize: '2rem', color: theme.palette.primary.main }}
-                    />
+                    <FontAwesomeIcon icon={step.icon} style={{ fontSize: '2rem', color: theme.palette.primary.main }} />
                   </Box>
-                  <Typography variant="h6" fontWeight={600} gutterBottom>
-                    {step.title}
-                  </Typography>
-                  <Typography 
-                    variant="body2" 
-                    color="text.secondary"
-                    sx={{ 
-                        maxWidth: 250,
-                        margin: '0 auto',
-                    }}
-                  >
-                    {step.description}
-                  </Typography>
+                  <Typography variant="h6" fontWeight={600} gutterBottom>{step.title}</Typography>
+                  <Typography variant="body2" color="text.secondary" sx={{ maxWidth: 250, margin: '0 auto' }}>{step.description}</Typography>
                 </Card>
               </Grid>
             ))}
           </Grid>
         </Box>
 
-        {/* Developer's Note Section */}
         <Box id="developerNote" sx={{ mb: 4, scrollMarginTop: '80px' }}>
-          <Paper
-            sx={{
-              p: { xs: 3, sm: 5 },
-              background: `linear-gradient(135deg, ${theme.palette.primary.main}08 0%, ${theme.palette.secondary.main}08 100%)`,
-              border: `2px solid ${theme.palette.primary.main}20`,
-            }}
-          >
+          <Paper sx={{ p: { xs: 3, sm: 5 }, background: `linear-gradient(135deg, ${theme.palette.primary.main}08 0%, ${theme.palette.secondary.main}08 100%)`, border: `2px solid ${theme.palette.primary.main}20` }}>
             <Box sx={{ textAlign: 'center', mb: 3 }}>
-              <Typography variant="h2" fontWeight={700} gutterBottom>
-                {t('developerNote.title')}
-              </Typography>
+              <Typography variant="h2" fontWeight={700} gutterBottom>{t('developerNote.title')}</Typography>
             </Box>
-
-            <Typography variant="body1" sx={{ fontSize: { xs: '0.95rem', sm: '1.1rem' }, lineHeight: 1.8, textAlign: 'center' }}>
-              {t('developerNote.content')}
-            </Typography>
-
+            <Typography variant="body1" sx={{ fontSize: { xs: '0.95rem', sm: '1.1rem' }, lineHeight: 1.8, textAlign: 'center' }}>{t('developerNote.content')}</Typography>
             <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, mt: 4, flexWrap: 'wrap' }}>
-              <Button
-                variant="contained"
-                color="secondary"
-                size="large"
-                onClick={() => setLoginOpen(true)}
-                startIcon={<FontAwesomeIcon icon={faHandshake} />}
-                sx={{ px: 4, fontWeight: 600 }}
-              >
+              <Button variant="contained" color="secondary" size="large" onClick={() => setLoginOpen(true)} startIcon={<FontAwesomeIcon icon={faHandshake} />} sx={{ px: 4, fontWeight: 600 }}>
                 {t('developerNote.joinCommunity')}
               </Button>
             </Box>
           </Paper>
         </Box>
       </Container>
-      
       <LoginDialog open={loginOpen} onOpenChange={setLoginOpen} />
     </Box>
   );

@@ -4,7 +4,6 @@
     "tagline": "Small steps, big savings"
   },
   "nav": {
-    "home": "Home",
     "bestDeals": "Best Deals",
     "howItWorks": "How It Works",
     "about": "About",
@@ -25,7 +24,8 @@
     "leaderboardProductAvgPrice": "Avg Price",
     "leaderboardProductBestPrice": "Best Price",
     "leaderboardProductDiscount": "OFF",
-    "joinNow": "View Store"
+    "joinNow": "View Store",
+    "viewStore": "View Store"
   },
   "howItWorks": {
     "title": "How It Works",
@@ -49,7 +49,7 @@
     "joinCommunity": "Join the Community"
   },
   "auth": {
-    "loginComingSoon": "login coming soon!",
+    "loginComingSoon": "{{provider}} login coming soon!",
     "welcome": "Welcome",
     "subtitle": "Sign in to start saving today",
     "loginWith": "Continue with {{provider}}",
@@ -69,11 +69,13 @@
     "share": "Share",
     "logout": "Logout",
     "switchLanguage": "Switch Language",
-    "shareMessage": "Check out Pocket Ninja - Find the best deals in Sapporo!",
-    "loginSuccess": "Welcome back, Ninja!"
+    "shareMessage": "Check out Pocket Ninja - Find the best deals in Sapporo and save around 30% on your bills!",
+    "loginSuccess": "Welcome back, Ninja!",
+    "developedWith": "Developed with",
+    "inSapporo": "in Sapporo"
   },
   "dashboard": {
-    "welcome": "Welcome back",
+    "welcome": "Welcome back, {{username}}!",
     "subtitle": "Ready to save more today in Sapporo?"
   },
   "onboarding": {
@@ -83,5 +85,11 @@
     "submit": "Start Saving",
     "success": "Your ninja profile is ready!",
     "error": "This username is already taken."
+  },
+  "pages": {
+    "compare": "Compare Page",
+    "upload": "Upload Page",
+    "campaigns": "Campaigns Page",
+    "profile": "Profile Page"
   }
 }

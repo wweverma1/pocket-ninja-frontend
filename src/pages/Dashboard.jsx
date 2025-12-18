@@ -24,7 +24,7 @@ const Dashboard = () => {
       <Box sx={{ mb: 4, display: 'flex', alignItems: 'center', gap: 2 }}>
         <FontAwesomeIcon icon={faBolt} style={{ color: theme.palette.secondary.main, fontSize: '2rem' }} />
         <Typography variant="h4" fontWeight={800}>
-          {t('dashboard.welcome') || 'Welcome back'}, {user?.username}!
+          {t('dashboard.welcome', { username: user?.username })}
         </Typography>
       </Box>
       <Grid container spacing={3}>

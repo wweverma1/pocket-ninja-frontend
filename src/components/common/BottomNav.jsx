@@ -4,7 +4,6 @@ import { BottomNavigation, BottomNavigationAction, Paper, Box, Typography } from
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faTableColumns,
-  faHome,
   faChartLine,
   faUpload,
   faUsers,
@@ -22,7 +21,7 @@ const BottomNav = () => {
   const { isLoggedIn } = useAuth();
 
   const navItems = [
-    { label: t('nav.dashboard') || 'Dashboard', icon: faTableColumns, path: '/dashboard' },
+    { label: t('nav.dashboard'), icon: faTableColumns, path: '/dashboard' },
     { label: t('nav.compare'), icon: faChartLine, path: '/compare' },
     { label: t('nav.upload'), icon: faUpload, path: '/upload' },
     { label: t('nav.campaigns'), icon: faUsers, path: '/campaigns' },
@@ -67,11 +66,11 @@ const BottomNav = () => {
           }}
         >
           <Typography variant="body2" sx={{ fontSize: '0.85rem' }}>
-            Developed with
+            {t('common.developedWith')}
           </Typography>
           <FontAwesomeIcon icon={faHeart} style={{ color: '#E74C3C', fontSize: '1rem' }} />
           <Typography variant="body2" sx={{ fontSize: '0.85rem' }}>
-            in Sapporo
+            {t('common.inSapporo')}
           </Typography>
         </Box>
       </Paper>

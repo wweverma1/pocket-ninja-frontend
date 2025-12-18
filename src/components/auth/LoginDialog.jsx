@@ -18,7 +18,7 @@ const LoginDialog = ({ open, onOpenChange }) => {
 
   const handleLogin = (provider) => {
     if (provider === 'Yahoo') {
-      toast.success(`${provider} ${t('auth.loginComingSoon')}`, {
+      toast.success(t('auth.loginComingSoon', { provider: 'Yahoo' }), {
         duration: 3000,
         position: 'bottom-center',
       });
@@ -26,7 +26,6 @@ const LoginDialog = ({ open, onOpenChange }) => {
     }
 
     const redirectPath = `${BACKEND_BASE_URL}/auth/redirect/${provider.toLowerCase()}`;
-    
     const popup = window.open(
       redirectPath,
       'pocket_ninja_auth',
@@ -35,19 +34,11 @@ const LoginDialog = ({ open, onOpenChange }) => {
 
     const handleMessage = (event) => {
       if (event.origin !== window.location.origin) return;
-      
       if (event.data?.type === 'AUTH_COMPLETE') {
         const { token, suggestedUsername, isNewUser } = event.data;
-
-        // 1. Update Authentication State
         login(suggestedUsername, token);
-        
-        // 2. Close UI elements
         onOpenChange(false);
-        toast.success(t('common.loginSuccess') || 'Login Successful!', { position: 'bottom-center' });
-        
-        // 3. Navigate - using a small timeout ensures the Router state 
-        // is ready and isn't overridden by App.jsx's root redirect
+        toast.success(t('common.loginSuccess'), { position: 'bottom-center' });
         setTimeout(() => {
           if (isNewUser) {
             navigate('/onboarding', { state: { suggestedUsername }, replace: true });
@@ -55,7 +46,6 @@ const LoginDialog = ({ open, onOpenChange }) => {
             navigate('/dashboard', { replace: true });
           }
         }, 100);
-
         window.removeEventListener('message', handleMessage);
       } else if (event.data?.type === 'AUTH_ERROR') {
         toast.error(event.data.message, { position: 'bottom-center' });

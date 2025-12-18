@@ -10,9 +10,11 @@ import Onboarding from './pages/Onboarding';
 import AuthSuccessHandler from './pages/AuthSuccessHandler';
 import AuthFailureHandler from './pages/AuthFailureHandler';
 import { useAuth } from './context/AuthContext';
+import { useTranslation } from 'react-i18next';
 
 function App() {
   const { isLoggedIn, loading } = useAuth();
+  const { t } = useTranslation();
 
   if (loading) {
     return (
@@ -43,10 +45,10 @@ function App() {
               element={isLoggedIn ? <Onboarding /> : <Navigate to="/" replace />} 
             />
             
-            <Route path="/compare" element={isLoggedIn ? <Box sx={{p:4}}>Compare Page</Box> : <Navigate to="/" replace />} />
-            <Route path="/upload" element={isLoggedIn ? <Box sx={{p:4}}>Upload Page</Box> : <Navigate to="/" replace />} />
-            <Route path="/campaigns" element={isLoggedIn ? <Box sx={{p:4}}>Campaigns Page</Box> : <Navigate to="/" replace />} />
-            <Route path="/profile" element={isLoggedIn ? <Box sx={{p:4}}>Profile Page</Box> : <Navigate to="/" replace />} />
+            <Route path="/compare" element={isLoggedIn ? <Box sx={{p:4}}>{t('pages.compare')}</Box> : <Navigate to="/" replace />} />
+            <Route path="/upload" element={isLoggedIn ? <Box sx={{p:4}}>{t('pages.upload')}</Box> : <Navigate to="/" replace />} />
+            <Route path="/campaigns" element={isLoggedIn ? <Box sx={{p:4}}>{t('pages.campaigns')}</Box> : <Navigate to="/" replace />} />
+            <Route path="/profile" element={isLoggedIn ? <Box sx={{p:4}}>{t('pages.profile')}</Box> : <Navigate to="/" replace />} />
           </Routes>
         </Box>
         <BottomNav />

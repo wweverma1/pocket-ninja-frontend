@@ -4,7 +4,6 @@
     "tagline": "小さな一歩、大きな節約"
   },
   "nav": {
-    "home": "ホーム",
     "bestDeals": "お得情報",
     "howItWorks": "使い方",
     "about": "について",
@@ -25,7 +24,8 @@
     "leaderboardProductAvgPrice": "平均価格",
     "leaderboardProductBestPrice": "最安値",
     "leaderboardProductDiscount": "割引",
-    "joinNow": "ストアを見る"
+    "joinNow": "ストアを見る",
+    "viewStore": "店舗を見る"
   },
   "howItWorks": {
     "title": "使い方",
@@ -49,7 +49,7 @@
     "joinCommunity": "コミュニティに参加"
   },
   "auth": {
-    "loginComingSoon": "ログイン機能は近日公開！",
+    "loginComingSoon": "{{provider}}ログイン機能は近日公開！",
     "welcome": "いらっしゃいませ",
     "subtitle": "サインインして節約を始めましょう",
     "loginWith": "{{provider}}で続ける",
@@ -70,10 +70,12 @@
     "logout": "ログアウト",
     "switchLanguage": "言語を切り替える",
     "shareMessage": "Pocket Ninjaをチェック！札幌で最安値を見つけて節約しよう！",
-    "loginSuccess": "おかえりなさい、ニンジャ！"
+    "loginSuccess": "おかえりなさい、ニンジャ！",
+    "developedWith": "Developed with",
+    "inSapporo": "in Sapporo"
   },
   "dashboard": {
-    "welcome": "おかえりなさい",
+    "welcome": "おかえりなさい、{{username}}！",
     "subtitle": "今日は札幌のどこで節約しますか？"
   },
   "onboarding": {
@@ -83,5 +85,11 @@
     "submit": "節約を始める",
     "success": "忍者プロフィールの設定が完了しました！",
     "error": "そのユーザー名は既に使用されています。"
+  },
+  "pages": {
+    "compare": "比較ページ",
+    "upload": "アップロードページ",
+    "campaigns": "キャンペーンページ",
+    "profile": "プロフィールページ"
   }
 }
