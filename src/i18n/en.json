@@ -23,6 +23,7 @@
     "leaderboardProductAvgPrice": "Avg Price",
     "leaderboardProductBestPrice": "Best Price",
     "leaderboardProductDiscount": "OFF",
+    "savePercent": "Save {{percent}}%",
     "joinNow": "View Store",
     "viewStore": "View Store"
   },

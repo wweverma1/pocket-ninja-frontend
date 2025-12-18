@@ -23,6 +23,7 @@
     "leaderboardProductAvgPrice": "平均価格",
     "leaderboardProductBestPrice": "最安値",
     "leaderboardProductDiscount": "割引",
+    "savePercent": "{{percent}}% 節約",
     "joinNow": "ストアを見る",
     "viewStore": "店舗を見る"
   },
