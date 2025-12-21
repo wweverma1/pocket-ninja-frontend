@@ -29,7 +29,6 @@ import {
   faCrown,
 } from '@fortawesome/free-solid-svg-icons';
 import { useTranslation } from 'react-i18next';
-import { useAuth } from '../context/AuthContext';
 import { leaderboardAPI } from '../services/api';
 import { ListSkeleton } from '../components/common/LoadingSkeleton';
 import { globalStyles } from '../theme/globalStyles';
@@ -75,10 +74,12 @@ const Home = () => {
   const navigate = useNavigate();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  const { isLoggedIn } = useAuth();
   const [leaderboard, setLeaderboard] = useState([]);
   const [loading, setLoading] = useState(true);
   const [loginOpen, setLoginOpen] = useState(false);
+
+  // Check if current language is English
+  const isEnglish = i18n.language && i18n.language.startsWith('en');
 
   useEffect(() => {
     fetchLeaderboard();
@@ -203,17 +204,22 @@ const Home = () => {
       opacity: 0.7;
       border-radius: 50%;
     }
-    @keyframes float {
-      0% { transform: translateY(0px); }
-      50% { transform: translateY(-10px); }
-      100% { transform: translateY(0px); }
+    @keyframes fadeInUp {
+      0% { 
+        opacity: 0; 
+        transform: translateY(30px); 
+      }
+      100% { 
+        opacity: 1; 
+        transform: translateY(0); 
+      }
     }
     @keyframes snowfall {
       0% { transform: translateY(-10vh) translateX(0); opacity: 1; }
       100% { transform: translateY(100vh) translateX(20px); opacity: 0.2; }
     }
-    .floating-element {
-      animation: float 4s ease-in-out infinite;
+    .hero-animate {
+      animation: fadeInUp 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
     }
   `;
 
@@ -249,7 +255,7 @@ const Home = () => {
         <Snowfall />
         
         <Container maxWidth="md" sx={{ position: 'relative', zIndex: 1 }}>
-          <Box className="floating-element">
+          <Box className="hero-animate">
             <Typography variant="h1" sx={{ 
               mb: 3, 
               fontWeight: 900, 
@@ -345,21 +351,25 @@ const Home = () => {
                 const isTop3 = index < 3;
                 const rankColor = getRankColor(index);
                 
+                // Determine name order based on language
+                const primaryName = isEnglish ? item.englishName : item.productName;
+                const secondaryName = isEnglish ? item.productName : item.englishName;
+                
                 return (
                   <Card
                     key={index}
-                    onClick={!isLoggedIn ? () => setLoginOpen(true) : undefined}
+                    onClick={() => setLoginOpen(true)}
                     sx={{
-                      cursor: !isLoggedIn ? 'pointer' : 'default',
+                      cursor: 'pointer',
                       position: 'relative',
                       overflow: 'visible',
                       transition: 'all 0.3s ease',
                       borderLeft: isTop3 ? `4px solid ${rankColor}` : `4px solid ${theme.palette.grey[300]}`,
                       boxShadow: isTop3 ? getRankGlow(index) : 1,
-                      '&:hover': !isLoggedIn ? { 
+                      '&:hover': { 
                         transform: 'translateY(-4px)', 
                         boxShadow: 4 
-                      } : {},
+                      },
                     }}
                   >
                     {isTop3 && (
@@ -409,10 +419,10 @@ const Home = () => {
                           </Avatar>
                           <Box>
                             <Typography variant="h6" fontWeight={700} sx={{ lineHeight: 1.2, mb: 0.5 }}>
-                              {item.productName}
+                              {primaryName}
                             </Typography>
                             <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.8rem' }}>
-                              {item.englishName}
+                              {secondaryName}
                             </Typography>
                           </Box>
                         </Box>
@@ -458,22 +468,16 @@ const Home = () => {
                                 color="secondary"
                                 sx={{ fontWeight: 800, height: 28 }} 
                               />
-                              {isLoggedIn ? (
-                                <Button variant="outlined" size="small" sx={{ minWidth: '40px', px: 1, borderRadius: 2 }}>
-                                   <FontAwesomeIcon icon={faStore} />
-                                </Button>
-                              ) : (
-                                <Button 
-                                  variant="contained" 
-                                  size="small"
-                                  color="primary"
-                                  onClick={() => setLoginOpen(true)} 
-                                  sx={{ borderRadius: 2, minWidth: '80px' }}
-                                >
-                                  <FontAwesomeIcon icon={faLock} style={{ marginRight: 6 }} />
-                                  {t('home.joinNow')}
-                                </Button>
-                              )}
+                              <Button 
+                                variant="contained" 
+                                size="small"
+                                color="primary"
+                                onClick={() => setLoginOpen(true)} 
+                                sx={{ borderRadius: 2, minWidth: '80px' }}
+                              >
+                                <FontAwesomeIcon icon={faLock} style={{ marginRight: 6 }} />
+                                {t('home.joinNow')}
+                              </Button>
                           </Box>
                         </Box>
 
