@@ -26,8 +26,18 @@ export const userAPI = {
     return response.data;
   },
   
-  updateProfile: async (profileData) => {
-    const response = await api.put('/user/', profileData);
+  updateUsername: async (profileData) => {
+    const response = await api.put('/user/username', profileData);
+    return response.data;
+  },
+
+  updateUserAvatar: async (profileData) => {
+    const response = await api.put('/user/avatar', profileData);
+    return response.data;
+  },
+
+  updatePreferredStoreProximity: async (profileData) => {
+    const response = await api.put('/user/proximity', profileData);
     return response.data;
   },
 };
