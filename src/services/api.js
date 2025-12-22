@@ -49,4 +49,18 @@ export const leaderboardAPI = {
   },
 };
 
+export const feedbackAPI = {
+  getFeedback: async () => {
+    const response = await api.get('/feedback/');
+    return response.data;
+  },
+  submitFeedback: async (userRating, userFeedback) => {
+    const response = await api.put('/feedback/', { 
+      userRating, 
+      userFeedback 
+    });
+    return response.data;
+  },
+};
+
 export default api;

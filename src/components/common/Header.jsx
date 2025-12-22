@@ -17,11 +17,12 @@ import {
   Divider,
 } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faBolt, faShareNodes, faLanguage, faRightToBracket, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faBolt, faShareNodes, faLanguage, faRightToBracket, faSignOutAlt, faCommentDots } from '@fortawesome/free-solid-svg-icons';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../context/AuthContext';
 import LanguageToggle from './LanguageToggle';
 import LoginDialog from '../auth/LoginDialog';
+import FeedbackDialog from './FeedbackDialog';
 
 const Header = () => {
   const { t, i18n } = useTranslation();
@@ -30,6 +31,7 @@ const Header = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
+  const [feedbackOpen, setFeedbackOpen] = useState(false);
   const { isLoggedIn, logout } = useAuth();
 
   const loggedOutMenuItems = [
@@ -124,9 +126,17 @@ const Header = () => {
           {!isMobile && (
             <Box sx={{ display: 'flex', alignItems: 'center', ml: 2 }}>
               <LanguageToggle />
+              
+              {isLoggedIn && (
+                <IconButton color="inherit" onClick={() => setFeedbackOpen(true)} aria-label="feedback" sx={{ p: 1 }}>
+                  <FontAwesomeIcon icon={faCommentDots} />
+                </IconButton>
+              )}
+
               <IconButton color="inherit" onClick={handleShare} aria-label="share" sx={{ p: 1 }}>
                 <FontAwesomeIcon icon={faShareNodes} />
               </IconButton>
+
               {isLoggedIn ? (
                 <Button variant="contained" color="secondary" onClick={handleLogout} sx={{ ml: 1, fontWeight: 600, textTransform: 'none' }}>
                   {t('common.logout')}
@@ -185,6 +195,18 @@ const Header = () => {
                   </Box>
                 </ListItemButton>
               </ListItem>
+              
+              {isLoggedIn && (
+                <ListItem disablePadding>
+                  <ListItemButton onClick={() => { setFeedbackOpen(true); setDrawerOpen(false); }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                      <FontAwesomeIcon icon={faCommentDots} />
+                      <ListItemText primary={t('feedback.title')} />
+                    </Box>
+                  </ListItemButton>
+                </ListItem>
+              )}
+
               <ListItem disablePadding>
                 <ListItemButton onClick={handleShare}>
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
@@ -226,6 +248,7 @@ const Header = () => {
         </Box>
       </Drawer>
       <LoginDialog open={loginOpen} onOpenChange={setLoginOpen} />
+      <FeedbackDialog open={feedbackOpen} onOpenChange={setFeedbackOpen} />
     </>
   );
 };

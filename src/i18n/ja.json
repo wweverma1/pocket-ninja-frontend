@@ -93,6 +93,23 @@
     "customUploadComingSoon": "カスタムアップロード機能は近日公開！",
     "points": "ポイント"
   },
+  "feedback": {
+    "title": "フィードバックを送信",
+    "subtitle": "皆様からのフィードバックは、私たちが改善していく上で重要です。",
+    "averageRating": "平均アプリ評価",
+    "yourRating": "あなたの評価",
+    "placeholder": "ご意見をお聞かせください (任意)",
+    "submit": "送信",
+    "success": "フィードバックが正常に送信されました！",
+    "validationError": "評価またはメッセージを入力してください。",
+    "labels": {
+      "useless": "役に立たない",
+      "poor": "悪い",
+      "ok": "普通",
+      "good": "良い",
+      "excellent": "素晴らしい"
+    }
+  },
   "pages": {
     "compare": "比較ページ",
     "upload": "アップロードページ",

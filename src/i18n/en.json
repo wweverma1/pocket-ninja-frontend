@@ -93,6 +93,23 @@
     "customUploadComingSoon": "Custom upload coming soon!",
     "points": "points"
   },
+  "feedback": {
+    "title": "Submit Feedback",
+    "subtitle": "Your feedback is important for us to improve.",
+    "averageRating": "Average App Rating",
+    "yourRating": "Your Rating",
+    "placeholder": "Tell us what you think (optional)...",
+    "submit": "Submit",
+    "success": "Feedback submitted successfully!",
+    "validationError": "Please provide a rating or a message.",
+    "labels": {
+      "useless": "Useless",
+      "poor": "Poor",
+      "ok": "Ok",
+      "good": "Good",
+      "excellent": "Excellent"
+    }
+  },
   "pages": {
     "compare": "Compare Page",
     "upload": "Upload Page",
