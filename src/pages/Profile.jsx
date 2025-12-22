@@ -291,7 +291,8 @@ const Profile = () => {
               color="#f1c40f" 
               title={t('profile.rankScore')} 
               value={profileData.rankScore}
-              subtitle={`+${profileData.lastRankIncrement}`}
+              subtitle={profileData.lastRankIncrement > 0 ? `+${profileData.lastRankIncrement}` : null}
+              subtitleLabel={profileData.lastRankIncrement > 0 ? t('profile.points') : null}
             />
           </Grid>
           <Grid item xs={12} sm={6} sx={{ display: 'flex' }}>
@@ -300,8 +301,8 @@ const Profile = () => {
               color="#2ecc71" 
               title={t('profile.estimatedSavings')} 
               value={`¥${profileData.estimatedTotalSavings.toLocaleString()}`}
-              monthlyValue={`¥${profileData.monthlyStats.savings.toLocaleString()}`}
-              monthlyLabel={t('profile.thisMonth')}
+              monthlyValue={profileData.monthlyStats.savings > 0 ? `¥${profileData.monthlyStats.savings.toLocaleString()}` : null}
+              monthlyLabel={profileData.monthlyStats.savings > 0 ? t('profile.thisMonth') : null}
             />
           </Grid>
           <Grid item xs={12} sm={6} sx={{ display: 'flex' }}>
@@ -310,8 +311,8 @@ const Profile = () => {
               color="#3498db" 
               title={t('profile.contributions')} 
               value={profileData.totalContributions} 
-              monthlyValue={`${profileData.monthlyStats.contributions}`}
-              monthlyLabel={t('profile.thisMonth')}
+              monthlyValue={profileData.monthlyStats.contributions > 0 ? `${profileData.monthlyStats.contributions}` : null}
+              monthlyLabel={profileData.monthlyStats.contributions > 0 ? t('profile.thisMonth') : null}
             />
           </Grid>
           <Grid item xs={12} sm={6} sx={{ display: 'flex' }}>
@@ -320,8 +321,8 @@ const Profile = () => {
               color="#e74c3c" 
               title={t('profile.expenditure')} 
               value={`¥${profileData.totalExpenditure.toLocaleString()}`}
-              monthlyValue={`¥${profileData.monthlyStats.expenditure.toLocaleString()}`}
-              monthlyLabel={t('profile.thisMonth')}
+              monthlyValue={profileData.monthlyStats.expenditure > 0 ? `¥${profileData.monthlyStats.expenditure.toLocaleString()}` : null}
+              monthlyLabel={profileData.monthlyStats.expenditure > 0 ? t('profile.thisMonth') : null}
             />
           </Grid>
         </Grid>
@@ -395,7 +396,7 @@ const Profile = () => {
               '& .MuiSlider-markLabel': {
                 fontSize: { xs: '0.65rem', sm: '0.8rem' },
                 mt: 1,
-                display: { xs: 'none', sm: 'block' }
+                // Removed display: 'none' for xs to show marks on mobile
               }
             }}
           />
@@ -539,7 +540,7 @@ const Profile = () => {
   );
 };
 
-const StatCard = ({ icon, color, title, value, subtitle, monthlyValue, monthlyLabel }) => {
+const StatCard = ({ icon, color, title, value, subtitle, subtitleLabel, monthlyValue, monthlyLabel }) => {
   const theme = useTheme();
   return (
     <Paper 
@@ -574,9 +575,16 @@ const StatCard = ({ icon, color, title, value, subtitle, monthlyValue, monthlyLa
         <Typography variant="h4" fontWeight="bold" sx={{ lineHeight: 1.2 }}>{value}</Typography>
         
         {subtitle && (
-          <Typography variant="caption" color="success.main" fontWeight="600" sx={{ display: 'block', mt: 0.5 }}>
-            {subtitle}
-          </Typography>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, mt: 0.5 }}>
+             <Typography variant="caption" color="success.main" fontWeight="700">
+               {subtitle}
+             </Typography>
+             {subtitleLabel && (
+               <Typography variant="caption" color="text.secondary">
+                 {subtitleLabel}
+               </Typography>
+             )}
+          </Box>
         )}
 
         {monthlyValue && (

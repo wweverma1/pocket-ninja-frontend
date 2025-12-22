@@ -90,7 +90,8 @@
     "proximity": "Preferred Store Proximity",
     "selectAvatar": "Select Avatar",
     "update": "Update",
-    "customUploadComingSoon": "Custom upload coming soon!"
+    "customUploadComingSoon": "Custom upload coming soon!",
+    "points": "points"
   },
   "pages": {
     "compare": "Compare Page",
