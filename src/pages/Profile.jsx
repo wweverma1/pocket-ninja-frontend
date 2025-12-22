@@ -217,10 +217,9 @@ const Profile = () => {
         sx={{ 
           p: 3, 
           borderRadius: 4, 
-          background: `linear-gradient(135deg, ${alpha(theme.palette.primary.light, 0.1)} 0%, ${alpha(theme.palette.primary.main, 0.2)} 100%)`, 
+          background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)', 
           textAlign: 'center', 
-          position: 'relative',
-          border: `1px solid ${alpha(theme.palette.primary.main, 0.1)}`
+          position: 'relative'
         }}
       >
         <Box sx={{ position: 'relative', display: 'inline-block' }}>
