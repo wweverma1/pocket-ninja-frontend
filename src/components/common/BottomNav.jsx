@@ -23,7 +23,7 @@ const BottomNav = () => {
   const navItems = [
     { label: t('nav.compare'), icon: faChartLine, path: '/compare' },
     { label: t('nav.upload'), icon: faUpload, path: '/upload' },
-    { label: t('nav.campaigns'), icon: faUsers, path: '/campaigns' },
+    // { label: t('nav.campaigns'), icon: faUsers, path: '/campaigns' },
     { label: t('nav.profile'), icon: faUser, path: '/profile' },
   ];
 
