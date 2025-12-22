@@ -260,11 +260,34 @@ const Profile = () => {
           </IconButton>
         </Box>
         
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1, mb: 0.5 }}>
-          <Typography variant="h4" fontWeight="bold" color="text.primary">
+        <Box sx={{ 
+          display: 'flex', 
+          alignItems: 'center', 
+          justifyContent: 'center', 
+          gap: 1, 
+          mb: 0.5,
+          maxWidth: '100%' 
+        }}>
+          <Typography 
+            variant="h4" 
+            fontWeight="bold" 
+            color="text.primary"
+            noWrap
+            sx={{ 
+              maxWidth: '90%' 
+            }}
+          >
             {profileData.username}
           </Typography>
-          <IconButton size="small" onClick={openEditDialog} sx={{ bgcolor: alpha(theme.palette.common.white, 0.6), '&:hover': { bgcolor: alpha(theme.palette.common.white, 1) } }}>
+          <IconButton 
+            size="small" 
+            onClick={openEditDialog} 
+            sx={{ 
+              bgcolor: alpha(theme.palette.common.white, 0.6), 
+              '&:hover': { bgcolor: alpha(theme.palette.common.white, 1) },
+              flexShrink: 0
+            }}
+          >
             <FontAwesomeIcon icon={faPen} size="xs" />
           </IconButton>
         </Box>
@@ -396,7 +419,6 @@ const Profile = () => {
               '& .MuiSlider-markLabel': {
                 fontSize: { xs: '0.65rem', sm: '0.8rem' },
                 mt: 1,
-                // Removed display: 'none' for xs to show marks on mobile
               }
             }}
           />
