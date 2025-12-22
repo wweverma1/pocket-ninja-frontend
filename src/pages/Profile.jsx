@@ -76,7 +76,9 @@ const Profile = () => {
         // Initialize avatar selection
         setSelectedAvatarId(response.result.userAvatarId || 1);
       } else {
-        toast.error(response.message[i18n.language] || response.message.en, { duration: 3000, position: 'bottom-center' });
+        // Safe access to message object
+        const msg = response.message?.[i18n.language] || response.message?.en || t('common.error');
+        toast.error(msg, { duration: 3000, position: 'bottom-center' });
       }
     } catch (error) {
       console.error('Failed to fetch profile', error);
@@ -94,12 +96,14 @@ const Profile = () => {
       const response = await userAPI.updateUsername(newUsername);
       
       if (response.errorStatus === 0) {
-        toast.success(response.message[i18n.language] || response.message.en, { duration: 3000, position: 'bottom-center' });
+        const msg = response.message?.[i18n.language] || response.message?.en || t('common.save');
+        toast.success(msg, { duration: 3000, position: 'bottom-center' });
         updateUsername(response.result.username);
         setProfileData(prev => ({ ...prev, username: response.result.username }));
         setIsEditDialogOpen(false);
       } else {
-        toast.error(response.message[i18n.language] || response.message.en, { duration: 3000, position: 'bottom-center' });
+        const msg = response.message?.[i18n.language] || response.message?.en || t('common.error');
+        toast.error(msg, { duration: 3000, position: 'bottom-center' });
       }
     } catch (error) {
       console.error('Failed to update username', error);
@@ -115,11 +119,13 @@ const Profile = () => {
       const response = await userAPI.updatePreferredStoreProximity(proximity);
       
       if (response.errorStatus === 0) {
-        toast.success(response.message[i18n.language] || response.message.en, { duration: 3000, position: 'bottom-center' });
+        const msg = response.message?.[i18n.language] || response.message?.en || t('common.save');
+        toast.success(msg, { duration: 3000, position: 'bottom-center' });
         setProfileData(prev => ({ ...prev, preferredStoreProximity: proximity }));
         setOriginalProximity(proximity);
       } else {
-        toast.error(response.message[i18n.language] || response.message.en, { duration: 3000, position: 'bottom-center' });
+        const msg = response.message?.[i18n.language] || response.message?.en || t('common.error');
+        toast.error(msg, { duration: 3000, position: 'bottom-center' });
       }
     } catch (error) {
       console.error('Failed to update proximity', error);
@@ -135,11 +141,13 @@ const Profile = () => {
       const response = await userAPI.updateUserAvatarId(selectedAvatarId);
       
       if (response.errorStatus === 0) {
-        toast.success(response.message[i18n.language] || response.message.en, { duration: 3000, position: 'bottom-center' });
+        const msg = response.message?.[i18n.language] || response.message?.en || t('common.save');
+        toast.success(msg, { duration: 3000, position: 'bottom-center' });
         setProfileData(prev => ({ ...prev, userAvatarId: selectedAvatarId }));
         setIsAvatarDialogOpen(false);
       } else {
-        toast.error(response.message[i18n.language] || response.message.en, { duration: 3000, position: 'bottom-center' });
+        const msg = response.message?.[i18n.language] || response.message?.en || t('common.error');
+        toast.error(msg, { duration: 3000, position: 'bottom-center' });
       }
     } catch (error) {
       console.error('Failed to update avatar', error);
@@ -197,7 +205,7 @@ const Profile = () => {
   }
 
   if (!profileData) return null;
-
+  
   const marks = [
     { value: 0.2, label: '<200m' },
     { value: 1.0, label: '1km' },
@@ -319,14 +327,42 @@ const Profile = () => {
         </Grid>
       </Box>
 
-      {/* Preferences Section */}
-      <Paper elevation={0} sx={{ p: 3, borderRadius: 3, border: `1px solid ${theme.palette.divider}` }}>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1 }}>
-          <FontAwesomeIcon icon={faMapMarkerAlt} style={{ color: theme.palette.primary.main, fontSize: '1.2rem' }} />
+      {/* Preferences Section - Styled to match StatCards */}
+      <Paper 
+        sx={{ 
+          p: 3, 
+          borderRadius: 3, 
+          position: 'relative',
+          overflow: 'hidden',
+          transition: 'transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out',
+          '&:hover': {
+            transform: 'translateY(-2px)',
+            boxShadow: theme.shadows[3]
+          }
+        }}
+      >
+        {/* Decorative Watermark */}
+        <Box sx={{ position: 'absolute', right: -15, top: -15, opacity: 0.05, transform: 'rotate(15deg)' }}>
+          <FontAwesomeIcon icon={faMapMarkerAlt} size="8x" color={theme.palette.secondary.main} />
+        </Box>
+
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1, position: 'relative', zIndex: 1 }}>
+          <Box sx={{ 
+            bgcolor: alpha(theme.palette.secondary.main, 0.1), 
+            p: 1, 
+            borderRadius: '50%', 
+            display: 'flex', 
+            width: 36, 
+            height: 36, 
+            alignItems: 'center', 
+            justifyContent: 'center' 
+          }}>
+            <FontAwesomeIcon icon={faMapMarkerAlt} style={{ color: theme.palette.secondary.main, fontSize: '1rem' }} />
+          </Box>
           <Typography variant="h6" fontWeight="bold">{t('profile.proximity')}</Typography>
         </Box>
         
-        <Box sx={{ px: { xs: 3, sm: 5 }, py: 4 }}>
+        <Box sx={{ px: { xs: 3, sm: 5 }, py: 4, position: 'relative', zIndex: 1 }}>
           <Slider
             value={proximity}
             onChange={(e, val) => setProximity(val)}
@@ -364,7 +400,7 @@ const Profile = () => {
             }}
           />
         </Box>
-        <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+        <Box sx={{ display: 'flex', justifyContent: 'flex-end', position: 'relative', zIndex: 1 }}>
           <Button 
             variant="contained" 
             color="primary" 
