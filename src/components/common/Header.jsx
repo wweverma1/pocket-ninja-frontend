@@ -95,8 +95,15 @@ const Header = () => {
           <Typography
             variant="h6"
             component="div"
-            sx={{ flexGrow: 1, fontWeight: 700, cursor: 'pointer', display: 'flex', flexDirection: 'column', lineHeight: 1.2 }}
-            onClick={() => isLoggedIn ? navigate('/') : window.scrollTo({ top: 0, behavior: 'smooth' })}
+            sx={{ 
+              flexGrow: 1, 
+              fontWeight: 700, 
+              cursor: isLoggedIn ? 'default' : 'pointer', 
+              display: 'flex', 
+              flexDirection: 'column', 
+              lineHeight: 1.2 
+            }}
+            {...(!isLoggedIn && { onClick: () => window.scrollTo({ top: 0, behavior: 'smooth' }) })}
           >
             {t('app.name')}
             <Typography variant="caption" sx={{ fontSize: { xs: '0.65rem', sm: '0.75rem' }, opacity: 0.9 }}>

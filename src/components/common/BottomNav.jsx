@@ -3,8 +3,8 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { BottomNavigation, BottomNavigationAction, Paper, Box, Typography, useTheme } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faChartLine,
-  faUpload,
+  faShoppingCart,
+  faHandsHelping,
   faUsers,
   faUser,
   faHeart,
@@ -21,8 +21,8 @@ const BottomNav = () => {
   const theme = useTheme();
 
   const navItems = [
-    { label: t('nav.compare'), icon: faChartLine, path: '/compare' },
-    { label: t('nav.upload'), icon: faUpload, path: '/upload' },
+    { label: t('nav.compare'), icon: faShoppingCart, path: '/compare' },
+    { label: t('nav.upload'), icon: faHandsHelping, path: '/upload' },
     // { label: t('nav.campaigns'), icon: faUsers, path: '/campaigns' },
     { label: t('nav.profile'), icon: faUser, path: '/profile' },
   ];

@@ -21,9 +21,9 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
   faTrophy, 
-  faCoins, 
+  faPiggyBank, 
   faChartLine, 
-  faFileInvoiceDollar, 
+  faHandsHelping, 
   faPen, 
   faStar, 
   faMapMarkerAlt, 
@@ -297,7 +297,7 @@ const Profile = () => {
           </Grid>
           <Grid item xs={12} sm={6} sx={{ display: 'flex' }}>
             <StatCard 
-              icon={faCoins} 
+              icon={faPiggyBank} 
               color="#2ecc71" 
               title={t('profile.estimatedSavings')} 
               value={`¥${profileData.estimatedTotalSavings.toLocaleString()}`}
@@ -307,7 +307,7 @@ const Profile = () => {
           </Grid>
           <Grid item xs={12} sm={6} sx={{ display: 'flex' }}>
             <StatCard 
-              icon={faFileInvoiceDollar} 
+              icon={faHandsHelping} 
               color="#3498db" 
               title={t('profile.contributions')} 
               value={profileData.totalContributions} 
