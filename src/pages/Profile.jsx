@@ -217,7 +217,6 @@ const Profile = () => {
         sx={{ 
           p: 3, 
           borderRadius: 4, 
-          // Updated gradient to match app theme (Navy Blue hint)
           background: `linear-gradient(135deg, ${alpha(theme.palette.primary.light, 0.1)} 0%, ${alpha(theme.palette.primary.main, 0.2)} 100%)`, 
           textAlign: 'center', 
           position: 'relative',
@@ -346,7 +345,6 @@ const Profile = () => {
             sx={{
               color: 'secondary.main',
               height: 8,
-              // FIX: Remove margin added by 'marks' prop when labels are hidden
               '&.MuiSlider-marked': {
                 marginBottom: 0
               },
@@ -361,11 +359,9 @@ const Profile = () => {
                 },
                 '&:before': { display: 'none' },
               },
-              // Completely hide marks visually
               '& .MuiSlider-mark': {
                 display: 'none' 
               },
-              // Hide mark labels on mobile
               '& .MuiSlider-markLabel': {
                 fontSize: { xs: '0.65rem', sm: '0.8rem' },
                 mt: 1,
@@ -465,7 +461,7 @@ const Profile = () => {
             ))}
             {/* Disabled Upload Option */}
             <Grid item xs={4} sm={3} sx={{ display: 'flex', justifyContent: 'center' }}>
-               <Tooltip title="Custom upload coming soon!">
+               <Tooltip title={t('profile.customUploadComingSoon')}>
                   <Box
                     sx={{
                       p: { xs: 0.5, sm: 1 },

@@ -86,5 +86,3 @@ export const ProfileSkeleton = () => {
     </Box>
   );
 };
-
-export default { CardSkeleton, ListSkeleton, ProfileSkeleton };

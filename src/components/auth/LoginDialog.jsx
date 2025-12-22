@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import * as Dialog from '@radix-ui/react-dialog';
 import { Box, Typography, Button, Divider } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -13,8 +13,16 @@ const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 const LoginDialog = ({ open, onOpenChange }) => {
   const { t } = useTranslation();
-  const { login } = useAuth();
+  const { login, isLoggedIn } = useAuth();
   const navigate = useNavigate();
+  const [pendingRedirect, setPendingRedirect] = useState(null);
+
+  useEffect(() => {
+    if (isLoggedIn && pendingRedirect) {
+        navigate(pendingRedirect, { replace: true });
+        setPendingRedirect(null);
+    }
+  }, [isLoggedIn, pendingRedirect, navigate]);
 
   const handleLogin = (provider) => {
     if (provider === 'Yahoo') {
@@ -54,13 +62,9 @@ const LoginDialog = ({ open, onOpenChange }) => {
           });
         }
         
-        setTimeout(() => {
-          if (isNewUser) {
-            navigate('/profile', { replace: true });
-          } else {
-            navigate('/compare', { replace: true });
-          }
-        }, 100);
+        // Schedule redirect based on user status; actual navigation happens in useEffect
+        // once authentication state is updated.
+        setPendingRedirect(isNewUser ? '/profile' : '/compare');
         
         window.removeEventListener('message', handleMessage);
       } else if (event.data?.type === 'AUTH_ERROR') {
