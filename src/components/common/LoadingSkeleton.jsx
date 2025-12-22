@@ -83,6 +83,18 @@ export const ProfileSkeleton = () => {
           ))}
         </Box>
       </Box>
+
+      {/* Preferences Skeleton (Proximity) */}
+      <Box sx={{ p: 3, borderRadius: 3, border: '1px solid #e0e0e0', bgcolor: 'background.paper' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 3 }}>
+           <MUISkeleton variant="circular" width={24} height={24} />
+           <Skeleton height={24} width={150} />
+        </Box>
+
+        <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
+           <Skeleton height={36} width={100} />
+        </Box>
+      </Box>
     </Box>
   );
 };

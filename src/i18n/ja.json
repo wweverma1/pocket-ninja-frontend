@@ -76,7 +76,7 @@
   },
   "profile": {
     "joinedAt": "参加日",
-    "rankScore": "忍者ランク",
+    "rankScore": "忍者スコア",
     "estimatedSavings": "推定節約額",
     "contributions": "貢献数",
     "expenditure": "支出額",
@@ -87,8 +87,7 @@
     "uploads": "レシート数",
     "editUsername": "忍者ネームの変更",
     "usernameLabel": "新しいユーザー名",
-    "preferences": "設定",
-    "proximity": "検索範囲",
+    "proximity": "優先店舗の近さ",
     "selectAvatar": "アバターを選択",
     "update": "更新",
     "customUploadComingSoon": "カスタムアップロード機能は近日公開！"

@@ -183,6 +183,7 @@ const Profile = () => {
 
   const formatDistance = (value) => {
     if (value >= 5) return '>5km';
+    if (value <= 0.2) return '<200m';
     if (value < 1) return `${Math.round(value * 1000)}m`;
     return `${value}km`;
   };
@@ -198,8 +199,7 @@ const Profile = () => {
   if (!profileData) return null;
 
   const marks = [
-    { value: 0.2, label: '200m' },
-    { value: 0.5, label: '500m' },
+    { value: 0.2, label: '<200m' },
     { value: 1.0, label: '1km' },
     { value: 2.0, label: '2km' },
     { value: 3.0, label: '3km' },
@@ -324,15 +324,10 @@ const Profile = () => {
       <Paper elevation={0} sx={{ p: 3, borderRadius: 3, border: `1px solid ${theme.palette.divider}` }}>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1 }}>
           <FontAwesomeIcon icon={faMapMarkerAlt} style={{ color: theme.palette.primary.main, fontSize: '1.2rem' }} />
-          <Typography variant="h6" fontWeight="bold">{t('profile.preferences')}</Typography>
+          <Typography variant="h6" fontWeight="bold">{t('profile.proximity')}</Typography>
         </Box>
         
         <Box sx={{ px: { xs: 3, sm: 5 }, py: 4 }}>
-          {/* Label without the static value display */}
-          <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 1 }}>
-            {t('profile.proximity')}
-          </Typography>
-          
           <Slider
             value={proximity}
             onChange={(e, val) => setProximity(val)}

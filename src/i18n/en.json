@@ -76,7 +76,7 @@
   },
   "profile": {
     "joinedAt": "Ninja since",
-    "rankScore": "Ninja Rank",
+    "rankScore": "Ninja Score",
     "estimatedSavings": "Est. Savings",
     "contributions": "Contributions",
     "expenditure": "Spent",
@@ -87,8 +87,7 @@
     "uploads": "Receipts",
     "editUsername": "Edit Ninja Name",
     "usernameLabel": "New Username",
-    "preferences": "Preferences",
-    "proximity": "Store Proximity",
+    "proximity": "Preferred Store Proximity",
     "selectAvatar": "Select Avatar",
     "update": "Update",
     "customUploadComingSoon": "Custom upload coming soon!"
