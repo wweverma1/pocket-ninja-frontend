@@ -86,7 +86,11 @@
     "saved": "Saved",
     "uploads": "Receipts",
     "editUsername": "Edit Ninja Name",
-    "usernameLabel": "New Username"
+    "usernameLabel": "New Username",
+    "preferences": "Preferences",
+    "proximity": "Store Proximity",
+    "selectAvatar": "Select Avatar",
+    "update": "Update"
   },
   "pages": {
     "compare": "Compare Page",

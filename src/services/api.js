@@ -26,18 +26,18 @@ export const userAPI = {
     return response.data;
   },
   
-  updateUsername: async (profileData) => {
-    const response = await api.put('/user/username', profileData);
+  updateUsername: async (username) => {
+    const response = await api.put('/user/username', { "username": username });
     return response.data;
   },
 
-  updateUserAvatar: async (profileData) => {
-    const response = await api.put('/user/avatar', profileData);
+  updateUserAvatarId: async (userAvatarId) => {
+    const response = await api.put('/user/avatar/id', { "userAvatarId": userAvatarId });
     return response.data;
   },
 
-  updatePreferredStoreProximity: async (profileData) => {
-    const response = await api.put('/user/proximity', profileData);
+  updatePreferredStoreProximity: async (proximity) => {
+    const response = await api.put('/user/proximity', { "preferredStoreProximity": proximity });
     return response.data;
   },
 };

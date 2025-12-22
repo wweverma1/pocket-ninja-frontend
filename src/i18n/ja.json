@@ -86,7 +86,11 @@
     "saved": "節約額",
     "uploads": "レシート数",
     "editUsername": "忍者ネームの変更",
-    "usernameLabel": "新しいユーザー名"
+    "usernameLabel": "新しいユーザー名",
+    "preferences": "設定",
+    "proximity": "検索範囲",
+    "selectAvatar": "アバターを選択",
+    "update": "更新"
   },
   "pages": {
     "compare": "比較ページ",

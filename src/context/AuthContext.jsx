@@ -2,8 +2,6 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const AuthContext = createContext();
 
-const FOOD_EMOJIS = ["🍱", "🍣", "🍜", "🍲", "🍛", "🍙", "🍚", "🍘", "🍢", "🍡", "🍧", "🍦", "🍰", "🍮", "🍵", "🍶"];
-
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
@@ -17,25 +15,21 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const getRandomEmoji = () => FOOD_EMOJIS[Math.floor(Math.random() * FOOD_EMOJIS.length)];
-
   useEffect(() => {
     // Check localStorage for direct keys
     const token = localStorage.getItem('authToken');
     const username = localStorage.getItem('username');
     
     if (token && username) {
-      const avatar = getRandomEmoji();
       setIsLoggedIn(true);
-      setUser({ username, avatar });
+      setUser({ username });
     }
     setLoading(false);
   }, []);
 
   const login = (username, token) => {
-    const avatar = getRandomEmoji();
     setIsLoggedIn(true);
-    setUser({ username, avatar });
+    setUser({ username });
     localStorage.setItem('isLoggedIn', 'true');
     localStorage.setItem('username', username);
     localStorage.setItem('authToken', token);
