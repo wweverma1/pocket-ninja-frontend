@@ -65,7 +65,7 @@ const Upload = () => {
       }
     } catch (error) {
       console.error('Failed to fetch leaderboard', error);
-      toast.error(t('common.error'));
+      toast.error(t('common.error'), { duration: 3000, position: 'bottom-center' });
     } finally {
       setLoadingLeaderboard(false);
     }
@@ -101,12 +101,11 @@ const Upload = () => {
 
     // Check if image
     if (!file.type.startsWith('image/')) {
-      toast.error(t('upload.imageOnlyError'));
+      toast.error(t('upload.imageOnlyError'), { duration: 3000, position: 'bottom-center' });
       return;
     }
 
     setUploading(true);
-    const toastId = toast.loading(t('upload.processing'));
 
     try {
       // Convert to Base64
@@ -122,7 +121,7 @@ const Upload = () => {
           if (response.errorStatus === 0) {
             // Success
             const successMsg = response.message?.[i18n.language] || response.message?.en || t('upload.success');
-            toast.success(successMsg, { id: toastId });
+            toast.success(successMsg, { duration: 3000, position: 'bottom-center' });
             
             // Refresh data
             fetchReceipts(selectedMonth);
@@ -130,14 +129,16 @@ const Upload = () => {
           } else {
             // Failure from API logic (e.g., unsupported store)
             const errorMsg = response.message?.[i18n.language] || response.message?.en || t('common.error');
-            toast.error(errorMsg, { id: toastId });
+            toast.error(errorMsg, { duration: 3000, position: 'bottom-center' });
+
+            fetchReceipts(selectedMonth);
           }
         } catch (apiError) {
           console.error('Upload API error', apiError);
           const errorMsg = apiError.response?.data?.message?.[i18n.language] || 
                            apiError.response?.data?.message?.en || 
                            t('common.error');
-          toast.error(errorMsg, { id: toastId });
+          toast.error(errorMsg, { duration: 3000, position: 'bottom-center' });
         } finally {
           setUploading(false);
           // Reset input so same file can be selected again if needed
@@ -146,13 +147,13 @@ const Upload = () => {
       };
       
       reader.onerror = () => {
-        toast.error(t('common.error'), { id: toastId });
+        toast.error(t('common.error'), { duration: 3000, position: 'bottom-center' });
         setUploading(false);
       };
 
     } catch (e) {
       console.error('File reading error', e);
-      toast.error(t('common.error'), { id: toastId });
+      toast.error(t('common.error'), { duration: 3000, position: 'bottom-center' });
       setUploading(false);
     }
   };
@@ -210,22 +211,30 @@ const Upload = () => {
           </Box>
         ) : (
           <Box>
-            {/* Podium */}
+            {/* Improved Podium */}
             <Box sx={{ 
               display: 'flex', 
               justifyContent: 'center', 
               alignItems: 'flex-end', 
-              gap: { xs: 1, sm: 3 },
+              gap: { xs: 2, sm: 4 },
               mb: 6,
-              height: 250 // constrain height
+              minHeight: 280
             }}>
               {podiumOrder.map((positionIndex) => {
                 const user = leaderboard[positionIndex];
-                if (!user) return null; // Handle case where fewer than 3 users exist
+                // Render placeholder if user doesn't exist to maintain layout
+                if (!user) return <Box key={`placeholder-${positionIndex}`} sx={{ width: { xs: '30%', sm: 140 } }} />;
 
                 const isFirst = positionIndex === 0;
                 const height = getRankHeight(positionIndex);
                 const color = getRankColor(positionIndex);
+                
+                // Podium gradients based on rank
+                const gradient = isFirst 
+                  ? 'linear-gradient(135deg, #FFD700 0%, #FDB931 100%)' 
+                  : positionIndex === 1
+                    ? 'linear-gradient(135deg, #E0E0E0 0%, #BDBDBD 100%)'
+                    : 'linear-gradient(135deg, #CD7F32 0%, #A0522D 100%)';
 
                 return (
                   <Box key={user.username} sx={{ 
@@ -233,83 +242,130 @@ const Upload = () => {
                     flexDirection: 'column', 
                     alignItems: 'center', 
                     width: { xs: '30%', sm: 140 },
-                    position: 'relative'
+                    position: 'relative',
+                    zIndex: isFirst ? 2 : 1,
+                    transition: 'transform 0.3s ease',
+                    '&:hover': {
+                      transform: 'translateY(-5px)',
+                    }
                   }}>
-                    {/* Crown for #1 */}
-                    {isFirst && (
-                       <Box sx={{ 
-                         color: '#FFD700', 
-                         mb: 1, 
-                         fontSize: '1.5rem',
-                         animation: 'float 3s ease-in-out infinite' 
-                       }}>
-                         <FontAwesomeIcon icon={faCrown} />
-                       </Box>
-                    )}
+                    {/* Avatar Container */}
+                    <Box sx={{ position: 'relative', mb: 2 }}>
+                        {isFirst && (
+                          <Box sx={{ 
+                            position: 'absolute',
+                            top: -35,
+                            left: '50%',
+                            transform: 'translateX(-50%)',
+                            color: '#FFD700', 
+                            fontSize: '2rem',
+                            filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.3))',
+                            animation: 'float 3s ease-in-out infinite' 
+                          }}>
+                            <FontAwesomeIcon icon={faCrown} />
+                          </Box>
+                        )}
+                        <Avatar 
+                          src={`/avatars/${user.avatarId}.png`}
+                          sx={{ 
+                            width: { xs: 60, sm: 80 }, 
+                            height: { xs: 60, sm: 80 }, 
+                            border: `4px solid white`,
+                            boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                          }}
+                        />
+                        <Box sx={{
+                          position: 'absolute',
+                          bottom: -10,
+                          left: '50%',
+                          transform: 'translateX(-50%)',
+                          bgcolor: 'white',
+                          borderRadius: '12px',
+                          px: 1,
+                          py: 0.2,
+                          boxShadow: 1,
+                          border: `1px solid ${theme.palette.divider}`
+                        }}>
+                           <Typography variant="caption" fontWeight={800} color="text.secondary">
+                             {user.score}
+                           </Typography>
+                        </Box>
+                    </Box>
                     
-                    <Avatar 
-                      src={`/avatars/${user.avatarId}.png`}
-                      sx={{ 
-                        width: { xs: 50, sm: 70 }, 
-                        height: { xs: 50, sm: 70 }, 
-                        mb: 1,
-                        border: `1px solid ${color}`,
-                        boxShadow: `0 1px 1px ${alpha(color, 0.4)}`,
-                        zIndex: 2
-                      }}
-                    />
-                    <Typography variant="subtitle2" fontWeight={700} noWrap sx={{ maxWidth: '100%' }}>
+                    <Typography variant="subtitle2" fontWeight={700} noWrap sx={{ maxWidth: '100%', mb: 1, textAlign: 'center' }}>
                       {user.username}
                     </Typography>
-                    <Typography variant="caption" color="text.secondary" sx={{ mb: 1 }}>
-                       {user.score} {t('upload.points')}
-                    </Typography>
 
-                    {/* The Block */}
-                    <Box sx={{ 
+                    {/* Podium Block */}
+                    <Paper elevation={3} sx={{ 
                       width: '100%', 
                       height: height, 
-                      bgcolor: alpha(color, 0.2), 
-                      borderTopLeftRadius: 8, 
-                      borderTopRightRadius: 8,
+                      background: gradient, 
+                      borderRadius: '16px 16px 0 0',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      color: theme.palette.text.secondary,
+                      color: 'white',
                       fontWeight: 900,
-                      fontSize: '2rem',
-                      border: `1px solid ${alpha(color, 0.3)}`,
-                      borderBottom: 'none'
+                      fontSize: '2.5rem',
+                      textShadow: '0 2px 4px rgba(0,0,0,0.2)',
+                      position: 'relative',
+                      overflow: 'hidden'
                     }}>
-                      {positionIndex + 1}
-                    </Box>
+                       {/* Decorative shimmer */}
+                       <Box sx={{
+                         position: 'absolute',
+                         top: 0,
+                         left: 0,
+                         right: 0,
+                         bottom: 0,
+                         background: 'linear-gradient(45deg, rgba(255,255,255,0) 40%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0) 60%)',
+                         transform: 'skewX(-20deg)',
+                       }} />
+                       {positionIndex + 1}
+                    </Paper>
                   </Box>
                 );
               })}
             </Box>
 
-            {/* User Stats / Milestone */}
+            {/* Improved User Stats / Milestone Card */}
+            {/* User Stats / Milestone - Simplified */}
             {userStats && (
-              <Card sx={{ 
+              <Box sx={{ 
                 maxWidth: 600, 
                 mx: 'auto', 
-                bgcolor: alpha(theme.palette.primary.main, 0.05),
-                border: `1px solid ${alpha(theme.palette.primary.main, 0.1)}`,
-                boxShadow: 'none'
+                mt: 4, 
+                textAlign: 'center',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: 2
               }}>
-                <CardContent sx={{ textAlign: 'center', py: 2 }}>
-                  {userStats.rank > 3 && (
-                    <Typography variant="h6" fontWeight={700} color="primary.main" gutterBottom>
-                      {t('upload.yourRank')}: #{userStats.rank}
-                    </Typography>
-                  )}
-                  {userStats.nextMilestone && (
-                     <Typography variant="body1" fontWeight={500} sx={{ fontStyle: 'italic' }}>
-                       "{userStats.nextMilestone[i18n.language] || userStats.nextMilestone.en}"
-                     </Typography>
-                  )}
-                </CardContent>
-              </Card>
+                {/* Simple Rank Display */}
+                <Box sx={{ 
+                  display: 'inline-flex', 
+                  alignItems: 'center', 
+                  gap: 1.5,
+                  bgcolor: alpha(theme.palette.primary.main, 0.08),
+                  px: 3,
+                  py: 1,
+                  borderRadius: '50px',
+                  border: `1px solid ${alpha(theme.palette.primary.main, 0.1)}`
+                }}>
+                   <FontAwesomeIcon icon={faTrophy} color={theme.palette.primary.main} size="sm" />
+                   <Typography variant="subtitle1" fontWeight={700} color="primary.main">
+                     {t('upload.yourRank')}: <Box component="span" sx={{ fontSize: '1.2em', fontWeight: 800 }}>#{userStats.rank}</Box>
+                   </Typography>
+                </Box>
+
+                {/* Milestone Message - Clean Text */}
+                {userStats.nextMilestone && (
+                   <Typography variant="body1" color="text.secondary" sx={{ fontStyle: 'italic', maxWidth: '90%', fontSize: '0.95rem' }}>
+                     "{userStats.nextMilestone[i18n.language] || userStats.nextMilestone.en}"
+                   </Typography>
+                )}
+              </Box>
             )}
           </Box>
         )}
