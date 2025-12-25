@@ -6,7 +6,7 @@ import Header from './components/common/Header';
 import BottomNav from './components/common/BottomNav';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
-// import Upload from './pages/Upload';
+import Upload from './pages/Upload';
 import AuthSuccessHandler from './pages/AuthSuccessHandler';
 import AuthFailureHandler from './pages/AuthFailureHandler';
 import { useAuth } from './context/AuthContext';
@@ -36,10 +36,10 @@ function App() {
             <Route path="/auth/failure" element={<AuthFailureHandler />} />
             
             <Route path="/compare" element={isLoggedIn ? <Box sx={{p:4}}>{t('pages.compare')}</Box> : <Navigate to="/" replace />} />
-            {/* <Route 
+            <Route 
               path="/upload" 
               element={isLoggedIn ? <Upload /> : <Navigate to="/" replace />} 
-            /> */}
+            />
             <Route path="/campaigns" element={isLoggedIn ? <Box sx={{p:4}}>{t('pages.campaigns')}</Box> : <Navigate to="/" replace />} />
             <Route 
               path="/profile" 

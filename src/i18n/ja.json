@@ -112,19 +112,27 @@
   },
   "upload": {
     "leaderboardTitle": "忍者マスター",
-    "leaderboardSubtitle": "みんなの節約を最大化するトップ貢献者たち！",
-    "yourRank": "あなたの忍者ランク",
-    "contributeTitle": "札幌の節約をサポート",
-    "contributeSubtitle": "レシートを撮影するだけ。計算は任せて、みんなで賢く節約しましょう。小さな一歩が大きな力に！",
+    "leaderboardSubtitle": "みんなの節約に貢献しているトップユーザー！",
+    "yourRank": "あなたのランク",
+    "contributeTitle": "札幌の節約を助ける",
+    "contributeSubtitle": "レシートの写真を共有してください。計算は私たちが担当し、みんなのために節約のチャンスを広げます。小さな一歩が大きな影響を与えます！",
     "snap": "レシートを撮影",
-    "thankYouNote": "あなたのレシートが、最安値発見のカギになります。いつもありがとうございます！",
-    "historyTitle": "貢献履歴",
+    "thankYouNote": "領収書はどれも、より良い取引を見つけるのに役立ちます。ご協力に感謝いたします！",
+    "historyTitle": "あなたの貢献履歴",
     "selectMonth": "月を選択",
-    "noReceipts": "この月のレシートはありません。",
+    "noReceipts": "この月のレシートは見つかりませんでした。",
     "unknownStore": "不明な店舗",
     "imageOnlyError": "画像ファイルを選択してください。",
-    "success": "アップロード成功！解析を開始します...",
-    "productsFound": "商品データ{{count}}件を抽出しました"
+    "processing": "レシートを処理中...",
+    "success": "レシートがアップロードされました！",
+    "productsFound": "{{count}} 個の商品を抽出",
+    "uploading": "アップロード中...",
+    "points": "pt",
+    "contributions": "枚",
+    "status": {
+      "success": "成功",
+      "failed": "失敗"
+    }
   },
   "pages": {
     "compare": "比較ページ",

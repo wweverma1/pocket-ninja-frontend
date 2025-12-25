@@ -117,14 +117,22 @@
     "contributeTitle": "Help Sapporo Save",
     "contributeSubtitle": "Share a clear photo of your receipt, we will handle the math and unlock savings for the community. Small steps, big impact!",
     "snap": "Scan Receipt",
-    "thankYouNote": "Every receipt helps in finding a better deal. We appreciate you!",
-    "historyTitle": "Your contributions",
+    "thankYouNote": "Every receipt helps in finding a better deal. We appreciate your effort!",
+    "historyTitle": "Your Contributions",
     "selectMonth": "Select Month",
     "noReceipts": "No receipts found for this month.",
     "unknownStore": "Unknown Store",
     "imageOnlyError": "Please select an image file.",
-    "success": "Receipt uploaded successfully! It is being processed.",
-    "productsFound": "{{count}} products extracted"
+    "processing": "Processing receipt...",
+    "success": "Receipt uploaded successfully!",
+    "productsFound": "{{count}} products extracted",
+    "uploading": "Uploading...",
+    "points": "pts",
+    "contributions": "receipts",
+    "status": {
+      "success": "Success",
+      "failed": "Failed"
+    }
   },
   "pages": {
     "compare": "Compare Page",
