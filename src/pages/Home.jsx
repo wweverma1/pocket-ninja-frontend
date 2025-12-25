@@ -29,7 +29,7 @@ import {
   faCrown,
 } from '@fortawesome/free-solid-svg-icons';
 import { useTranslation } from 'react-i18next';
-import { leaderboardAPI } from '../services/api';
+import { productAPI } from '../services/api';
 import { ListSkeleton } from '../components/common/LoadingSkeleton';
 import { globalStyles } from '../theme/globalStyles';
 import LanguageSelectionDialog from '../components/common/LanguageSelectionDialog';
@@ -82,13 +82,13 @@ const Home = () => {
   const isEnglish = i18n.language && i18n.language.startsWith('en');
 
   useEffect(() => {
-    fetchLeaderboard();
+    fetchHotProducts();
   }, []);
 
-  const fetchLeaderboard = async () => {
+  const fetchHotProducts = async () => {
     try {
       setLoading(true);
-      const data = await leaderboardAPI.getTopSavings();
+      const data = await productAPI.getTopSavings();
       setLeaderboard(data.slice(0, 5));
     } catch (error) {
       console.error('Error fetching leaderboard:', error);

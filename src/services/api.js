@@ -40,13 +40,33 @@ export const userAPI = {
     const response = await api.put('/user/proximity', { "preferredStoreProximity": proximity });
     return response.data;
   },
+
+  getReceipts: async (month) => {
+    // month format: YYYY-MM
+    const response = await api.get(`/user/receipt?month=${month}`);
+    return response.data;
+  }
 };
 
-export const leaderboardAPI = {
+export const productAPI = {
   getTopSavings: async () => {
-    const response = await api.get('/leaderboard/top-savings');
+    const response = await api.get('/product/hot');
     return response.data;
   },
+
+  uploadReceipt: async (base64Image) => {
+    const response = await api.put('/product/', { 
+        receiptImageData: base64Image 
+    });
+    return response.data;
+  }
+}
+
+export const leaderboardAPI = {
+  getLeaderboard: async () => {
+    const response = await api.get('/leaderboard/');
+    return response.data;
+  }
 };
 
 export const feedbackAPI = {

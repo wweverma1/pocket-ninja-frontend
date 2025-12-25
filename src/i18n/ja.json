@@ -110,6 +110,22 @@
       "excellent": "素晴らしい"
     }
   },
+  "upload": {
+    "leaderboardTitle": "忍者マスター",
+    "leaderboardSubtitle": "みんなの節約を最大化するトップ貢献者たち！",
+    "yourRank": "あなたの忍者ランク",
+    "contributeTitle": "札幌の節約をサポート",
+    "contributeSubtitle": "レシートを撮影するだけ。計算は任せて、みんなで賢く節約しましょう。小さな一歩が大きな力に！",
+    "snap": "レシートを撮影",
+    "thankYouNote": "あなたのレシートが、最安値発見のカギになります。いつもありがとうございます！",
+    "historyTitle": "貢献履歴",
+    "selectMonth": "月を選択",
+    "noReceipts": "この月のレシートはありません。",
+    "unknownStore": "不明な店舗",
+    "imageOnlyError": "画像ファイルを選択してください。",
+    "success": "アップロード成功！解析を開始します...",
+    "productsFound": "商品データ{{count}}件を抽出しました"
+  },
   "pages": {
     "compare": "比較ページ",
     "upload": "アップロードページ",
