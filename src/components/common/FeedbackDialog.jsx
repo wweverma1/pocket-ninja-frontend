@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import * as Dialog from '@radix-ui/react-dialog';
 import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
   Button,
   Box,
   Typography,
@@ -14,7 +11,7 @@ import {
   alpha
 } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { faStar, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { useTranslation } from 'react-i18next';
 import { feedbackAPI } from '../../services/api';
 import toast from 'react-hot-toast';
@@ -104,8 +101,8 @@ const FeedbackDialog = ({ open, onOpenChange }) => {
     }
   };
 
-  const handleClose = () => {
-    if (!submitting) {
+  const handleOpenChangeWrapper = (isOpen) => {
+    if (!isOpen && !submitting) {
       onOpenChange(false);
     }
   };
@@ -117,148 +114,198 @@ const FeedbackDialog = ({ open, onOpenChange }) => {
   const isUnchanged = (value === initialRating) && (feedbackText.trim() === '');
 
   return (
-    <Dialog 
-      open={open} 
-      onClose={handleClose} 
-      fullWidth 
-      maxWidth="sm"
-      PaperProps={{
-        sx: { borderRadius: 3, p: 1 }
-      }}
-    >
-      <DialogTitle sx={{ textAlign: 'center', fontWeight: 800, fontSize: '1.5rem', pb: 0.5 }}>
-        {t('feedback.title')}
-      </DialogTitle>
-      
-      <Typography variant="body2" color="text.secondary" align="center" sx={{ px: 4, mb: 1, lineHeight: 1.4 }}>
-        {t('feedback.subtitle')}
-      </Typography>
-      
-      <DialogContent sx={{ overflowY: 'visible' }}>
-        {loading ? (
-          <Box sx={{ display: 'flex', justifyContent: 'center', p: 4 }}>
-            <CircularProgress />
-          </Box>
-        ) : (
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4, pt: 2 }}>
-            
-            {/* Attractive Average Rating Display */}
-            <Box sx={{ textAlign: 'center' }}>
-              <Typography variant="overline" color="text.secondary" letterSpacing={1.5} fontWeight={600}>
-                {t('feedback.averageRating')}
-              </Typography>
-              <Box sx={{ 
-                display: 'flex', 
-                alignItems: 'center', 
-                justifyContent: 'center',
-                gap: 1.5,
-                mt: 0.5
-              }}>
-                <Typography variant="h2" fontWeight="800" color="text.primary" sx={{ lineHeight: 1 }}>
-                  {avgRating.toFixed(1)}
+    <Dialog.Root open={open} onOpenChange={handleOpenChangeWrapper}>
+      <Dialog.Portal>
+        <Dialog.Overlay
+          style={{
+            position: 'fixed',
+            inset: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.6)',
+            zIndex: 9998,
+            backdropFilter: 'blur(4px)',
+            animation: 'fadeIn 0.3s ease-out',
+          }}
+        />
+        <Dialog.Content
+          style={{
+            position: 'fixed',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: '90vw',
+            maxWidth: '600px', // Matches sm
+            maxHeight: '90vh',
+            zIndex: 9999,
+            backgroundColor: 'white',
+            borderRadius: '16px',
+            padding: '24px',
+            boxShadow: '0 20px 60px rgba(0,0,0,0.3)',
+            animation: 'slideUp 0.3s ease-out',
+            overflowY: 'auto'
+          }}
+        >
+          <Box sx={{ position: 'relative' }}>
+             <Dialog.Close asChild>
+              <Button
+                disabled={submitting}
+                sx={{
+                  position: 'absolute',
+                  top: -8,
+                  right: -8,
+                  minWidth: 'auto',
+                  width: 40,
+                  height: 40,
+                  borderRadius: '50%',
+                  color: 'text.secondary',
+                }}
+              >
+                <FontAwesomeIcon icon={faTimes} />
+              </Button>
+            </Dialog.Close>
+
+            <Dialog.Title asChild>
+              <Box sx={{ textAlign: 'center', pb: 0.5 }}>
+                <Typography variant="h5" fontWeight={800}>
+                  {t('feedback.title')}
                 </Typography>
-                <FontAwesomeIcon icon={faStar} color="#faaf00" style={{ fontSize: '2.5rem' }} />
               </Box>
-            </Box>
-
-            {/* User Rating Input */}
-            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1 }}>
-              <Typography variant="subtitle1" fontWeight="700">
-                {t('feedback.yourRating')}
+            </Dialog.Title>
+            
+            <Dialog.Description asChild>
+              <Typography variant="body2" color="text.secondary" align="center" sx={{ px: 2, mb: 1, lineHeight: 1.4 }}>
+                {t('feedback.subtitle')}
               </Typography>
-              <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
-                <Rating
-                  name="user-rating"
-                  value={value}
-                  precision={1}
-                  size="large"
-                  onChange={(event, newValue) => {
-                    setValue(newValue);
-                  }}
-                  onChangeActive={(event, newHover) => {
-                    setHover(newHover);
-                  }}
-                  sx={{
-                    fontSize: '3.5rem',
-                    color: '#faaf00',
-                    '& .MuiRating-iconHover': {
-                      color: '#faaf00',
-                    },
-                  }}
-                />
-                {/* Hover Feedback Label */}
-                <Box sx={{ mt: 1, minHeight: '24px' }}>
-                  {(hover !== -1 || value !== null) && (
-                    <Typography 
-                      color={hover !== -1 ? 'primary.main' : 'text.secondary'}
-                      fontWeight={hover !== -1 ? 700 : 500}
-                      sx={{ transition: 'all 0.2s' }}
-                    >
-                      {hover !== -1 ? getLabelText(hover) : (value ? getLabelText(value) : '')}
-                    </Typography>
-                  )}
+            </Dialog.Description>
+            
+            <Box sx={{ mt: 2 }}>
+              {loading ? (
+                <Box sx={{ display: 'flex', justifyContent: 'center', p: 4 }}>
+                  <CircularProgress />
                 </Box>
-              </Box>
-            </Box>
+              ) : (
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4, pt: 2 }}>
+                  
+                  {/* Attractive Average Rating Display */}
+                  <Box sx={{ textAlign: 'center' }}>
+                    <Typography variant="overline" color="text.secondary" letterSpacing={1.5} fontWeight={600}>
+                      {t('feedback.averageRating')}
+                    </Typography>
+                    <Box sx={{ 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      justifyContent: 'center',
+                      gap: 1.5,
+                      mt: 0.5
+                    }}>
+                      <Typography variant="h2" fontWeight="800" color="text.primary" sx={{ lineHeight: 1 }}>
+                        {avgRating.toFixed(1)}
+                      </Typography>
+                      <FontAwesomeIcon icon={faStar} color="#faaf00" style={{ fontSize: '2.5rem' }} />
+                    </Box>
+                  </Box>
 
-            {/* Feedback Text Input */}
-            <TextField
-              multiline
-              rows={4}
-              placeholder={t('feedback.placeholder')}
-              value={feedbackText}
-              onChange={(e) => setFeedbackText(e.target.value)}
-              variant="outlined"
-              fullWidth
-              sx={{
-                '& .MuiOutlinedInput-root': {
-                  borderRadius: 3,
-                  bgcolor: alpha(theme.palette.background.default, 0.5),
-                  '&:hover': {
-                    bgcolor: alpha(theme.palette.background.default, 0.8),
-                  },
-                  '&.Mui-focused': {
-                    bgcolor: 'transparent',
-                  }
-                }
-              }}
-            />
+                  {/* User Rating Input */}
+                  <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1 }}>
+                    <Typography variant="subtitle1" fontWeight="700">
+                      {t('feedback.yourRating')}
+                    </Typography>
+                    <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
+                      <Rating
+                        name="user-rating"
+                        value={value}
+                        precision={1}
+                        size="large"
+                        onChange={(event, newValue) => {
+                          setValue(newValue);
+                        }}
+                        onChangeActive={(event, newHover) => {
+                          setHover(newHover);
+                        }}
+                        sx={{
+                          fontSize: '3.5rem',
+                          color: '#faaf00',
+                          '& .MuiRating-iconHover': {
+                            color: '#faaf00',
+                          },
+                        }}
+                      />
+                      {/* Hover Feedback Label */}
+                      <Box sx={{ mt: 1, minHeight: '24px' }}>
+                        {(hover !== -1 || value !== null) && (
+                          <Typography 
+                            color={hover !== -1 ? 'primary.main' : 'text.secondary'}
+                            fontWeight={hover !== -1 ? 700 : 500}
+                            sx={{ transition: 'all 0.2s' }}
+                          >
+                            {hover !== -1 ? getLabelText(hover) : (value ? getLabelText(value) : '')}
+                          </Typography>
+                        )}
+                      </Box>
+                    </Box>
+                  </Box>
+
+                  {/* Feedback Text Input */}
+                  <TextField
+                    multiline
+                    rows={4}
+                    placeholder={t('feedback.placeholder')}
+                    value={feedbackText}
+                    onChange={(e) => setFeedbackText(e.target.value)}
+                    variant="outlined"
+                    fullWidth
+                    sx={{
+                      '& .MuiOutlinedInput-root': {
+                        borderRadius: 3,
+                        bgcolor: alpha(theme.palette.background.default, 0.5),
+                        '&:hover': {
+                          bgcolor: alpha(theme.palette.background.default, 0.8),
+                        },
+                        '&.Mui-focused': {
+                          bgcolor: 'transparent',
+                        }
+                      }
+                    }}
+                  />
+                </Box>
+              )}
+            </Box>
+            
+            <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, mt: 4 }}>
+              <Button 
+                onClick={() => handleOpenChangeWrapper(false)} 
+                disabled={submitting} 
+                color="inherit" 
+                sx={{ 
+                  minWidth: 100, 
+                  borderRadius: 2,
+                  textTransform: 'none',
+                  fontWeight: 600
+                }}
+              >
+                {t('common.cancel')}
+              </Button>
+              <Button 
+                variant="contained" 
+                color="secondary" 
+                onClick={handleSubmit} 
+                disabled={submitting || loading || isUnchanged}
+                sx={{ 
+                  minWidth: 140,
+                  fontWeight: 700,
+                  borderRadius: 2,
+                  textTransform: 'none',
+                  boxShadow: theme.shadows[4],
+                  py: 1
+                }}
+              >
+                {submitting ? t('common.loading') : t('feedback.submit')}
+              </Button>
+            </Box>
           </Box>
-        )}
-      </DialogContent>
-      
-      <DialogActions sx={{ px: 3, pb: 3, justifyContent: 'center', gap: 2 }}>
-        <Button 
-          onClick={handleClose} 
-          disabled={submitting} 
-          color="inherit" 
-          sx={{ 
-            minWidth: 100, 
-            borderRadius: 2,
-            textTransform: 'none',
-            fontWeight: 600
-          }}
-        >
-          {t('common.cancel')}
-        </Button>
-        <Button 
-          variant="contained" 
-          color="secondary" 
-          onClick={handleSubmit} 
-          disabled={submitting || loading || isUnchanged}
-          sx={{ 
-            minWidth: 140,
-            fontWeight: 700,
-            borderRadius: 2,
-            textTransform: 'none',
-            boxShadow: theme.shadows[4],
-            py: 1
-          }}
-        >
-          {submitting ? t('common.loading') : t('feedback.submit')}
-        </Button>
-      </DialogActions>
-    </Dialog>
+          <style>{`@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } } @keyframes slideUp { from { opacity: 0; transform: translate(-50%, -45%); } to { opacity: 1; transform: translate(-50%, -50%); } }`}</style>
+        </Dialog.Content>
+      </Dialog.Portal>
+    </Dialog.Root>
   );
 };
 

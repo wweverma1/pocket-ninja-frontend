@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import * as Dialog from '@radix-ui/react-dialog';
 import { 
   Box, 
   Typography, 
@@ -10,10 +11,6 @@ import {
   TextField, 
   Chip,
   Slider,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
   useTheme,
   alpha,
   Tooltip
@@ -27,7 +24,8 @@ import {
   faPen, 
   faStar, 
   faMapMarkerAlt, 
-  faCloudUploadAlt 
+  faCloudUploadAlt,
+  faTimes
 } from '@fortawesome/free-solid-svg-icons';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../context/AuthContext';
@@ -216,6 +214,33 @@ const Profile = () => {
   ];
 
   const avatars = [1, 2, 3, 4, 5, 6, 7, 8];
+
+  // Styles reused for both dialogs to match LoginDialog pattern
+  const overlayStyle = {
+    position: 'fixed',
+    inset: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    zIndex: 9998,
+    backdropFilter: 'blur(4px)',
+    animation: 'fadeIn 0.3s ease-out',
+  };
+
+  const contentStyleBase = {
+    position: 'fixed',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: '90vw',
+    maxHeight: '85vh',
+    zIndex: 9999,
+    backgroundColor: 'white',
+    borderRadius: '16px',
+    padding: '24px',
+    boxShadow: '0 20px 60px rgba(0,0,0,0.3)',
+    animation: 'slideUp 0.3s ease-out',
+    overflowY: 'auto',
+    overflowX: 'hidden', // Added to prevent horizontal scrollbar
+  };
 
   return (
     <Box sx={{ p: 3, maxWidth: '800px', mx: 'auto', display: 'flex', flexDirection: 'column', gap: 3, pb: 10 }}>
@@ -437,127 +462,133 @@ const Profile = () => {
       </Paper>
 
       {/* Edit Username Dialog */}
-      <Dialog 
-        open={isEditDialogOpen} 
-        onClose={() => !updating && setIsEditDialogOpen(false)} 
-        fullWidth 
-        maxWidth="xs"
-      >
-        <DialogTitle sx={{ textAlign: 'center', fontWeight: 'bold' }}>
-          {t('profile.editUsername')}
-        </DialogTitle>
-        <DialogContent>
-          <Box sx={{ pt: 1 }}>
-            <TextField
-              fullWidth
-              label={t('profile.usernameLabel')}
-              value={newUsername}
-              onChange={(e) => setNewUsername(e.target.value)}
-              variant="outlined"
-              autoFocus
-            />
-          </Box>
-        </DialogContent>
-        <DialogActions sx={{ px: 3, pb: 3, justifyContent: 'center' }}>
-          <Button onClick={() => setIsEditDialogOpen(false)} disabled={updating} color="inherit">
-            {t('common.cancel')}
-          </Button>
-          <Button 
-            variant="contained" 
-            color="secondary" 
-            onClick={handleUpdateUsername} 
-            disabled={updating || !newUsername.trim() || newUsername === profileData.username}
-          >
-            {updating ? t('common.loading') : t('common.save')}
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <Dialog.Root open={isEditDialogOpen} onOpenChange={(open) => !updating && setIsEditDialogOpen(open)}>
+        <Dialog.Portal>
+          <Dialog.Overlay style={overlayStyle} />
+          <Dialog.Content aria-describedby={undefined} style={{ ...contentStyleBase, maxWidth: '444px' }}>
+            <Dialog.Title asChild>
+              <Typography variant="h6" fontWeight="bold" textAlign="center" gutterBottom>
+                {t('profile.editUsername')}
+              </Typography>
+            </Dialog.Title>
+            
+            <Box sx={{ pt: 2, pb: 2 }}>
+              <TextField
+                fullWidth
+                label={t('profile.usernameLabel')}
+                value={newUsername}
+                onChange={(e) => setNewUsername(e.target.value)}
+                variant="outlined"
+                autoFocus
+              />
+            </Box>
+            
+            <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, mt: 2 }}>
+              <Button onClick={() => setIsEditDialogOpen(false)} disabled={updating} color="inherit">
+                {t('common.cancel')}
+              </Button>
+              <Button 
+                variant="contained" 
+                color="secondary" 
+                onClick={handleUpdateUsername} 
+                disabled={updating || !newUsername.trim() || newUsername === profileData.username}
+              >
+                {updating ? t('common.loading') : t('common.save')}
+              </Button>
+            </Box>
+          </Dialog.Content>
+        </Dialog.Portal>
+      </Dialog.Root>
 
       {/* Avatar Selection Dialog */}
-      <Dialog 
-        open={isAvatarDialogOpen} 
-        onClose={() => !updating && setIsAvatarDialogOpen(false)} 
-        fullWidth 
-        maxWidth="sm"
-      >
-        <DialogTitle sx={{ textAlign: 'center', fontWeight: 'bold' }}>
-          {t('profile.selectAvatar')}
-        </DialogTitle>
-        <DialogContent>
-          <Grid container spacing={{ xs: 1, sm: 2 }} sx={{ p: 1 }}>
-            {avatars.map((id) => (
-              <Grid item xs={4} sm={3} key={id} sx={{ display: 'flex', justifyContent: 'center' }}>
-                <Box
-                  onClick={() => setSelectedAvatarId(id)}
-                  sx={{
-                    cursor: 'pointer',
-                    p: { xs: 0.5, sm: 1 }, 
-                    borderRadius: 2,
-                    border: selectedAvatarId === id ? `3px solid ${theme.palette.secondary.main}` : '3px solid transparent',
-                    transition: 'all 0.2s',
-                    '&:hover': {
-                      bgcolor: alpha(theme.palette.secondary.main, 0.05),
-                      transform: 'scale(1.05)'
-                    }
-                  }}
-                >
-                  <Avatar 
-                    src={`/avatars/${id}.png`} 
-                    sx={{ 
-                      width: { xs: 50, sm: 64 }, 
-                      height: { xs: 50, sm: 64 }, 
-                      bgcolor: 'transparent' 
-                    }} 
-                  />
-                </Box>
-              </Grid>
-            ))}
-            {/* Disabled Upload Option */}
-            <Grid item xs={4} sm={3} sx={{ display: 'flex', justifyContent: 'center' }}>
-               <Tooltip title={t('profile.customUploadComingSoon')}>
+      <Dialog.Root open={isAvatarDialogOpen} onOpenChange={(open) => !updating && setIsAvatarDialogOpen(open)}>
+        <Dialog.Portal>
+          <Dialog.Overlay style={overlayStyle} />
+          <Dialog.Content aria-describedby={undefined} style={{ ...contentStyleBase, maxWidth: '600px' }}>
+            <Dialog.Title asChild>
+              <Typography variant="h6" fontWeight="bold" textAlign="center" gutterBottom>
+                {t('profile.selectAvatar')}
+              </Typography>
+            </Dialog.Title>
+
+            <Grid container spacing={{ xs: 1, sm: 2 }} sx={{ p: 1, mt: 1 }}>
+              {avatars.map((id) => (
+                <Grid key={id} sx={{ display: 'flex', justifyContent: 'center' }}>
                   <Box
+                    onClick={() => setSelectedAvatarId(id)}
                     sx={{
-                      p: { xs: 0.5, sm: 1 },
+                      cursor: 'pointer',
+                      p: { xs: 0.5, sm: 1 }, 
                       borderRadius: 2,
-                      border: '3px solid transparent',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      width: '100%',
-                      opacity: 0.5,
-                      cursor: 'not-allowed'
+                      border: selectedAvatarId === id ? `3px solid ${theme.palette.secondary.main}` : '3px solid transparent',
+                      transition: 'all 0.2s',
+                      '&:hover': {
+                        bgcolor: alpha(theme.palette.secondary.main, 0.05),
+                        transform: 'scale(1.05)'
+                      }
                     }}
                   >
-                    <Box sx={{ 
+                    <Avatar 
+                      src={`/avatars/${id}.png`} 
+                      sx={{ 
                         width: { xs: 50, sm: 64 }, 
                         height: { xs: 50, sm: 64 }, 
-                        borderRadius: '50%', 
-                        bgcolor: theme.palette.grey[200],
+                        bgcolor: 'transparent' 
+                      }} 
+                    />
+                  </Box>
+                </Grid>
+              ))}
+              {/* Disabled Upload Option */}
+              <Grid sx={{ display: 'flex', justifyContent: 'center' }}>
+                 <Tooltip title={t('profile.customUploadComingSoon')}>
+                    <Box
+                      sx={{
+                        p: { xs: 0.5, sm: 1 },
+                        borderRadius: 2,
+                        border: '3px solid transparent',
                         display: 'flex',
                         alignItems: 'center',
-                        justifyContent: 'center'
-                    }}>
-                      <FontAwesomeIcon icon={faCloudUploadAlt} size="lg" color={theme.palette.grey[500]} />
+                        justifyContent: 'center',
+                        width: '100%',
+                        opacity: 0.5,
+                        cursor: 'not-allowed'
+                      }}
+                    >
+                      <Box sx={{ 
+                          width: { xs: 50, sm: 64 }, 
+                          height: { xs: 50, sm: 64 }, 
+                          borderRadius: '50%', 
+                          bgcolor: theme.palette.grey[200],
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center'
+                      }}>
+                        <FontAwesomeIcon icon={faCloudUploadAlt} size="lg" color={theme.palette.grey[500]} />
+                      </Box>
                     </Box>
-                  </Box>
-               </Tooltip>
+                 </Tooltip>
+              </Grid>
             </Grid>
-          </Grid>
-        </DialogContent>
-        <DialogActions sx={{ px: 3, pb: 3, justifyContent: 'center' }}>
-          <Button onClick={() => setIsAvatarDialogOpen(false)} disabled={updating} color="inherit">
-            {t('common.cancel')}
-          </Button>
-          <Button 
-            variant="contained" 
-            color="secondary" 
-            onClick={handleUpdateAvatar} 
-            disabled={updating || selectedAvatarId === profileData.userAvatarId}
-          >
-            {updating ? t('common.loading') : t('common.save')}
-          </Button>
-        </DialogActions>
-      </Dialog>
+            
+            <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, mt: 2 }}>
+              <Button onClick={() => setIsAvatarDialogOpen(false)} disabled={updating} color="inherit">
+                {t('common.cancel')}
+              </Button>
+              <Button 
+                variant="contained" 
+                color="secondary" 
+                onClick={handleUpdateAvatar} 
+                disabled={updating || selectedAvatarId === profileData.userAvatarId}
+              >
+                {updating ? t('common.loading') : t('common.save')}
+              </Button>
+            </Box>
+          </Dialog.Content>
+        </Dialog.Portal>
+      </Dialog.Root>
+
+      <style>{`@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } } @keyframes slideUp { from { opacity: 0; transform: translate(-50%, -45%); } to { opacity: 1; transform: translate(-50%, -50%); } }`}</style>
     </Box>
   );
 };
