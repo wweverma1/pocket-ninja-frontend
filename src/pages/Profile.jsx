@@ -308,7 +308,7 @@ const Profile = () => {
       {/* Gamified Stats Grid */}
       <Box sx={{ flexGrow: 1 }}>
         <Grid container spacing={2} sx={{ height: '100%' }} alignItems="stretch">
-          <Grid item xs={12} sm={6} sx={{ display: 'flex' }}>
+          <Grid sx={{ display: 'flex' }}>
             <StatCard 
               icon={faTrophy} 
               color="#f1c40f" 
@@ -318,7 +318,7 @@ const Profile = () => {
               subtitleLabel={profileData.lastRankIncrement > 0 ? t('profile.points') : null}
             />
           </Grid>
-          <Grid item xs={12} sm={6} sx={{ display: 'flex' }}>
+          <Grid sx={{ display: 'flex' }}>
             <StatCard 
               icon={faPiggyBank} 
               color="#2ecc71" 
@@ -328,7 +328,7 @@ const Profile = () => {
               monthlyLabel={profileData.monthlyStats.savings > 0 ? t('profile.thisMonth') : null}
             />
           </Grid>
-          <Grid item xs={12} sm={6} sx={{ display: 'flex' }}>
+          <Grid sx={{ display: 'flex' }}>
             <StatCard 
               icon={faHandsHelping} 
               color="#3498db" 
@@ -338,7 +338,7 @@ const Profile = () => {
               monthlyLabel={profileData.monthlyStats.contributions > 0 ? t('profile.thisMonth') : null}
             />
           </Grid>
-          <Grid item xs={12} sm={6} sx={{ display: 'flex' }}>
+          <Grid sx={{ display: 'flex' }}>
             <StatCard 
               icon={faChartLine} 
               color="#e74c3c" 

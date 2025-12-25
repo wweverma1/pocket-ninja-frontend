@@ -518,7 +518,7 @@ const Home = () => {
 
           <Grid container spacing={4} sx={{ justifyContent: { xs: 'center', md: 'space-between' } }}>
             {howItWorksSteps.map((step, index) => (
-              <Grid item xs={12} md={4} key={index}>
+              <Grid key={index}>
                 <Card 
                   elevation={0}
                   sx={{ 
@@ -603,7 +603,7 @@ const Home = () => {
             </Box>
             
             <Grid container spacing={4} alignItems="center">
-              <Grid item xs={12} md={8}>
+              <Grid>
                 <Typography variant="h4" fontWeight={800} gutterBottom sx={{ color: 'primary.main' }}>
                   {t('developerNote.title')}
                 </Typography>
@@ -618,7 +618,7 @@ const Home = () => {
                   {t('developerNote.content')}
                 </Typography>
               </Grid>
-              <Grid item xs={12} md={4} sx={{ textAlign: { xs: 'left', md: 'center' } }}>
+              <Grid sx={{ textAlign: { xs: 'left', md: 'center' } }}>
                 <Button 
                   variant="contained" 
                   color="secondary" 
