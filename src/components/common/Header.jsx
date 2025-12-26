@@ -241,7 +241,7 @@ const Header = () => {
             <Divider />
             <Box sx={{ p: 2, textAlign: 'center' }}>
               <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 500 }}>
-                Pocket Ninja v1.0
+                Pocket Ninja v0.9
               </Typography>
             </Box>
           </Box>
