@@ -29,6 +29,7 @@ import { useTranslation } from 'react-i18next';
 import { leaderboardAPI, productAPI, userAPI } from '../services/api';
 import toast from 'react-hot-toast';
 import { ListSkeleton } from '../components/common/LoadingSkeleton';
+import imageCompression from 'browser-image-compression';
 
 const Upload = () => {
   const { t, i18n } = useTranslation();
@@ -108,53 +109,47 @@ const Upload = () => {
     setUploading(true);
 
     try {
-      // Convert to Base64
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
+      // Compression options
+      const options = {
+        maxSizeMB: 1,              // Max size: 1MB
+        maxWidthOrHeight: 1500,    // Max dimension: 1500px
+        useWebWorker: true,
+        fileType: 'image/webp',    // Convert to WebP
+        initialQuality: 0.8,       // Quality: 80%
+        // browser-image-compression automatically handles EXIF orientation
+      };
+
+      // Compress and resize image
+      const compressedFile = await imageCompression(file, options);
       
-      reader.onloadend = async () => {
-        const base64String = reader.result;
+      // Upload
+      const response = await productAPI.uploadReceipt(compressedFile);
+      
+      if (response.errorStatus === 0) {
+        // Success
+        const successMsg = response.message?.[i18n.language] || response.message?.en || t('upload.success');
+        toast.success(successMsg, { duration: 3000, position: 'bottom-center' });
         
-        try {
-          const response = await productAPI.uploadReceipt(base64String);
-          
-          if (response.errorStatus === 0) {
-            // Success
-            const successMsg = response.message?.[i18n.language] || response.message?.en || t('upload.success');
-            toast.success(successMsg, { duration: 3000, position: 'bottom-center' });
-            
-            // Refresh data
-            fetchReceipts(selectedMonth);
-            fetchLeaderboard(); 
-          } else {
-            // Failure from API logic (e.g., unsupported store)
-            const errorMsg = response.message?.[i18n.language] || response.message?.en || t('common.error');
-            toast.error(errorMsg, { duration: 3000, position: 'bottom-center' });
+        // Refresh data
+        fetchReceipts(selectedMonth);
+        fetchLeaderboard(); 
+      } else {
+        // Failure from API logic (e.g., unsupported store)
+        const errorMsg = response.message?.[i18n.language] || response.message?.en || t('common.error');
+        toast.error(errorMsg, { duration: 3000, position: 'bottom-center' });
 
-            fetchReceipts(selectedMonth);
-          }
-        } catch (apiError) {
-          console.error('Upload API error', apiError);
-          const errorMsg = apiError.response?.data?.message?.[i18n.language] || 
-                           apiError.response?.data?.message?.en || 
-                           t('common.error');
-          toast.error(errorMsg, { duration: 3000, position: 'bottom-center' });
-        } finally {
-          setUploading(false);
-          // Reset input so same file can be selected again if needed
-          if (fileInputRef.current) fileInputRef.current.value = '';
-        }
-      };
-      
-      reader.onerror = () => {
-        toast.error(t('common.error'), { duration: 3000, position: 'bottom-center' });
-        setUploading(false);
-      };
-
-    } catch (e) {
-      console.error('File reading error', e);
-      toast.error(t('common.error'), { duration: 3000, position: 'bottom-center' });
+        fetchReceipts(selectedMonth);
+      }
+    } catch (error) {
+      console.error('Upload or Compression error', error);
+      const errorMsg = error.response?.data?.message?.[i18n.language] || 
+                       error.response?.data?.message?.en || 
+                       t('common.error');
+      toast.error(errorMsg, { duration: 3000, position: 'bottom-center' });
+    } finally {
       setUploading(false);
+      // Reset input so same file can be selected again if needed
+      if (fileInputRef.current) fileInputRef.current.value = '';
     }
   };
 

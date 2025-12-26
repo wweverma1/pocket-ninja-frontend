@@ -54,9 +54,14 @@ export const productAPI = {
     return response.data;
   },
 
-  uploadReceipt: async (base64Image) => {
-    const response = await api.put('/product/', { 
-        receiptImageData: base64Image 
+  uploadReceipt: async (imageFile) => {
+    const formData = new FormData();
+    formData.append('receiptImage', imageFile);
+
+    const response = await api.put('/product/', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
     });
     return response.data;
   }
