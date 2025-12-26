@@ -230,12 +230,16 @@ const Upload = () => {
         if (response.errorStatus === 0) {
             const successMsg = response.message?.[i18n.language] || response.message?.en || t('upload.success');
             toast.success(successMsg, { duration: 3000, position: 'bottom-center' });
-            fetchReceipts(selectedMonth);
-            fetchLeaderboard();
+            setTimeout(() => {
+                fetchReceipts(selectedMonth);
+                fetchLeaderboard();
+            }, 500);
         } else {
             const errorMsg = response.message?.[i18n.language] || response.message?.en || t('common.error');
             toast.error(errorMsg, { duration: 3000, position: 'bottom-center' });
-            fetchReceipts(selectedMonth);
+            setTimeout(() => {
+              fetchReceipts(selectedMonth);
+            }, 500);
         }
 
     } catch (error) {
