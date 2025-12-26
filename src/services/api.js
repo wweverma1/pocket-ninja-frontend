@@ -43,7 +43,7 @@ export const userAPI = {
 
   getReceipts: async (month) => {
     // month format: YYYY-MM
-    const response = await api.get(`/user/receipt?month=${month}`);
+    const response = await api.get(`/user/receipt?month=${month}&_t=${new Date().getTime()}`);
     return response.data;
   }
 };
@@ -76,7 +76,7 @@ export const productAPI = {
 
 export const leaderboardAPI = {
   getLeaderboard: async () => {
-    const response = await api.get('/leaderboard/');
+    const response = await api.get(`/leaderboard/?_t=${new Date().getTime()}`);
     return response.data;
   }
 };
