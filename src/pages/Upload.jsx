@@ -13,7 +13,12 @@ import {
   useTheme,
   alpha,
   TextField,
-  Chip
+  Chip,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  IconButton
 } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -22,8 +27,9 @@ import {
   faReceipt,
   faCheckCircle,
   faExclamationCircle,
-  faUpload,
-  faCrown
+  faCrown,
+  faCropSimple,
+  faTimes
 } from '@fortawesome/free-solid-svg-icons';
 import { useTranslation } from 'react-i18next';
 import { leaderboardAPI, productAPI, userAPI } from '../services/api';
@@ -31,22 +37,47 @@ import toast from 'react-hot-toast';
 import { ListSkeleton } from '../components/common/LoadingSkeleton';
 import imageCompression from 'browser-image-compression';
 
+// React Image Crop
+import ReactCrop, { centerCrop, makeAspectCrop } from 'react-image-crop';
+import 'react-image-crop/dist/ReactCrop.css';
+
+// Helper to create the initial crop area (centered, 90% of image)
+function centerAspectCrop(mediaWidth, mediaHeight, aspect) {
+  return centerCrop(
+    makeAspectCrop(
+      {
+        unit: '%',
+        width: 90,
+      },
+      aspect,
+      mediaWidth,
+      mediaHeight
+    ),
+    mediaWidth,
+    mediaHeight
+  )
+}
+
 const Upload = () => {
   const { t, i18n } = useTranslation();
   const theme = useTheme();
   const fileInputRef = useRef(null);
-
+  
+  // Data State
   const [leaderboard, setLeaderboard] = useState([]);
   const [userStats, setUserStats] = useState(null);
   const [loadingLeaderboard, setLoadingLeaderboard] = useState(true);
-
-  // History State
   const [receipts, setReceipts] = useState([]);
   const [loadingReceipts, setLoadingReceipts] = useState(false);
-  const [selectedMonth, setSelectedMonth] = useState(new Date().toISOString().slice(0, 7)); // YYYY-MM
+  const [selectedMonth, setSelectedMonth] = useState(new Date().toISOString().slice(0, 7));
   
-  // Upload State
+  // Upload & Crop State
   const [uploading, setUploading] = useState(false);
+  const [imgSrc, setImgSrc] = useState('');
+  const [crop, setCrop] = useState();
+  const [completedCrop, setCompletedCrop] = useState(null);
+  const [cropDialogOpen, setCropDialogOpen] = useState(false);
+  const imgRef = useRef(null);
 
   useEffect(() => {
     fetchLeaderboard();
@@ -58,7 +89,6 @@ const Upload = () => {
 
   const fetchLeaderboard = async () => {
     try {
-      // setLoadingLeaderboard(true); // Optional: keep old data while refreshing language
       const data = await leaderboardAPI.getLeaderboard();
       if (data.errorStatus === 0) {
         setLeaderboard(data.result.leaderboard || []);
@@ -83,7 +113,6 @@ const Upload = () => {
       }
     } catch (error) {
       console.error('Failed to fetch receipts', error);
-      // Don't show toast on 404/empty, just clear list
       setReceipts([]);
     } finally {
       setLoadingReceipts(false);
@@ -96,74 +125,157 @@ const Upload = () => {
     }
   };
 
-  const handleFileChange = async (event) => {
-    const file = event.target.files[0];
-    if (!file) return;
-
-    // Check if image
-    if (!file.type.startsWith('image/')) {
-      toast.error(t('upload.imageOnlyError'), { duration: 3000, position: 'bottom-center' });
-      return;
-    }
-
-    setUploading(true);
-
-    try {
-      // Compression options
-      const options = {
-        maxSizeMB: 1,              // Max size: 1MB
-        maxWidthOrHeight: 1500,    // Max dimension: 1500px
-        useWebWorker: true,
-        fileType: 'image/webp',    // Convert to WebP
-        initialQuality: 0.8,       // Quality: 80%
-        // browser-image-compression automatically handles EXIF orientation
-      };
-
-      // Compress and resize image
-      const compressedFile = await imageCompression(file, options);
-      
-      // Upload
-      const response = await productAPI.uploadReceipt(compressedFile);
-      
-      if (response.errorStatus === 0) {
-        // Success
-        const successMsg = response.message?.[i18n.language] || response.message?.en || t('upload.success');
-        toast.success(successMsg, { duration: 3000, position: 'bottom-center' });
-        
-        // Refresh data
-        fetchReceipts(selectedMonth);
-        fetchLeaderboard(); 
-      } else {
-        // Failure from API logic (e.g., unsupported store)
-        const errorMsg = response.message?.[i18n.language] || response.message?.en || t('common.error');
-        toast.error(errorMsg, { duration: 3000, position: 'bottom-center' });
-
-        fetchReceipts(selectedMonth);
+  // 1. Handle File Selection -> Open Crop Dialog
+  const handleFileChange = (event) => {
+    if (event.target.files && event.target.files.length > 0) {
+      const file = event.target.files[0];
+      if (!file.type.startsWith('image/')) {
+        toast.error(t('upload.imageOnlyError'), { duration: 3000, position: 'bottom-center' });
+        return;
       }
-    } catch (error) {
-      console.error('Upload or Compression error', error);
-      const errorMsg = error.response?.data?.message?.[i18n.language] || 
-                       error.response?.data?.message?.en || 
-                       t('common.error');
-      toast.error(errorMsg, { duration: 3000, position: 'bottom-center' });
-    } finally {
-      setUploading(false);
-      // Reset input so same file can be selected again if needed
-      if (fileInputRef.current) fileInputRef.current.value = '';
+      
+      setCrop(undefined); // Reset crop
+      const reader = new FileReader();
+      reader.addEventListener('load', () => {
+        setImgSrc(reader.result.toString() || '');
+        setCropDialogOpen(true);
+      });
+      reader.readAsDataURL(file);
+      
+      // Reset input to allow re-selecting same file
+      event.target.value = ''; 
     }
   };
 
+  // 2. Initialize Crop when image loads in Dialog
+  function onImageLoad(e) {
+    const { width, height } = e.currentTarget;
+    // Start with a free-form crop centered on the image
+    const initialCrop = centerAspectCrop(width, height, 0); // 0 or undefined for freeform
+    // Since we want freeform, we just center a box:
+    setCrop({
+        unit: '%',
+        width: 90,
+        height: 90,
+        x: 5,
+        y: 5
+    });
+  }
+
+  // 3. Generate Cropped Blob using Canvas
+  const getCroppedImg = (image, crop) => {
+    const canvas = document.createElement('canvas');
+    const scaleX = image.naturalWidth / image.width;
+    const scaleY = image.naturalHeight / image.height;
+    
+    // Set canvas size to the cropped size (in natural pixels)
+    canvas.width = crop.width * scaleX;
+    canvas.height = crop.height * scaleY;
+    
+    const ctx = canvas.getContext('2d');
+
+    // Smooth scaling
+    ctx.imageSmoothingQuality = 'high';
+
+    ctx.drawImage(
+      image,
+      crop.x * scaleX,
+      crop.y * scaleY,
+      crop.width * scaleX,
+      crop.height * scaleY,
+      0,
+      0,
+      crop.width * scaleX,
+      crop.height * scaleY
+    );
+
+    return new Promise((resolve, reject) => {
+      canvas.toBlob(
+        (blob) => {
+          if (!blob) {
+            reject(new Error('Canvas is empty'));
+            return;
+          }
+          // Name the blob for file processing
+          blob.name = 'cropped_receipt.jpg';
+          resolve(blob);
+        },
+        'image/jpeg',
+        1 // High quality intermediate
+      );
+    });
+  };
+
+  // 4. Confirm Crop -> Compress -> Upload
+  const handleCropConfirm = async () => {
+    if (!imgRef.current || !completedCrop) {
+        // If no crop interaction, just use original source? 
+        // Or enforce crop. Let's assume if dialog is open, we want what's in the box.
+        // If completedCrop is null, user didn't touch it. 
+        // For simplicity, if null, try to use the current 'crop' state or full image.
+        toast.error(t('common.error'), { position: 'bottom-center' });
+        return;
+    }
+
+    try {
+        setUploading(true);
+        setCropDialogOpen(false); // Close dialog immediately
+
+        // A. Get Blob from Canvas
+        const croppedBlob = await getCroppedImg(imgRef.current, completedCrop);
+
+        // B. Compress (WebP, 1500px, 1MB)
+        const options = {
+            maxSizeMB: 1,
+            maxWidthOrHeight: 1500,
+            useWebWorker: true,
+            fileType: 'image/webp',
+            initialQuality: 0.8,
+        };
+        
+        const compressedFile = await imageCompression(croppedBlob, options);
+
+        // C. Upload
+        const response = await productAPI.uploadReceipt(compressedFile);
+
+        if (response.errorStatus === 0) {
+            const successMsg = response.message?.[i18n.language] || response.message?.en || t('upload.success');
+            toast.success(successMsg, { duration: 3000, position: 'bottom-center' });
+            fetchReceipts(selectedMonth);
+            fetchLeaderboard();
+        } else {
+            const errorMsg = response.message?.[i18n.language] || response.message?.en || t('common.error');
+            toast.error(errorMsg, { duration: 3000, position: 'bottom-center' });
+            fetchReceipts(selectedMonth);
+        }
+
+    } catch (error) {
+        console.error('Crop/Upload error', error);
+        const errorMsg = error.response?.data?.message?.[i18n.language] || 
+                       error.response?.data?.message?.en || 
+                       t('common.error');
+        toast.error(errorMsg, { duration: 3000, position: 'bottom-center' });
+    } finally {
+        setUploading(false);
+    }
+  };
+
+  const handleCloseDialog = () => {
+      setCropDialogOpen(false);
+      setImgSrc('');
+  };
+
+  // Helpers for Render
   const getRankColor = (index) => {
     switch(index) {
-      case 0: return '#FFD700'; // Gold
-      case 1: return '#C0C0C0'; // Silver
-      case 2: return '#CD7F32'; // Bronze
+      case 0: return '#FFD700'; 
+      case 1: return '#C0C0C0'; 
+      case 2: return '#CD7F32'; 
       default: return theme.palette.grey[400];
     }
   };
 
   const getRankHeight = (index) => {
-    // Podium visual steps
     switch(index) {
       case 0: return 160; 
       case 1: return 130;
@@ -172,13 +284,12 @@ const Upload = () => {
     }
   };
 
-  // Reorder for Podium: Silver (1) - Gold (0) - Bronze (2)
   const podiumOrder = [1, 0, 2]; 
 
   return (
     <Container maxWidth="lg" sx={{ pb: 8, pt: 4 }}>
       
-      {/* 1. Leaderboard Section */}
+      {/* Leaderboard Section */}
       <Box sx={{ mb: 8 }}>
         <Box sx={{ textAlign: 'center', mb: 5 }}>
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 1 }}>
@@ -206,7 +317,7 @@ const Upload = () => {
           </Box>
         ) : (
           <Box>
-            {/* Improved Podium */}
+            {/* Podium */}
             <Box sx={{ 
               display: 'flex', 
               justifyContent: 'center', 
@@ -217,14 +328,11 @@ const Upload = () => {
             }}>
               {podiumOrder.map((positionIndex) => {
                 const user = leaderboard[positionIndex];
-                // Render placeholder if user doesn't exist to maintain layout
                 if (!user) return <Box key={`placeholder-${positionIndex}`} sx={{ width: { xs: '30%', sm: 140 } }} />;
 
                 const isFirst = positionIndex === 0;
                 const height = getRankHeight(positionIndex);
                 const color = getRankColor(positionIndex);
-                
-                // Podium gradients based on rank
                 const gradient = isFirst 
                   ? 'linear-gradient(135deg, #FFD700 0%, #FDB931 100%)' 
                   : positionIndex === 1
@@ -240,11 +348,8 @@ const Upload = () => {
                     position: 'relative',
                     zIndex: isFirst ? 2 : 1,
                     transition: 'transform 0.3s ease',
-                    '&:hover': {
-                      transform: 'translateY(-5px)',
-                    }
+                    '&:hover': { transform: 'translateY(-5px)' }
                   }}>
-                    {/* Avatar Container */}
                     <Box sx={{ position: 'relative', mb: 2 }}>
                         {isFirst && (
                           <Box sx={{ 
@@ -286,12 +391,9 @@ const Upload = () => {
                            </Typography>
                         </Box>
                     </Box>
-                    
                     <Typography variant="subtitle2" fontWeight={700} noWrap sx={{ maxWidth: '100%', mb: 1, textAlign: 'center' }}>
                       {user.username}
                     </Typography>
-
-                    {/* Podium Block */}
                     <Paper elevation={3} sx={{ 
                       width: '100%', 
                       height: height, 
@@ -307,7 +409,6 @@ const Upload = () => {
                       position: 'relative',
                       overflow: 'hidden'
                     }}>
-                       {/* Decorative shimmer */}
                        <Box sx={{
                          position: 'absolute',
                          top: 0,
@@ -324,20 +425,8 @@ const Upload = () => {
               })}
             </Box>
 
-            {/* Improved User Stats / Milestone Card */}
-            {/* User Stats / Milestone - Simplified */}
             {userStats && (
-              <Box sx={{ 
-                maxWidth: 600, 
-                mx: 'auto', 
-                mt: 4, 
-                textAlign: 'center',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                gap: 2
-              }}>
-                {/* Simple Rank Display */}
+              <Box sx={{ maxWidth: 600, mx: 'auto', mt: 4, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>
                 <Box sx={{ 
                   display: 'inline-flex', 
                   alignItems: 'center', 
@@ -353,8 +442,6 @@ const Upload = () => {
                      {t('upload.yourRank')}: <Box component="span" sx={{ fontSize: '1.2em', fontWeight: 800 }}>#{userStats.rank}</Box>
                    </Typography>
                 </Box>
-
-                {/* Milestone Message - Clean Text */}
                 {userStats.nextMilestone && (
                    <Typography variant="body1" color="text.secondary" sx={{ fontStyle: 'italic', maxWidth: '90%', fontSize: '0.95rem' }}>
                      "{userStats.nextMilestone[i18n.language] || userStats.nextMilestone.en}"
@@ -366,7 +453,7 @@ const Upload = () => {
         )}
       </Box>
 
-      {/* 2. Contribute Section */}
+      {/* Contribute Section */}
       <Paper 
         elevation={0}
         sx={{ 
@@ -396,7 +483,6 @@ const Upload = () => {
           <input
             type="file"
             accept="image/*"
-            capture="environment"
             ref={fileInputRef}
             style={{ display: 'none' }}
             onChange={handleFileChange}
@@ -428,7 +514,7 @@ const Upload = () => {
         </Container>
       </Paper>
 
-      {/* 3. History Section */}
+      {/* History Section */}
       <Box>
          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 3, flexWrap: 'wrap', gap: 2 }}>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
@@ -481,7 +567,6 @@ const Upload = () => {
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
                 {receipts.map((receipt, index) => {
                   const isSuccess = receipt.status === 'SUCCESS';
-                  // Handle message extraction based on the object structure from prompt
                   const resultMsgObj = receipt.result?.message;
                   const messageText = resultMsgObj?.[i18n.language] || resultMsgObj?.en || '';
                   
@@ -493,7 +578,6 @@ const Upload = () => {
                     }}>
                       <CardContent sx={{ py: 2, '&:last-child': { pb: 2 } }}>
                          <Grid container spacing={2} alignItems="center">
-                            {/* Icon */}
                             <Grid sx={{ textAlign: 'center' }}>
                                <FontAwesomeIcon 
                                  icon={isSuccess ? faCheckCircle : faExclamationCircle} 
@@ -501,8 +585,6 @@ const Upload = () => {
                                  color={isSuccess ? theme.palette.success.main : theme.palette.error.main}
                                />
                             </Grid>
-
-                            {/* Info */}
                             <Grid>
                                <Typography variant="subtitle1" fontWeight={700}>
                                  {receipt.storeName || t('upload.unknownStore')}
@@ -514,8 +596,6 @@ const Upload = () => {
                                   {messageText}
                                </Typography>
                             </Grid>
-                            
-                            {/* Stats */}
                             {isSuccess && (
                               <Grid sx={{ textAlign: { xs: 'left', sm: 'right' }, pl: { xs: 6, sm: 0 } }}>
                                  <Chip 
@@ -541,6 +621,63 @@ const Upload = () => {
             )}
          </Paper>
       </Box>
+
+      {/* CROP DIALOG */}
+      <Dialog
+        open={cropDialogOpen}
+        onClose={handleCloseDialog}
+        maxWidth="md"
+        fullWidth
+        PaperProps={{
+            sx: { borderRadius: 3, maxHeight: '90vh' }
+        }}
+      >
+        <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: 1, borderColor: 'divider' }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                <FontAwesomeIcon icon={faCropSimple} />
+                <Typography variant="h6" fontWeight={700}>{t('upload.edit') || "Edit Image"}</Typography>
+            </Box>
+            <IconButton onClick={handleCloseDialog} size="small">
+                <FontAwesomeIcon icon={faTimes} />
+            </IconButton>
+        </DialogTitle>
+        
+        <DialogContent sx={{ p: 0, bgcolor: '#f5f5f5', display: 'flex', justifyContent: 'center', overflow: 'auto' }}>
+            {!!imgSrc && (
+                <Box sx={{ p: 2 }}>
+                    <ReactCrop
+                        crop={crop}
+                        onChange={(_, percentCrop) => setCrop(percentCrop)}
+                        onComplete={(c) => setCompletedCrop(c)}
+                        aspect={undefined} // Freeform crop
+                    >
+                        <img
+                            ref={imgRef}
+                            alt="Crop me"
+                            src={imgSrc}
+                            onLoad={onImageLoad}
+                            style={{ maxWidth: '100%', maxHeight: '60vh', display: 'block' }}
+                        />
+                    </ReactCrop>
+                </Box>
+            )}
+        </DialogContent>
+        
+        <DialogActions sx={{ p: 3, borderTop: 1, borderColor: 'divider' }}>
+             <Button onClick={handleCloseDialog} color="inherit" sx={{ fontWeight: 600 }}>
+                 {t('common.cancel')}
+             </Button>
+             <Button 
+                onClick={handleCropConfirm} 
+                variant="contained" 
+                color="secondary"
+                startIcon={<FontAwesomeIcon icon={faCheckCircle} />}
+                sx={{ px: 3, borderRadius: 2, fontWeight: 700 }}
+            >
+                 {t('upload.submit')}
+             </Button>
+        </DialogActions>
+      </Dialog>
 
       <style>{`
         @keyframes float {
