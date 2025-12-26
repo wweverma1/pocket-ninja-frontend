@@ -665,7 +665,7 @@ const Upload = () => {
                 </Dialog.Title>
 
                 {/* Crop Content */}
-                <Box sx={{ mt: 3, mb: 3, display: 'flex', justifyContent: 'center', bgcolor: '#f5f5f5', borderRadius: 2, p: 1 }}>
+                <Box sx={{ mt: 3, mb: 3, display: 'flex', justifyContent: 'center', bgcolor: '#f5f5f5', p: 1 }}>
                     {!!imgSrc && (
                         <ReactCrop
                             crop={crop}
