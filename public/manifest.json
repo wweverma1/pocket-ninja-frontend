@@ -3,12 +3,12 @@
   "name": "Pocket Ninja | Small steps, big savings",
   "icons": [
     {
-      "src": "/pocket-ninja-icons.png",
+      "src": "/pocket-ninja-image-192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/pocket-ninja-icons.png",
+      "src": "/pocket-ninja-icons-512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
