@@ -14,10 +14,6 @@ import {
   alpha,
   TextField,
   Chip,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
   IconButton
 } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -36,6 +32,9 @@ import { leaderboardAPI, productAPI, userAPI } from '../services/api';
 import toast from 'react-hot-toast';
 import { ListSkeleton } from '../components/common/LoadingSkeleton';
 import imageCompression from 'browser-image-compression';
+
+// Radix UI Dialog
+import * as Dialog from '@radix-ui/react-dialog';
 
 // React Image Crop
 import ReactCrop, { centerCrop, makeAspectCrop } from 'react-image-crop';
@@ -150,9 +149,7 @@ const Upload = () => {
   // 2. Initialize Crop when image loads in Dialog
   function onImageLoad(e) {
     const { width, height } = e.currentTarget;
-    // Start with a free-form crop centered on the image
-    const initialCrop = centerAspectCrop(width, height, 0); // 0 or undefined for freeform
-    // Since we want freeform, we just center a box:
+    const initialCrop = centerAspectCrop(width, height, 0); 
     setCrop({
         unit: '%',
         width: 90,
@@ -168,13 +165,10 @@ const Upload = () => {
     const scaleX = image.naturalWidth / image.width;
     const scaleY = image.naturalHeight / image.height;
     
-    // Set canvas size to the cropped size (in natural pixels)
     canvas.width = crop.width * scaleX;
     canvas.height = crop.height * scaleY;
     
     const ctx = canvas.getContext('2d');
-
-    // Smooth scaling
     ctx.imageSmoothingQuality = 'high';
 
     ctx.drawImage(
@@ -196,12 +190,11 @@ const Upload = () => {
             reject(new Error('Canvas is empty'));
             return;
           }
-          // Name the blob for file processing
           blob.name = 'cropped_receipt.jpg';
           resolve(blob);
         },
         'image/jpeg',
-        1 // High quality intermediate
+        1 
       );
     });
   };
@@ -209,17 +202,13 @@ const Upload = () => {
   // 4. Confirm Crop -> Compress -> Upload
   const handleCropConfirm = async () => {
     if (!imgRef.current || !completedCrop) {
-        // If no crop interaction, just use original source? 
-        // Or enforce crop. Let's assume if dialog is open, we want what's in the box.
-        // If completedCrop is null, user didn't touch it. 
-        // For simplicity, if null, try to use the current 'crop' state or full image.
         toast.error(t('common.error'), { position: 'bottom-center' });
         return;
     }
 
     try {
         setUploading(true);
-        setCropDialogOpen(false); // Close dialog immediately
+        setCropDialogOpen(false); 
 
         // A. Get Blob from Canvas
         const croppedBlob = await getCroppedImg(imgRef.current, completedCrop);
@@ -263,6 +252,12 @@ const Upload = () => {
   const handleCloseDialog = () => {
       setCropDialogOpen(false);
       setImgSrc('');
+  };
+
+  const handleOpenChangeWrapper = (isOpen) => {
+    if (!isOpen && !uploading) {
+      handleCloseDialog();
+    }
   };
 
   // Helpers for Render
@@ -622,62 +617,95 @@ const Upload = () => {
          </Paper>
       </Box>
 
-      {/* CROP DIALOG */}
-      <Dialog
-        open={cropDialogOpen}
-        onClose={handleCloseDialog}
-        maxWidth="md"
-        fullWidth
-        PaperProps={{
-            sx: { borderRadius: 3, maxHeight: '90vh' }
-        }}
-      >
-        <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: 1, borderColor: 'divider' }}>
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                <FontAwesomeIcon icon={faCropSimple} />
-                <Typography variant="h6" fontWeight={700}>{t('upload.edit') || "Edit Image"}</Typography>
-            </Box>
-            <IconButton onClick={handleCloseDialog} size="small">
-                <FontAwesomeIcon icon={faTimes} />
-            </IconButton>
-        </DialogTitle>
-        
-        <DialogContent sx={{ p: 0, bgcolor: '#f5f5f5', display: 'flex', justifyContent: 'center', overflow: 'auto' }}>
-            {!!imgSrc && (
-                <Box sx={{ p: 2 }}>
-                    <ReactCrop
-                        crop={crop}
-                        onChange={(_, percentCrop) => setCrop(percentCrop)}
-                        onComplete={(c) => setCompletedCrop(c)}
-                        aspect={undefined} // Freeform crop
-                    >
-                        <img
-                            ref={imgRef}
-                            alt="Crop me"
-                            src={imgSrc}
-                            onLoad={onImageLoad}
-                            style={{ maxWidth: '100%', maxHeight: '60vh', display: 'block' }}
-                        />
-                    </ReactCrop>
+      {/* Radix UI Crop Dialog */}
+      <Dialog.Root open={cropDialogOpen} onOpenChange={handleOpenChangeWrapper}>
+        <Dialog.Portal>
+          <Dialog.Overlay
+            style={{
+              position: 'fixed',
+              inset: 0,
+              backgroundColor: 'rgba(0, 0, 0, 0.6)',
+              zIndex: 9998,
+              backdropFilter: 'blur(4px)',
+              animation: 'fadeIn 0.3s ease-out',
+            }}
+          />
+          <Dialog.Content
+            aria-describedby={undefined}
+            style={{
+              position: 'fixed',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              width: '90vw',
+              maxWidth: '600px',
+              maxHeight: '90vh',
+              zIndex: 9999,
+              backgroundColor: 'white',
+              borderRadius: '16px',
+              padding: '24px',
+              boxShadow: '0 20px 60px rgba(0,0,0,0.3)',
+              animation: 'slideUp 0.3s ease-out',
+              overflowY: 'auto'
+            }}
+          >
+            <Box sx={{ position: 'relative' }}>
+                {/* Title */}
+                <Dialog.Title asChild>
+                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, pb: 0.5 }}>
+                       <FontAwesomeIcon icon={faCropSimple} />
+                       <Typography variant="h6" fontWeight={800}>
+                          {t('upload.edit') || "Edit Image"}
+                       </Typography>
+                   </Box>
+                </Dialog.Title>
+
+                {/* Crop Content */}
+                <Box sx={{ mt: 3, mb: 3, display: 'flex', justifyContent: 'center', bgcolor: '#f5f5f5', borderRadius: 2, p: 1 }}>
+                    {!!imgSrc && (
+                        <ReactCrop
+                            crop={crop}
+                            onChange={(_, percentCrop) => setCrop(percentCrop)}
+                            onComplete={(c) => setCompletedCrop(c)}
+                            aspect={undefined}
+                        >
+                            <img
+                                ref={imgRef}
+                                alt="Crop me"
+                                src={imgSrc}
+                                onLoad={onImageLoad}
+                                style={{ maxWidth: '100%', maxHeight: '50vh', display: 'block' }}
+                            />
+                        </ReactCrop>
+                    )}
                 </Box>
-            )}
-        </DialogContent>
-        
-        <DialogActions sx={{ p: 3, borderTop: 1, borderColor: 'divider' }}>
-             <Button onClick={handleCloseDialog} color="inherit" sx={{ fontWeight: 600 }}>
-                 {t('common.cancel')}
-             </Button>
-             <Button 
-                onClick={handleCropConfirm} 
-                variant="contained" 
-                color="secondary"
-                startIcon={<FontAwesomeIcon icon={faCheckCircle} />}
-                sx={{ px: 3, borderRadius: 2, fontWeight: 700 }}
-            >
-                 {t('upload.submit')}
-             </Button>
-        </DialogActions>
-      </Dialog>
+
+                {/* Actions */}
+                <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, mt: 4 }}>
+                     <Button 
+                        onClick={handleCloseDialog} 
+                        color="inherit" 
+                        disabled={uploading}
+                        sx={{ fontWeight: 600, textTransform: 'none', borderRadius: 2 }}
+                     >
+                         {t('common.cancel')}
+                     </Button>
+                     <Button 
+                        onClick={handleCropConfirm} 
+                        variant="contained" 
+                        color="secondary"
+                        disabled={uploading}
+                        startIcon={<FontAwesomeIcon icon={faCheckCircle} />}
+                        sx={{ px: 3, borderRadius: 2, fontWeight: 700, textTransform: 'none', boxShadow: 4 }}
+                    >
+                         {t('upload.submit')}
+                     </Button>
+                </Box>
+            </Box>
+            <style>{`@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } } @keyframes slideUp { from { opacity: 0; transform: translate(-50%, -45%); } to { opacity: 1; transform: translate(-50%, -50%); } }`}</style>
+          </Dialog.Content>
+        </Dialog.Portal>
+      </Dialog.Root>
 
       <style>{`
         @keyframes float {

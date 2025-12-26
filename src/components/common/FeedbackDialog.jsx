@@ -145,24 +145,6 @@ const FeedbackDialog = ({ open, onOpenChange }) => {
           }}
         >
           <Box sx={{ position: 'relative' }}>
-             <Dialog.Close asChild>
-              <Button
-                disabled={submitting}
-                sx={{
-                  position: 'absolute',
-                  top: -8,
-                  right: -8,
-                  minWidth: 'auto',
-                  width: 40,
-                  height: 40,
-                  borderRadius: '50%',
-                  color: 'text.secondary',
-                }}
-              >
-                <FontAwesomeIcon icon={faTimes} />
-              </Button>
-            </Dialog.Close>
-
             <Dialog.Title asChild>
               <Box sx={{ textAlign: 'center', pb: 0.5 }}>
                 <Typography variant="h5" fontWeight={800}>

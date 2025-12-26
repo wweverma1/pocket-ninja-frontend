@@ -56,12 +56,19 @@ export const productAPI = {
 
   uploadReceipt: async (imageFile) => {
     const formData = new FormData();
-    formData.append('receiptImage', imageFile);
+    // Append the file. We add 'receipt.webp' as the 3rd argument because 
+    // blobs from canvas/compression might not have a filename, 
+    // and servers often require one to validate the extension.
+    formData.append('receiptImage', imageFile, 'receipt.webp');
 
+    // FIX: Explicitly set Content-Type to undefined.
+    // This removes the default 'application/json' and prevents Axios from 
+    // setting a raw 'multipart/form-data' header without the boundary.
+    // The browser will now automatically set the correct header with the boundary.
     const response = await api.put('/product/', formData, {
       headers: {
-        'Content-Type': 'multipart/form-data',
-      },
+        'Content-Type': undefined
+      }
     });
     return response.data;
   }
