@@ -383,10 +383,11 @@ const Upload = () => {
                           px: 1,
                           py: 0.2,
                           boxShadow: 1,
-                          border: `1px solid ${theme.palette.divider}`
+                          border: `1px solid ${theme.palette.divider}`,
+                          whiteSpace: 'nowrap'
                         }}>
                            <Typography variant="caption" fontWeight={800} color="text.secondary">
-                             {user.score}
+                             {user.score} <Typography component="span" variant="caption" sx={{ fontSize: '0.7em' }}>{t('upload.contributions')}</Typography>
                            </Typography>
                         </Box>
                     </Box>
@@ -438,7 +439,7 @@ const Upload = () => {
                 }}>
                    <FontAwesomeIcon icon={faTrophy} color={theme.palette.primary.main} size="sm" />
                    <Typography variant="subtitle1" fontWeight={700} color="primary.main">
-                     {t('upload.yourRank')}: <Box component="span" sx={{ fontSize: '1.2em', fontWeight: 800 }}>#{userStats.rank}</Box>
+                     {t('upload.yourRank')}: <Box component="span" sx={{ fontSize: '1.2em', fontWeight: 800 }}>{userStats.rank ? `#${userStats.rank}` : t('upload.unranked')}</Box>
                    </Typography>
                 </Box>
                 {userStats.nextMilestone && (
