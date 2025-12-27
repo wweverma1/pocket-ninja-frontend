@@ -503,7 +503,7 @@ const Profile = () => {
                 onClick={handleUpdateUsername} 
                 disabled={updating || !newUsername.trim() || newUsername === profileData.username}
               >
-                {updating ? t('common.updating') : t('common.save')}
+                {updating ? t('common.updating') : t('common.update')}
               </Button>
             </Box>
           </Dialog.Content>
@@ -591,7 +591,7 @@ const Profile = () => {
                 onClick={handleUpdateAvatar} 
                 disabled={updating || selectedAvatarId === profileData.userAvatarId}
               >
-                {updating ? t('common.updating') : t('common.save')}
+                {updating ? t('common.updating') : t('common.update')}
               </Button>
             </Box>
           </Dialog.Content>

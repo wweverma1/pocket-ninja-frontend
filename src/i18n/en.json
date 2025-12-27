@@ -59,6 +59,7 @@
   "common": {
     "loading": "Loading...",
     "submitting": "Submitting...",
+    "update": "Update",
     "updating": "Updating...",
     "error": "An error occurred",
     "retry": "Retry",
