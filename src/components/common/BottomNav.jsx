@@ -84,6 +84,7 @@ const BottomNav = () => {
         left: 0,
         right: 0,
         zIndex: 1000,
+        boxShadow: '0px -2px 8px rgba(0,0,0,0.1)'
       }}
       elevation={4}
     >
@@ -94,20 +95,16 @@ const BottomNav = () => {
         sx={{
           '& .MuiBottomNavigationAction-root': {
             minWidth: 'auto',
-            padding: '6px 8px', // Reduced horizontal padding
           },
           '& .MuiBottomNavigationAction-label': {
-            fontSize: '0.65rem', // Smaller base font size
-            marginTop: '4px',
-            '&.Mui-selected': {
-              fontSize: '0.75rem', // Controlled growth for selected state
-            }
+            fontSize: '0.75rem',
           },
           '& .Mui-selected': {
-            color: theme.palette.primary.main,
+            fontSize: '0.85rem',
+            color: 'white'
           },
           '& .Mui-selected svg': {
-            color: theme.palette.primary.main,
+            color: 'white'
           }
         }}
       >
@@ -116,6 +113,7 @@ const BottomNav = () => {
             key={index}
             label={item.label}
             icon={<FontAwesomeIcon icon={item.icon} />}
+            sx={{ backgroundColor: 'primary.main' }}
           />
         ))}
       </BottomNavigation>
