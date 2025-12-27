@@ -25,7 +25,8 @@ import {
   faExclamationCircle,
   faCrown,
   faCropSimple,
-  faTimes
+  faTimes,
+  faGlassCheers
 } from '@fortawesome/free-solid-svg-icons';
 import { useTranslation } from 'react-i18next';
 import { leaderboardAPI, productAPI, userAPI } from '../services/api';
@@ -437,16 +438,18 @@ const Upload = () => {
                   borderRadius: '50px',
                   border: `1px solid ${alpha(theme.palette.primary.main, 0.1)}`
                 }}>
-                   <FontAwesomeIcon icon={faTrophy} color={theme.palette.primary.main} size="sm" />
-                   <Typography variant="subtitle1" fontWeight={700} color="primary.main">
-                    {userStats.rank ? (
-                      <>
+                  {userStats.rank ? (
+                    <>
+                      <FontAwesomeIcon icon={faGlassCheers} color={theme.palette.primary.main} size="sm" />
+                      <Typography variant="subtitle1" fontWeight={700} color="primary.main">
                         {t('upload.yourRank')} <Box component="span" sx={{ fontSize: '1.2em', fontWeight: 800 }}>#{userStats.rank}</Box>
-                      </>
+                      </Typography>
+                    </>
                     ) : (
-                      t('upload.unranked')
+                      <Typography variant="subtitle1" fontWeight={700} color="primary.main">
+                        {t('upload.unranked')}
+                      </Typography>
                     )}
-                  </Typography>
                 </Box>
                 {userStats.nextMilestone && (
                    <Typography variant="body1" color="text.secondary" sx={{ fontStyle: 'italic', maxWidth: '90%', fontSize: '0.95rem' }}>
