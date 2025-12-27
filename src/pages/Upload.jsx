@@ -286,6 +286,53 @@ const Upload = () => {
 
   const podiumOrder = [1, 0, 2]; 
 
+  // 1. Define Ribbon Colors
+  const ribbonMainColor = userStats?.rank ? theme.palette.secondary.main : theme.palette.grey[400];
+  const ribbonEndColor = userStats?.rank ? theme.palette.secondary.dark : theme.palette.grey[600];
+  const ribbonFoldColor = userStats?.rank ? '#a12d22' : theme.palette.grey[700];
+
+  // 2. Compact Ribbon Style (Dimensions matched to previous element)
+  const ribbonStyle = {
+    position: 'relative',
+    margin: '0 auto',
+    padding: '8px 32px', // Similar to px: 3, py: 1
+    textAlign: 'center',
+    backgroundColor: ribbonMainColor,
+    color: 'white',
+    width: 'fit-content',
+    minWidth: '200px', // Reduced width
+    boxShadow: '0 4px 10px rgba(0,0,0,0.1)',
+    transition: 'all 0.3s ease',
+    borderRadius: '2px', // Slight rounding for softness
+    
+    // Ribbon Ends
+    '&::before, &::after': {
+      content: '""',
+      width: '40px', // Smaller tails
+      height: '100%',
+      backgroundColor: ribbonEndColor,
+      position: 'absolute',
+      zIndex: -1,
+      top: '10px', // Adjusted offset for smaller height
+      clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%, 25% 50%)',
+      
+      // Fold
+      backgroundImage: `linear-gradient(45deg, transparent 50%, ${ribbonFoldColor} 50%)`,
+      backgroundSize: '10px 10px', // Smaller fold
+      backgroundRepeat: 'no-repeat',
+      backgroundPosition: 'bottom right',
+    },
+    
+    '&::before': {
+      left: '-25px', // Tucked closer
+    },
+    
+    '&::after': {
+      right: '-25px',
+      transform: 'scaleX(-1)',
+    }
+  };
+
   return (
     <Container maxWidth="lg" sx={{ pb: 8, pt: 4 }}>
       
@@ -368,8 +415,8 @@ const Upload = () => {
                         <Avatar 
                           src={`/avatars/${user.avatarId}.png`}
                           sx={{ 
-                            width: { xs: 60, sm: 80 }, 
-                            height: { xs: 60, sm: 80 }, 
+                            width: { xs: 70, sm: 90 }, 
+                            height: { xs: 70, sm: 90 }, 
                             border: `4px solid white`,
                             boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
                           }}
@@ -427,35 +474,41 @@ const Upload = () => {
             </Box>
 
             {userStats && (
-              <Box sx={{ maxWidth: 600, mx: 'auto', mt: 4, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>
-                <Box sx={{ 
-                  display: 'inline-flex', 
-                  alignItems: 'center', 
-                  gap: 1.5,
-                  bgcolor: alpha(theme.palette.primary.main, 0.08),
-                  px: 3,
-                  py: 1,
-                  borderRadius: '50px',
-                  border: `1px solid ${alpha(theme.palette.primary.main, 0.1)}`
-                }}>
-                  {userStats.rank ? (
-                    <>
-                      <FontAwesomeIcon icon={faGlassCheers} color={theme.palette.primary.main} size="sm" />
-                      <Typography variant="subtitle1" fontWeight={700} color="primary.main">
-                        {t('upload.yourRank')} <Box component="span" sx={{ fontSize: '1.2em', fontWeight: 800 }}>#{userStats.rank}</Box>
-                      </Typography>
-                    </>
-                    ) : (
-                      <Typography variant="subtitle1" fontWeight={700} color="primary.main">
-                        {t('upload.unranked')}
-                      </Typography>
+              <Box sx={{ maxWidth: 600, mx: 'auto', mt: 4, mb: 2, display: 'flex', justifyContent: 'center' }}>
+                 <Box sx={ribbonStyle}>
+                    
+                    {/* Rank Content */}
+                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1.5 }}>
+                        {userStats.rank ? (
+                          <>
+                             <FontAwesomeIcon icon={faGlassCheers} style={{ color: '#FFD700', fontSize: '1.1rem' }} />
+                             <Typography variant="subtitle1" fontWeight={700} sx={{ lineHeight: 1 }}>
+                               {t('upload.yourRank')}:
+                             </Typography>
+                             <Typography variant="h5" fontWeight={800} sx={{ lineHeight: 1, textShadow: '0 1px 2px rgba(0,0,0,0.2)' }}>
+                               #{userStats.rank}
+                             </Typography>
+                          </>
+                        ) : (
+                          <Typography variant="subtitle1" fontWeight={700}>
+                             {t('upload.unranked')}
+                          </Typography>
+                        )}
+                    </Box>
+
+                    {/* Milestone Message - Compact */}
+                    {userStats.nextMilestone && (
+                       <Box sx={{ 
+                          mt: 0.5, 
+                          pt: 0.5,
+                          width: '100%'
+                       }}>
+                          <Typography variant="caption" sx={{ fontStyle: 'italic', fontWeight: 500, fontSize: '0.75rem', opacity: 0.9 }}>
+                            {userStats.nextMilestone[i18n.language] || userStats.nextMilestone.en}
+                          </Typography>
+                       </Box>
                     )}
-                </Box>
-                {userStats.nextMilestone && (
-                   <Typography variant="body1" color="text.secondary" sx={{ fontStyle: 'italic', maxWidth: '90%', fontSize: '0.95rem' }}>
-                     "{userStats.nextMilestone[i18n.language] || userStats.nextMilestone.en}"
-                   </Typography>
-                )}
+                 </Box>
               </Box>
             )}
           </Box>
