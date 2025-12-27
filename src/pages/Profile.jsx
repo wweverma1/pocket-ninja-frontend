@@ -105,7 +105,11 @@ const Profile = () => {
       }
     } catch (error) {
       console.error('Failed to update username', error);
-      toast.error(t('common.error'), { duration: 3000, position: 'bottom-center' });
+      const errorMsg = error.response?.data?.message?.[i18n.language] || 
+                       error.response?.data?.message?.en || 
+                       t('common.error');
+                       
+      toast.error(errorMsg, { duration: 3000, position: 'bottom-center' });
     } finally {
       setUpdating(false);
     }
@@ -127,7 +131,10 @@ const Profile = () => {
       }
     } catch (error) {
       console.error('Failed to update proximity', error);
-      toast.error(t('common.error'), { duration: 3000, position: 'bottom-center' });
+      const errorMsg = error.response?.data?.message?.[i18n.language] || 
+                       error.response?.data?.message?.en || 
+                       t('common.error');
+      toast.error(errorMsg, { duration: 3000, position: 'bottom-center' });
     } finally {
       setUpdating(false);
     }
@@ -149,7 +156,10 @@ const Profile = () => {
       }
     } catch (error) {
       console.error('Failed to update avatar', error);
-      toast.error(t('common.error'), { duration: 3000, position: 'bottom-center' });
+      const errorMsg = error.response?.data?.message?.[i18n.language] || 
+                       error.response?.data?.message?.en || 
+                       t('common.error');
+      toast.error(errorMsg, { duration: 3000, position: 'bottom-center' });
     } finally {
       setUpdating(false);
     }
@@ -456,7 +466,7 @@ const Profile = () => {
             disabled={updating || proximity === originalProximity}
             sx={{ minWidth: 100 }}
           >
-            {updating ? t('common.loading') : t('profile.update')}
+            {updating ? t('common.updating') : t('profile.update')}
           </Button>
         </Box>
       </Paper>
@@ -493,7 +503,7 @@ const Profile = () => {
                 onClick={handleUpdateUsername} 
                 disabled={updating || !newUsername.trim() || newUsername === profileData.username}
               >
-                {updating ? t('common.loading') : t('common.save')}
+                {updating ? t('common.updating') : t('common.save')}
               </Button>
             </Box>
           </Dialog.Content>
@@ -581,7 +591,7 @@ const Profile = () => {
                 onClick={handleUpdateAvatar} 
                 disabled={updating || selectedAvatarId === profileData.userAvatarId}
               >
-                {updating ? t('common.loading') : t('common.save')}
+                {updating ? t('common.updating') : t('common.save')}
               </Button>
             </Box>
           </Dialog.Content>

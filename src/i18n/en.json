@@ -58,6 +58,7 @@
   },
   "common": {
     "loading": "Loading...",
+    "updating": "Updating...",
     "error": "An error occurred",
     "retry": "Retry",
     "cancel": "Cancel",
