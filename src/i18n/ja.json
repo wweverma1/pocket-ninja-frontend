@@ -58,6 +58,7 @@
   },
   "common": {
     "loading": "読み込み中...",
+    "submitting": "送信中...",
     "updating": "更新中...",
     "error": "エラーが発生しました",
     "retry": "再試行",
@@ -130,7 +131,7 @@
     "success": "レシートがアップロードされました！",
     "productsFound": "{{count}} 個の商品を抽出",
     "edit": "作物の受領書",
-    "uploading": "アップロード中...",
+    "uploading": "処理...",
     "points": "pt",
     "contributions": "枚",
     "status": {

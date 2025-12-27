@@ -280,7 +280,7 @@ const FeedbackDialog = ({ open, onOpenChange }) => {
                   py: 1
                 }}
               >
-                {submitting ? t('common.loading') : t('feedback.submit')}
+                {submitting ? t('common.submitting') : t('feedback.submit')}
               </Button>
             </Box>
           </Box>

@@ -58,6 +58,7 @@
   },
   "common": {
     "loading": "Loading...",
+    "submitting": "Submitting...",
     "updating": "Updating...",
     "error": "An error occurred",
     "retry": "Retry",
@@ -130,7 +131,7 @@
     "success": "Receipt uploaded successfully!",
     "productsFound": "{{count}} products extracted",
     "edit": "Crop Receipt",
-    "uploading": "Uploading...",
+    "uploading": "Processing...",
     "points": "pts",
     "contributions": "receipts",
     "status": {
