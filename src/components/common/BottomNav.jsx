@@ -84,6 +84,8 @@ const BottomNav = () => {
         left: 0,
         right: 0,
         zIndex: 1000,
+        py: 0.5,
+        backgroundColor: 'primary.main',
         boxShadow: '0px -2px 8px rgba(0,0,0,0.1)'
       }}
       elevation={4}
@@ -94,12 +96,12 @@ const BottomNav = () => {
         showLabels
         sx={{
           backgroundColor: 'primary.main',
-          
           '& .MuiBottomNavigationAction-root': {
             minWidth: 'auto',
           },
           '& .MuiBottomNavigationAction-label': {
             fontSize: '0.75rem',
+            marginTop: 0.5,
           },
           '& .Mui-selected': {
             fontSize: '0.85rem',
