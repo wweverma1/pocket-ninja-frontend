@@ -86,7 +86,8 @@ const BottomNav = () => {
         zIndex: 1000,
         py: 0.5,
         backgroundColor: 'primary.main',
-        boxShadow: '0px -2px 8px rgba(0,0,0,0.1)'
+        boxShadow: '0px -2px 8px rgba(0,0,0,0.1)',
+        borderRadius: 0
       }}
       elevation={4}
     >
