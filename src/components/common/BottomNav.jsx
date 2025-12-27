@@ -93,6 +93,8 @@ const BottomNav = () => {
         onChange={handleChange}
         showLabels
         sx={{
+          backgroundColor: 'primary.main',
+          
           '& .MuiBottomNavigationAction-root': {
             minWidth: 'auto',
           },
