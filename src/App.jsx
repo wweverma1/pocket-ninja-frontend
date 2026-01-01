@@ -37,7 +37,7 @@ function App() {
             
             <Route path="/compare" element={isLoggedIn ? <Box sx={{p:4}}>{t('pages.compare')}</Box> : <Navigate to="/" replace />} />
             <Route 
-              path="/upload" 
+              path="/contribute" 
               element={isLoggedIn ? <Upload /> : <Navigate to="/" replace />} 
             />
             <Route path="/campaigns" element={isLoggedIn ? <Box sx={{p:4}}>{t('pages.campaigns')}</Box> : <Navigate to="/" replace />} />

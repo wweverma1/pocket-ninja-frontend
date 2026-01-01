@@ -42,7 +42,7 @@ const Header = () => {
 
   const loggedInMenuItems = [
     { label: t('nav.compare'), path: '/compare' },
-    { label: t('nav.upload'), path: '/upload' },
+    { label: t('nav.upload'), path: '/contribute' },
     // { label: t('nav.campaigns'), path: '/campaigns' },
     { label: t('nav.profile'), path: '/profile' },
   ];
