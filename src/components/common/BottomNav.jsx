@@ -21,7 +21,7 @@ const BottomNav = () => {
   const theme = useTheme();
 
   const navItems = [
-    { label: t('nav.compare'), icon: faShoppingCart, path: '/compare' },
+    { label: t('nav.compare'), icon: faShoppingCart, path: '/shop' },
     { label: t('nav.upload'), icon: faHandsHelping, path: '/contribute' },
     // { label: t('nav.campaigns'), icon: faUsers, path: '/campaigns' },
     { label: t('nav.profile'), icon: faUser, path: '/profile' },

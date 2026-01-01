@@ -72,7 +72,7 @@ const LoginDialog = ({ open, onOpenChange }) => {
         
         // Schedule redirect based on user status; actual navigation happens in useEffect
         // once authentication state is updated.
-        setPendingRedirect(isNewUser ? '/profile' : '/compare');
+        setPendingRedirect(isNewUser ? '/profile' : '/shop');
         
         window.removeEventListener('message', handleMessage);
       } else if (event.data?.type === 'AUTH_ERROR') {

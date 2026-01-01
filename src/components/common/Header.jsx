@@ -41,7 +41,7 @@ const Header = () => {
   ];
 
   const loggedInMenuItems = [
-    { label: t('nav.compare'), path: '/compare' },
+    { label: t('nav.compare'), path: '/shop' },
     { label: t('nav.upload'), path: '/contribute' },
     // { label: t('nav.campaigns'), path: '/campaigns' },
     { label: t('nav.profile'), path: '/profile' },
