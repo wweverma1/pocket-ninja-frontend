@@ -27,14 +27,7 @@ const LoginDialog = ({ open, onOpenChange }) => {
   const handleLogin = (provider) => {
     if (provider === 'Yahoo') {
       toast.success(t('auth.loginComingSoon', { provider: 'Yahoo' }), {
-        duration: 3000,
-        position: 'bottom-center',
-      });
-      return;
-    }
-
-    if (provider === 'LINE') {
-      toast.success(t('auth.loginComingSoon', { provider: 'LINE' }), {
+        icon: '🫸🏻',
         duration: 3000,
         position: 'bottom-center',
       });
@@ -58,6 +51,7 @@ const LoginDialog = ({ open, onOpenChange }) => {
         if (isNewUser)
         {
           toast.success(t('common.loginSuccessNewUser', { username: username }), {
+            icon: '🙏🏻',
             duration: 3000,
             position: 'bottom-center',
           });
@@ -65,6 +59,7 @@ const LoginDialog = ({ open, onOpenChange }) => {
         else
         {
           toast.success(t('common.loginSuccess', { username: username }), {
+            icon: '🙏🏻',
             duration: 3000,
             position: 'bottom-center',
           });
@@ -115,13 +110,13 @@ const LoginDialog = ({ open, onOpenChange }) => {
             </Dialog.Description>
 
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-              <Button variant="outlined" fullWidth onClick={() => handleLogin('Google')} startIcon={<FontAwesomeIcon icon={faGoogle} />} sx={{ borderColor: '#4285F4', color: '#4285F4', py: 1.5, textTransform: 'none', fontWeight: 600, '&:hover': { borderColor: '#357AE8', backgroundColor: 'rgba(66, 133, 244, 0.04)' } }}>
+              <Button variant="contained" fullWidth onClick={() => handleLogin('Google')} startIcon={<FontAwesomeIcon icon={faGoogle} />} sx={{ backgroundColor: '#4285F4', color: 'white', py: 1.5, textTransform: 'none', fontWeight: 600, '&:hover': { backgroundColor: '#357AE8' } }}>
                 {t('auth.loginWith', { provider: 'Google' })}
               </Button>
               <Button variant="contained" fullWidth onClick={() => handleLogin('LINE')} startIcon={<FontAwesomeIcon icon={faLine} />} sx={{ backgroundColor: '#00B900', color: 'white', py: 1.5, textTransform: 'none', fontWeight: 600, '&:hover': { backgroundColor: '#00A000' } }}>
                 {t('auth.loginWith', { provider: 'LINE' })}
               </Button>
-              <Button variant="outlined" fullWidth onClick={() => handleLogin('Yahoo')} startIcon={<FontAwesomeIcon icon={faYahoo} />} sx={{ borderColor: '#6001D2', color: '#6001D2', py: 1.5, textTransform: 'none', fontWeight: 600, '&:hover': { borderColor: '#5001B2', backgroundColor: 'rgba(96, 1, 210, 0.04)' } }}>
+              <Button variant="contained" fullWidth onClick={() => handleLogin('Yahoo')} startIcon={<FontAwesomeIcon icon={faYahoo} />} sx={{ backgroundColor: '#6001D2', color: 'white', py: 1.5, textTransform: 'none', fontWeight: 600, '&:hover': { backgroundColor: '#5001B2' } }}>
                 {t('auth.loginWith', { provider: 'Yahoo' })}
               </Button>
             </Box>
