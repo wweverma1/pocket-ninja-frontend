@@ -95,28 +95,25 @@ const Home = () => {
       // Fallback data
       setLeaderboard([
         {
-          productName: 'コカ・コーラ 500ml',
-          englishName: 'Coca-Cola 500ml',
-          maxPrice: 150,
-          minPrice: 98,
-          savingsPercent: 34.7,
-          cheapestStore: 'AEON',
+          productName: '‐196 ストロングゼロ 500ml',
+          englishName: '-196 Strong Zero 500ml',
+          maxPrice: 298,
+          minPrice: 194,
+          savingsPercent: 34.8
         },
         {
-          productName: 'サッポロ一番 味噌ラーメン',
-          englishName: 'Sapporo Ichiban Miso Ramen',
-          maxPrice: 180,
-          minPrice: 128,
-          savingsPercent: 28.9,
-          cheapestStore: 'FamilyMart',
+          productName: 'オシキリ 十勝きぬ豆腐',
+          englishName: 'Oshikiri Tokachi Kinu Tofu',
+          maxPrice: 218,
+          minPrice: 149,
+          savingsPercent: 31.6
         },
         {
-          productName: 'キリン 午後の紅茶',
-          englishName: 'Kirin Afternoon Tea',
-          maxPrice: 140,
-          minPrice: 105,
-          savingsPercent: 25.0,
-          cheapestStore: 'Lawson',
+          productName: 'タカノフーズ 凄い納豆 40gx3個',
+          englishName: 'Takano Foods Amazing Natto 40g x 3 packs',
+          maxPrice: 254,
+          minPrice: 185,
+          savingsPercent: 27.3
         },
       ]);
     } finally {
@@ -353,7 +350,6 @@ const Home = () => {
                 
                 // Determine name order based on language
                 const primaryName = isEnglish ? item.englishName : item.productName;
-                const secondaryName = isEnglish ? item.productName : item.englishName;
                 
                 return (
                   <Card
@@ -417,14 +413,9 @@ const Home = () => {
                           >
                             {index + 1}
                           </Avatar>
-                          <Box>
-                            <Typography variant="h6" fontWeight={700} sx={{ lineHeight: 1.2, mb: 0.5 }}>
-                              {primaryName}
-                            </Typography>
-                            <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.8rem' }}>
-                              {secondaryName}
-                            </Typography>
-                          </Box>
+                          <Typography variant="h6" fontWeight={700} sx={{ whiteSpace: { xs: 'normal', md: 'nowrap' }, overflow: { md: 'hidden' }, textOverflow: { md: 'ellipsis' }, maxWidth: '90%' }}>
+                            {primaryName}
+                          </Typography>
                         </Box>
 
                         {/* RIGHT: Prices and Action - 50% width on Desktop */}
@@ -432,7 +423,7 @@ const Home = () => {
                           display: 'flex', 
                           alignItems: 'center', 
                           // Mobile: Space between elements; Desktop: Align end (or space-between to fill)
-                          justifyContent: { xs: 'space-between', md: 'flex-end' },
+                          justifyContent: { xs: 'space-between', md: 'space-around' },
                           width: { xs: '100%', md: '50%' },
                           gap: { xs: 1, md: 3 },
                           mt: { xs: 1, md: 0 } // Small margin on mobile to separate from title
@@ -461,13 +452,15 @@ const Home = () => {
                           </Box>
 
                           {/* Action Block: Savings & Button */}
-                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                          <Box sx={{ display: 'flex', alignItems: 'center' }}>
                               <Chip 
                                 label={t('home.savePercent', { percent: item.savingsPercent.toFixed(0) })}
                                 size="small"
                                 color="secondary"
                                 sx={{ fontWeight: 800, height: 28 }} 
                               />
+                          </Box>
+                          <Box sx={{ display: 'flex', alignItems: 'center' }}>
                               <Button 
                                 variant="contained" 
                                 size="small"
