@@ -9,10 +9,17 @@ const AuthFailureHandler = () => {
 
   useEffect(() => {
     const errorMsg = searchParams.get('error') || searchParams.get('message') || t('common.error');
+    
     if (window.opener) {
       window.opener.postMessage({ type: 'AUTH_ERROR', message: errorMsg }, window.location.origin);
-      window.close();
     }
+    
+    // Always use BroadcastChannel as fallback
+    const channel = new BroadcastChannel('auth_channel');
+    channel.postMessage({ type: 'AUTH_ERROR', message: errorMsg });
+    channel.close();
+    
+    setTimeout(() => window.close(), 500);
   }, [searchParams, t]);
 
   return (

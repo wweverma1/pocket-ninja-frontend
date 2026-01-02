@@ -12,19 +12,32 @@ const AuthSuccessHandler = () => {
     const isNewUser = searchParams.get('is_new_user') === 'true';
     const username = searchParams.get('username');
 
-    if (token && window.opener) {
-      // Send data to main window context using flat structure
-      window.opener.postMessage(
-        { 
-          type: 'AUTH_COMPLETE', 
-          token,
-          username: username,
-          isNewUser
-        }, 
-        window.location.origin
-      );
+    if (token) {
+      // Try window.opener first (works for Google on mobile, all providers on desktop)
+      if (window.opener) {
+        window.opener.postMessage(
+          { 
+            type: 'AUTH_COMPLETE', 
+            token,
+            username: username,
+            isNewUser
+          }, 
+          window.location.origin
+        );
+      }
       
-      window.close();
+      // Always use BroadcastChannel as fallback (works for LINE on mobile)
+      const channel = new BroadcastChannel('auth_channel');
+      channel.postMessage({
+        type: 'AUTH_COMPLETE',
+        token,
+        username,
+        isNewUser
+      });
+      channel.close();
+      
+      // Close window after a brief delay
+      setTimeout(() => window.close(), 500);
     }
   }, [searchParams]);
 

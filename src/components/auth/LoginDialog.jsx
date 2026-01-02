@@ -40,6 +40,7 @@ const LoginDialog = ({ open, onOpenChange }) => {
       'width=500,height=650,top=0,left=0,scrollbars=yes,status=yes'
     );
 
+    // Handler for window.postMessage (works for most desktop cases)
     const handleMessage = (event) => {
       if (event.origin !== window.location.origin) return;
       if (event.data?.type === 'AUTH_COMPLETE') {
@@ -47,29 +48,57 @@ const LoginDialog = ({ open, onOpenChange }) => {
         login(username, token);
         onOpenChange(false);
 
-        if (isNewUser)
-        {
+        if (isNewUser) {
           toast.success(t('common.loginSuccessNewUser', { username: username }), {
             duration: 3000,
             position: 'bottom-center',
           });
-        }
-        else
-        {
+        } else {
           toast.success(t('common.loginSuccess', { username: username }), {
             duration: 3000,
             position: 'bottom-center',
           });
         }
         
-        // Schedule redirect based on user status; actual navigation happens in useEffect
-        // once authentication state is updated.
-        setPendingRedirect(isNewUser ? '/profile' : '/shop');
+        setPendingRedirect(isNewUser ? '/profile' : '/contribute');
         
         window.removeEventListener('message', handleMessage);
+        channel.close();
       } else if (event.data?.type === 'AUTH_ERROR') {
         toast.error(event.data.message, { duration: 3000, position: 'bottom-center' });
         window.removeEventListener('message', handleMessage);
+        channel.close();
+      }
+    };
+
+    // BroadcastChannel listener (fallback for mobile LINE)
+    const channel = new BroadcastChannel('auth_channel');
+    channel.onmessage = (event) => {
+      if (event.data?.type === 'AUTH_COMPLETE') {
+        const { token, username, isNewUser } = event.data;
+        login(username, token);
+        onOpenChange(false);
+
+        if (isNewUser) {
+          toast.success(t('common.loginSuccessNewUser', { username: username }), {
+            duration: 3000,
+            position: 'bottom-center',
+          });
+        } else {
+          toast.success(t('common.loginSuccess', { username: username }), {
+            duration: 3000,
+            position: 'bottom-center',
+          });
+        }
+        
+        setPendingRedirect(isNewUser ? '/profile' : '/contribute');
+        
+        window.removeEventListener('message', handleMessage);
+        channel.close();
+      } else if (event.data?.type === 'AUTH_ERROR') {
+        toast.error(event.data.message, { duration: 3000, position: 'bottom-center' });
+        window.removeEventListener('message', handleMessage);
+        channel.close();
       }
     };
 
