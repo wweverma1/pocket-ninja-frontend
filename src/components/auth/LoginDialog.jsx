@@ -26,8 +26,7 @@ const LoginDialog = ({ open, onOpenChange }) => {
 
   const handleLogin = (provider) => {
     if (provider === 'Yahoo') {
-      toast.success(t('auth.loginComingSoon', { provider: 'Yahoo' }), {
-        icon: '🫸🏻',
+      toast.error(t('auth.loginComingSoon', { provider: 'Yahoo' }), {
         duration: 3000,
         position: 'bottom-center',
       });
@@ -51,7 +50,6 @@ const LoginDialog = ({ open, onOpenChange }) => {
         if (isNewUser)
         {
           toast.success(t('common.loginSuccessNewUser', { username: username }), {
-            icon: '🙏🏻',
             duration: 3000,
             position: 'bottom-center',
           });
@@ -59,7 +57,6 @@ const LoginDialog = ({ open, onOpenChange }) => {
         else
         {
           toast.success(t('common.loginSuccess', { username: username }), {
-            icon: '🙏🏻',
             duration: 3000,
             position: 'bottom-center',
           });
