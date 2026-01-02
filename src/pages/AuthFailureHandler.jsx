@@ -12,7 +12,6 @@ const AuthFailureHandler = () => {
     
     if (window.opener) {
       window.opener.postMessage({ type: 'AUTH_ERROR', message: errorMsg }, window.location.origin);
-      window.close();
     }
     
     // Always use BroadcastChannel as fallback

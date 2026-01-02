@@ -235,7 +235,7 @@ const Home = () => {
           background: heroGradient,
           color: 'white',
           // Adjusted height to be 75% of viewport
-          minHeight: '75vh',
+          minHeight: '60vh',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -243,10 +243,10 @@ const Home = () => {
           position: 'relative',
           overflow: 'hidden',
           // V-curve at the bottom
-          clipPath: 'polygon(0 0, 100% 0, 100% 90%, 50% 100%, 0 90%)',
+          clipPath: 'polygon(0 0, 100% 0, 100% 80%, 50% 100%, 0 80%)',
           mb: 6,
           pt: 0, 
-          pb: 8
+          pb: 4
         }}
       >
         <Snowfall />
