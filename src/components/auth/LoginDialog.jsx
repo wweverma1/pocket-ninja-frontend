@@ -60,7 +60,7 @@ const LoginDialog = ({ open, onOpenChange }) => {
           });
         }
         
-        setPendingRedirect(isNewUser ? '/xyz' : '/xyz');
+        setPendingRedirect(isNewUser ? '/profile' : '/contribute');
         
         window.removeEventListener('message', handleMessage);
         channel.close();
@@ -91,7 +91,7 @@ const LoginDialog = ({ open, onOpenChange }) => {
           });
         }
         
-        setPendingRedirect(isNewUser ? '/xyz' : '/xyz');
+        setPendingRedirect(isNewUser ? '/profile' : '/contribute');
         
         window.removeEventListener('message', handleMessage);
         channel.close();

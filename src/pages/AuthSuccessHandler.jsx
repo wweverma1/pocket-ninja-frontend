@@ -24,6 +24,8 @@ const AuthSuccessHandler = () => {
           }, 
           window.location.origin
         );
+
+        window.close();
       }
       
       // Always use BroadcastChannel as fallback (works for LINE on mobile)
