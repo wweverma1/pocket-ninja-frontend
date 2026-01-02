@@ -30,7 +30,7 @@ function App() {
         <Header />
         <Box component="main" sx={{ flexGrow: 1, pb: 8 }}>
           <Routes>
-            <Route path="/" element={!isLoggedIn ? <Home /> : <Navigate to="/shop" replace />} />
+            <Route path="/" element={!isLoggedIn ? <Home /> : <Navigate to="/contribute" replace />} />
             
             <Route path="/auth/success" element={<AuthSuccessHandler />} />
             <Route path="/auth/failure" element={<AuthFailureHandler />} />
@@ -40,7 +40,7 @@ function App() {
               path="/contribute" 
               element={isLoggedIn ? <Upload /> : <Navigate to="/" replace />} 
             />
-            <Route path="/campaigns" element={isLoggedIn ? <Box sx={{p:4}}>{t('pages.campaigns')}</Box> : <Navigate to="/" replace />} />
+            {/* <Route path="/campaigns" element={isLoggedIn ? <Box sx={{p:4}}>{t('pages.campaigns')}</Box> : <Navigate to="/" replace />} /> */}
             <Route 
               path="/profile" 
               element={isLoggedIn ? <Profile /> : <Navigate to="/" replace />} 
