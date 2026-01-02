@@ -6,7 +6,6 @@ import { faGoogle, faYahoo, faLine } from '@fortawesome/free-brands-svg-icons';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
@@ -14,15 +13,6 @@ const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 const LoginDialog = ({ open, onOpenChange }) => {
   const { t } = useTranslation();
   const { login, isLoggedIn } = useAuth();
-  const navigate = useNavigate();
-  const [pendingRedirect, setPendingRedirect] = useState(null);
-
-  useEffect(() => {
-    if (isLoggedIn && pendingRedirect) {
-        setTimeout(() => navigate(pendingRedirect, { replace: true }), 100);
-        setPendingRedirect(null);
-    }
-  }, [isLoggedIn, pendingRedirect, navigate]);
 
   const handleLogin = (provider) => {
     if (provider === 'Yahoo') {
@@ -60,8 +50,6 @@ const LoginDialog = ({ open, onOpenChange }) => {
           });
         }
         
-        setPendingRedirect(isNewUser ? '/profile' : '/contribute');
-        
         window.removeEventListener('message', handleMessage);
         channel.close();
       } else if (event.data?.type === 'AUTH_ERROR') {
@@ -90,8 +78,6 @@ const LoginDialog = ({ open, onOpenChange }) => {
             position: 'bottom-center',
           });
         }
-        
-        setPendingRedirect(isNewUser ? '/profile' : '/contribute');
         
         window.removeEventListener('message', handleMessage);
         channel.close();
