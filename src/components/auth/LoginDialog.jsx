@@ -19,8 +19,7 @@ const LoginDialog = ({ open, onOpenChange }) => {
 
   useEffect(() => {
     if (isLoggedIn && pendingRedirect) {
-        console.log("login dialog navigating to route: ", pendingRedirect);
-        navigate(pendingRedirect, { replace: true });
+        setTimeout(() => navigate(pendingRedirect, { replace: true }), 100);
         setPendingRedirect(null);
     }
   }, [isLoggedIn, pendingRedirect, navigate]);

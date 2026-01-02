@@ -30,16 +30,7 @@ function App() {
         <Header />
         <Box component="main" sx={{ flexGrow: 1, pb: 8 }}>
           <Routes>
-            <Route 
-              path="/" 
-              element={
-                !isLoggedIn ? (
-                  <Home /> 
-                ) : (
-                  console.log("app navigating to route: /contribute") || <Navigate to="/contribute" replace />
-                )
-              } 
-            />
+            <Route path="/" element={!isLoggedIn ? <Home /> : <Navigate to="/contribute" replace />} />
             
             <Route path="/auth/success" element={<AuthSuccessHandler />} />
             <Route path="/auth/failure" element={<AuthFailureHandler />} />
