@@ -141,6 +141,29 @@
       "failed": "失敗"
     }
   },
+  "compare": {
+    "title": "スマートショッピング",
+    "subtitle": "カートを作成して、近くの最安値店舗を見つけましょう。",
+    "searchPlaceholder": "商品を検索...",
+    "cartTitle": "買い物かご",
+    "cartEmpty": "カートは空です。商品を追加して比較しましょう！",
+    "findBestPrice": "価格を比較する",
+    "resultsTitle": "近くの最適店舗",
+    "productsAvailable": "{{available}} / {{total}} 点",
+    "savings": "¥{{amount}} お得！",
+    "navigate": "ルート案内",
+    "calculating": "計算中...",
+    "reminderTitle": "忍者からの任務",
+    "reminderBody": "買い物が終わったら、レシートの写真をアップロードすることを忘れないでください！あなたの貢献が札幌の節約を助けます。",
+    "goToMaps": "Googleマップを開く",
+    "itemAdded": "カートに追加しました",
+    "itemRemoved": "カートから削除しました",
+    "cartHelp": "上の検索バーから商品を追加して、推定節約額を確認してください。",
+    "sortBy": "並び替え",
+    "sortSavings": "節約額順",
+    "sortDistance": "近い順",
+"   locationError": "位置情報を取得できませんでした。札幌中心部を使用します。"
+  },
   "pages": {
     "compare": "ショップページ",
     "upload": "アップロードページ",

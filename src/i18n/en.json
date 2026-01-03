@@ -141,6 +141,29 @@
       "failed": "Failed"
     }
   },
+  "compare": {
+    "title": "Smart Shopping List",
+    "subtitle": "Build your cart and find the cheapest store nearby.",
+    "searchPlaceholder": "Search for products...",
+    "cartTitle": "Your Shopping Cart",
+    "cartEmpty": "Your cart is empty. Add items to compare prices!",
+    "findBestPrice": "Compare Prices",
+    "resultsTitle": "Best Stores Near You",
+    "productsAvailable": "{{available}} / {{total}} items",
+    "savings": "Save ¥{{amount}}",
+    "navigate": "Navigate",
+    "calculating": "Calculating...",
+    "reminderTitle": "Mission Objective",
+    "reminderBody": "After your purchase, please don't forget to snap a photo of your receipt! Your contribution helps the whole Sapporo community save money.",
+    "goToMaps": "Open Google Maps",
+    "itemAdded": "Added to cart",
+    "itemRemoved": "Removed from cart",
+    "cartHelp": "Add items from the search bar above to see your estimated savings.",
+    "sortBy": "Sort by",
+    "sortSavings": "Highest Savings",
+    "sortDistance": "Nearest Store",
+    "locationError": "Could not get your location. Using default Sapporo center."
+  },
   "pages": {
     "compare": "Shop Page",
     "upload": "Upload Page",

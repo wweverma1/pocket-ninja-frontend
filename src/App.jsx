@@ -11,6 +11,7 @@ import AuthSuccessHandler from './pages/AuthSuccessHandler';
 import AuthFailureHandler from './pages/AuthFailureHandler';
 import { useAuth } from './context/AuthContext';
 import { useTranslation } from 'react-i18next';
+import Compare from './pages/Compare';
 
 function App() {
   const { isLoggedIn, loading } = useAuth();
@@ -35,7 +36,7 @@ function App() {
             <Route path="/auth/success" element={<AuthSuccessHandler />} />
             <Route path="/auth/failure" element={<AuthFailureHandler />} />
             
-            <Route path="/shop" element={isLoggedIn ? <Box sx={{p:4}}>{t('pages.compare')}</Box> : <Navigate to="/" replace />} />
+            <Route path="/shop" element={isLoggedIn ? <Compare /> : <Navigate to="/" replace />} />
             <Route 
               path="/contribute" 
               element={isLoggedIn ? <Upload /> : <Navigate to="/" replace />} 
