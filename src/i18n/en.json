@@ -94,7 +94,8 @@
     "selectAvatar": "Select Avatar",
     "update": "Update",
     "customUploadComingSoon": "Custom upload coming soon!",
-    "points": "points"
+    "points": "points",
+    "noLeaderboard": "No leaderboard found for this month."
   },
   "feedback": {
     "title": "Submit Feedback",

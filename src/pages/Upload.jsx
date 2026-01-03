@@ -364,114 +364,119 @@ const Upload = () => {
           </Box>
         ) : (
           <Box>
-            {/* Podium */}
-            <Box sx={{ 
-              display: 'flex', 
-              justifyContent: 'center', 
-              alignItems: 'flex-end', 
-              gap: { xs: 2, sm: 4 },
-              mb: 6,
-              minHeight: 280
-            }}>
-              {podiumOrder.map((positionIndex) => {
-                const user = leaderboard[positionIndex];
-                if (!user) return <Box key={`placeholder-${positionIndex}`} sx={{ width: { xs: '30%', sm: 140 } }} />;
+            {leaderboard.length === 0 ? (
+              <Box sx={{ textAlign: 'center', color: 'text.secondary' }}>
+                <Typography>{t('profile.noLeaderboard')}</Typography>
+              </Box>
+            ) : (
+              <Box sx={{ 
+                display: 'flex', 
+                justifyContent: 'center', 
+                alignItems: 'flex-end', 
+                gap: { xs: 2, sm: 4 },
+                mb: 6,
+                minHeight: 280
+              }}>
+                {podiumOrder.map((positionIndex) => {
+                  const user = leaderboard[positionIndex];
+                  if (!user) return <Box key={`placeholder-${positionIndex}`} sx={{ width: { xs: '30%', sm: 140 } }} />;
 
-                const isFirst = positionIndex === 0;
-                const height = getRankHeight(positionIndex);
-                const color = getRankColor(positionIndex);
-                const gradient = isFirst 
-                  ? 'linear-gradient(135deg, #FFD700 0%, #FDB931 100%)' 
-                  : positionIndex === 1
-                    ? 'linear-gradient(135deg, #E0E0E0 0%, #BDBDBD 100%)'
-                    : 'linear-gradient(135deg, #CD7F32 0%, #A0522D 100%)';
+                  const isFirst = positionIndex === 0;
+                  const height = getRankHeight(positionIndex);
+                  const color = getRankColor(positionIndex);
+                  const gradient = isFirst 
+                    ? 'linear-gradient(135deg, #FFD700 0%, #FDB931 100%)' 
+                    : positionIndex === 1
+                      ? 'linear-gradient(135deg, #E0E0E0 0%, #BDBDBD 100%)'
+                      : 'linear-gradient(135deg, #CD7F32 0%, #A0522D 100%)';
 
-                return (
-                  <Box key={user.username} sx={{ 
-                    display: 'flex', 
-                    flexDirection: 'column', 
-                    alignItems: 'center', 
-                    width: { xs: '30%', sm: 140 },
-                    position: 'relative',
-                    zIndex: isFirst ? 2 : 1,
-                    transition: 'transform 0.3s ease',
-                    '&:hover': { transform: 'translateY(-5px)' }
-                  }}>
-                    <Box sx={{ position: 'relative', mb: 2 }}>
-                        {isFirst && (
-                          <Box sx={{ 
+                  return (
+                    <Box key={user.username} sx={{ 
+                      display: 'flex', 
+                      flexDirection: 'column', 
+                      alignItems: 'center', 
+                      width: { xs: '30%', sm: 140 },
+                      position: 'relative',
+                      zIndex: isFirst ? 2 : 1,
+                      transition: 'transform 0.3s ease',
+                      '&:hover': { transform: 'translateY(-5px)' }
+                    }}>
+                      <Box sx={{ position: 'relative', mb: 2 }}>
+                          {isFirst && (
+                            <Box sx={{ 
+                              position: 'absolute',
+                              top: -35,
+                              left: '50%',
+                              transform: 'translateX(-50%)',
+                              color: '#FFD700', 
+                              fontSize: '2rem',
+                              filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.3))',
+                              animation: 'float 3s ease-in-out infinite' 
+                            }}>
+                              <FontAwesomeIcon icon={faCrown} />
+                            </Box>
+                          )}
+                          <Avatar 
+                            src={`/avatars/${user.avatarId}.png`}
+                            sx={{ 
+                              width: { xs: 70, sm: 90 }, 
+                              height: { xs: 70, sm: 90 }, 
+                              border: `4px solid white`,
+                              boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                            }}
+                          />
+                          <Box sx={{
                             position: 'absolute',
-                            top: -35,
+                            bottom: -10,
                             left: '50%',
                             transform: 'translateX(-50%)',
-                            color: '#FFD700', 
-                            fontSize: '2rem',
-                            filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.3))',
-                            animation: 'float 3s ease-in-out infinite' 
+                            bgcolor: 'white',
+                            borderRadius: '12px',
+                            px: 1,
+                            py: 0.2,
+                            boxShadow: 1,
+                            border: `1px solid ${theme.palette.divider}`,
+                            whiteSpace: 'nowrap'
                           }}>
-                            <FontAwesomeIcon icon={faCrown} />
+                            <Typography variant="caption" fontWeight={800} color="text.secondary">
+                              {user.score} <Typography component="span" variant="caption" sx={{ fontSize: '0.7em' }}>{t('upload.contributions')}</Typography>
+                            </Typography>
                           </Box>
-                        )}
-                        <Avatar 
-                          src={`/avatars/${user.avatarId}.png`}
-                          sx={{ 
-                            width: { xs: 70, sm: 90 }, 
-                            height: { xs: 70, sm: 90 }, 
-                            border: `4px solid white`,
-                            boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
-                          }}
-                        />
+                      </Box>
+                      <Typography variant="subtitle2" fontWeight={700} noWrap sx={{ maxWidth: '100%', mb: 1, textAlign: 'center' }}>
+                        {user.username}
+                      </Typography>
+                      <Paper elevation={3} sx={{ 
+                        width: '100%', 
+                        height: height, 
+                        background: gradient, 
+                        borderRadius: '16px 16px 0 0',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: 'white',
+                        fontWeight: 900,
+                        fontSize: '2.5rem',
+                        textShadow: '0 2px 4px rgba(0,0,0,0.2)',
+                        position: 'relative',
+                        overflow: 'hidden'
+                      }}>
                         <Box sx={{
                           position: 'absolute',
-                          bottom: -10,
-                          left: '50%',
-                          transform: 'translateX(-50%)',
-                          bgcolor: 'white',
-                          borderRadius: '12px',
-                          px: 1,
-                          py: 0.2,
-                          boxShadow: 1,
-                          border: `1px solid ${theme.palette.divider}`,
-                          whiteSpace: 'nowrap'
-                        }}>
-                           <Typography variant="caption" fontWeight={800} color="text.secondary">
-                             {user.score} <Typography component="span" variant="caption" sx={{ fontSize: '0.7em' }}>{t('upload.contributions')}</Typography>
-                           </Typography>
-                        </Box>
+                          top: 0,
+                          left: 0,
+                          right: 0,
+                          bottom: 0,
+                          background: 'linear-gradient(45deg, rgba(255,255,255,0) 40%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0) 60%)',
+                          transform: 'skewX(-20deg)',
+                        }} />
+                        {positionIndex + 1}
+                      </Paper>
                     </Box>
-                    <Typography variant="subtitle2" fontWeight={700} noWrap sx={{ maxWidth: '100%', mb: 1, textAlign: 'center' }}>
-                      {user.username}
-                    </Typography>
-                    <Paper elevation={3} sx={{ 
-                      width: '100%', 
-                      height: height, 
-                      background: gradient, 
-                      borderRadius: '16px 16px 0 0',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      color: 'white',
-                      fontWeight: 900,
-                      fontSize: '2.5rem',
-                      textShadow: '0 2px 4px rgba(0,0,0,0.2)',
-                      position: 'relative',
-                      overflow: 'hidden'
-                    }}>
-                       <Box sx={{
-                         position: 'absolute',
-                         top: 0,
-                         left: 0,
-                         right: 0,
-                         bottom: 0,
-                         background: 'linear-gradient(45deg, rgba(255,255,255,0) 40%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0) 60%)',
-                         transform: 'skewX(-20deg)',
-                       }} />
-                       {positionIndex + 1}
-                    </Paper>
-                  </Box>
-                );
-              })}
-            </Box>
+                  );
+                })}
+              </Box>
+            )}
 
             {userStats && (
               <Box sx={{ maxWidth: 600, mx: 'auto', mt: 4, mb: 2, display: 'flex', justifyContent: 'center' }}>

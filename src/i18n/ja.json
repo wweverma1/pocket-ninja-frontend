@@ -94,7 +94,8 @@
     "selectAvatar": "アバターを選択",
     "update": "更新",
     "customUploadComingSoon": "カスタムアップロード機能は近日公開！",
-    "points": "ポイント"
+    "points": "ポイント",
+    "noLeaderboard": "今月のリーダーボードが見つかりません。"
   },
   "feedback": {
     "title": "フィードバックを送信",
