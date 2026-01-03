@@ -131,7 +131,7 @@
     "imageOnlyError": "画像ファイルを選択してください。",
     "processing": "レシートを処理中...",
     "success": "レシートがアップロードされました！",
-    "productsFound": "{{count}} 個の商品を抽出",
+    "productsFound": "{{count}} 件の商品が見つかりました",
     "edit": "作物の受領書",
     "uploading": "処理...",
     "points": "pt",

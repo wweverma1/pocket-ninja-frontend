@@ -643,8 +643,8 @@ const Upload = () => {
                        borderLeft: `5px solid ${isSuccess ? theme.palette.success.main : theme.palette.error.main}`,
                        boxShadow: 1
                     }}>
-                      <CardContent sx={{ py: 2, '&:last-child': { pb: 2 } }}>
-                         <Grid container spacing={2} alignItems="center">
+                      <CardContent sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, alignItems: { xs: 'stretch', md: 'center' }, justifyContent: 'space-between', py: 2, '&:last-child': { pb: 2 } }}>
+                         <Grid container spacing={2} alignItems="center" sx={{ width: { xs: '100%', md: '50%' }, minWidth: { md: '50%' }}}>
                             <Grid sx={{ textAlign: 'center' }}>
                                <FontAwesomeIcon 
                                  icon={isSuccess ? faCheckCircle : faExclamationCircle} 
@@ -663,23 +663,27 @@ const Upload = () => {
                                   {messageText}
                                </Typography>
                             </Grid>
-                            {isSuccess && (
-                              <Grid sx={{ textAlign: { xs: 'left', sm: 'right' }, pl: { xs: 6, sm: 0 } }}>
-                                 <Chip 
-                                   label={`¥${receipt.totalAmount?.toLocaleString()}`} 
-                                   color="success" 
-                                   variant="outlined" 
-                                   size="small" 
-                                   sx={{ fontWeight: 700, mr: 1 }} 
-                                 />
-                                 <Chip 
-                                   label={t('upload.productsFound', { count: receipt.productsFound })} 
-                                   size="small" 
-                                   sx={{ fontSize: '0.75rem' }} 
-                                 />
+                          </Grid>
+                          {isSuccess && (
+                            <Grid container spacing={2} alignItems="center" sx={{ mt: { xs: 1, md: 0 }, justifyContent: { xs: 'center', md: 'end' }, width: { xs: '100%', md: '50%' }, minWidth: { md: '50%' } }}>
+                              <Grid> 
+                                <Chip 
+                                  label={t('upload.productsFound', { count: receipt.productsFound })} 
+                                  size="small" 
+                                  sx={{ fontSize: '0.75rem' }} 
+                                />
                               </Grid>
-                            )}
-                         </Grid>
+                              <Grid>
+                                <Chip 
+                                  label={`¥${receipt.totalAmount?.toLocaleString()}`} 
+                                  color="success" 
+                                  variant="outlined" 
+                                  size="small" 
+                                  sx={{ fontWeight: 700, mr: 1 }} 
+                                />
+                              </Grid>
+                            </Grid>
+                          )}
                       </CardContent>
                     </Card>
                   );

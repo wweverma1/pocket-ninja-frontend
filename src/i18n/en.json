@@ -131,7 +131,7 @@
     "imageOnlyError": "Please select an image file.",
     "processing": "Processing receipt...",
     "success": "Receipt uploaded successfully!",
-    "productsFound": "{{count}} products extracted",
+    "productsFound": "{{count}} products found",
     "edit": "Crop Receipt",
     "uploading": "Processing...",
     "points": "pts",
