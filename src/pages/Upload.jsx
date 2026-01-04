@@ -338,24 +338,27 @@ const Upload = () => {
       
       {/* Leaderboard Section */}
       <Box sx={{ mb: 8 }}>
-        <Box sx={{ textAlign: 'center', mb: 5 }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 1 }}>
-            <Box sx={{ 
-              p: 1.5, 
-              borderRadius: '50%', 
-              bgcolor: alpha(theme.palette.secondary.main, 0.1), 
-              color: theme.palette.secondary.main,
-              mr: 2
-            }}>
-              <FontAwesomeIcon icon={faTrophy} size="lg" />
-            </Box>
-            <Typography variant="h4" fontWeight={800} color="text.primary">
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 5, textAlign: 'center' }}>
+          <Box sx={{ 
+            width: { xs: 40, sm: 50 }, 
+            height: { xs: 40, sm: 50 }, 
+            borderRadius: '50%', 
+            bgcolor: alpha(theme.palette.secondary.main, 0.1), 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'center', 
+            mr: 2 
+          }}>
+            <FontAwesomeIcon icon={faTrophy} style={{ fontSize: { xs: '1.25rem', sm: '1.5rem' }, color: theme.palette.secondary.main }} size="lg" />
+          </Box>
+          <Box sx={{ textAlign: 'left' }}>
+            <Typography variant="h4" fontWeight={800} color="text.primary" sx={{ fontSize: { xs: '1.5rem', sm: '2rem' } }}>
               {t('upload.leaderboardTitle')}
             </Typography>
+            <Typography variant="body1" color="text.secondary">
+              {t('upload.leaderboardSubtitle')}
+            </Typography>
           </Box>
-          <Typography variant="body1" color="text.secondary">
-            {t('upload.leaderboardSubtitle')}
-          </Typography>
         </Box>
 
         {loadingLeaderboard ? (
@@ -540,7 +543,7 @@ const Upload = () => {
         </Box>
 
         <Container maxWidth="sm" sx={{ position: 'relative', zIndex: 1 }}>
-          <Typography variant="h4" fontWeight={800} sx={{ fontSize: { xs: '1.625rem', sm: '2.125rem' } }} gutterBottom>
+          <Typography variant="h4" fontWeight={800} sx={{ fontSize: { xs: '1.5rem', sm: '2rem' } }} gutterBottom>
             {t('upload.contributeTitle')}
           </Typography>
           <Typography variant="body1" sx={{ mb: 4, opacity: 0.9, lineHeight: 1.6 }}>
@@ -584,7 +587,7 @@ const Upload = () => {
       {/* History Section */}
       <Box>
          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 3, flexWrap: 'wrap', gap: 2 }}>
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', mb: 5 }} >
                <Box sx={{ 
                     width: { xs: 40, sm: 50 }, 
                     height: { xs: 40, sm: 50 }, 
@@ -595,9 +598,9 @@ const Upload = () => {
                     justifyContent: 'center', 
                     mr: 2 
                 }}>
-                 <FontAwesomeIcon icon={faReceipt} style={{ color: theme.palette.secondary.main }} size="lg" />
+                 <FontAwesomeIcon icon={faReceipt} style={{ color: theme.palette.secondary.main, fontSize: { xs: '1.25rem', sm: '1.5rem' } }} size="lg" />
                </Box>
-               <Typography variant="h5" fontWeight={700}>
+               <Typography variant="h4" fontWeight={700} sx={{ fontSize: { xs: '1.5rem', sm: '2rem' }, textAlign: 'left' }}>
                  {t('upload.historyTitle')}
                </Typography>
             </Box>

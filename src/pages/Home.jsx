@@ -413,7 +413,7 @@ const Home = () => {
                           >
                             {index + 1}
                           </Avatar>
-                          <Typography variant="h6" fontWeight={700} sx={{ whiteSpace: { xs: 'normal', md: 'nowrap' }, overflow: { md: 'hidden' }, textOverflow: { md: 'ellipsis' }, maxWidth: '90%' }}>
+                          <Typography variant="h6" fontWeight={600} sx={{ whiteSpace: { xs: 'normal', md: 'nowrap' }, overflow: { md: 'hidden' }, textOverflow: { md: 'ellipsis' }, maxWidth: '90%', fontSize: { xs: '1.25rem', sm: '1.5rem' } }}>
                             {primaryName}
                           </Typography>
                         </Box>
@@ -597,7 +597,7 @@ const Home = () => {
             
             <Grid container spacing={4} alignItems="center">
               <Grid>
-                <Typography variant="h4" fontWeight={800} gutterBottom sx={{ color: 'primary.main', fontSize: { xs: '1.625rem', sm: '2.125rem' } }}>
+                <Typography variant="h4" fontWeight={800} gutterBottom sx={{ color: 'primary.main', fontSize: { xs: '1.5rem', sm: '2rem' } }}>
                   {t('developerNote.title')}
                 </Typography>
                 <Typography variant="body1" sx={{ 
