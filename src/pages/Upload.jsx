@@ -540,7 +540,7 @@ const Upload = () => {
         </Box>
 
         <Container maxWidth="sm" sx={{ position: 'relative', zIndex: 1 }}>
-          <Typography variant="h4" fontWeight={800} gutterBottom>
+          <Typography variant="h4" fontWeight={800} sx={{ fontSize: { xs: '1.625rem', sm: '2.125rem' } }} gutterBottom>
             {t('upload.contributeTitle')}
           </Typography>
           <Typography variant="body1" sx={{ mb: 4, opacity: 0.9, lineHeight: 1.6 }}>
@@ -584,7 +584,7 @@ const Upload = () => {
       {/* History Section */}
       <Box>
          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 3, flexWrap: 'wrap', gap: 2 }}>
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
                <Box sx={{ 
                     width: { xs: 40, sm: 50 }, 
                     height: { xs: 40, sm: 50 }, 
@@ -643,7 +643,7 @@ const Upload = () => {
                        borderLeft: `5px solid ${isSuccess ? theme.palette.success.main : theme.palette.error.main}`,
                        boxShadow: 1
                     }}>
-                      <CardContent sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, alignItems: { xs: 'stretch', md: 'center' }, justifyContent: 'space-between', py: 2, '&:last-child': { pb: 2 } }}>
+                      <CardContent sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, alignItems: { xs: 'stretch', md: 'center' }, justifyContent: 'space-between', py: 2, '&:last-child': { pb: 2 } }}>
                          <Grid container spacing={2} alignItems="center" sx={{ width: { xs: '100%', md: '50%' }, minWidth: { md: '50%' }}}>
                             <Grid sx={{ textAlign: 'center' }}>
                                <FontAwesomeIcon 
