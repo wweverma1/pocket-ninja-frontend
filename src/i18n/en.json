@@ -15,7 +15,7 @@
   "home": {
     "welcome": "Buy Essentials at Best Prices",
     "savingsPromise": "* Save up to 30% on your bills",
-    "subtitle": "Compare prices across stores in Sapporo and save on every purchase",
+    "subtitle": "Compare prices across all stores in Sapporo and save on every purchase",
     "startSaving": "Start Saving",
     "getStarted": "Get Started",
     "leaderboardTitle": "Today's Best Deals",
@@ -95,7 +95,7 @@
     "update": "Update",
     "customUploadComingSoon": "Custom upload coming soon!",
     "points": "points",
-    "noLeaderboard": "No leaderboard found for this month."
+    "noLeaderboard": "No leaderboard found for this month"
   },
   "feedback": {
     "title": "Submit Feedback",
@@ -142,20 +142,20 @@
     }
   },
   "compare": {
-    "title": "Smart Shopping List",
-    "subtitle": "Build your cart and find the cheapest store nearby.",
+    "title": "Build Your Cart",
+    "subtitle": "Add your items and compare prices across all stores in Sapporo",
     "searchPlaceholder": "Search for products...",
     "cartTitle": "Your Shopping Cart",
     "cartEmpty": "Your cart is empty. Add items to compare prices!",
     "findBestPrice": "Compare Prices",
     "resultsTitle": "Best Stores Near You",
-    "productsAvailable": "{{available}} / {{total}} items",
+    "productsAvailable": "{{available}} products found",
     "savings": "Save ¥{{amount}}",
     "navigate": "Navigate",
-    "calculating": "Calculating...",
-    "reminderTitle": "Mission Objective",
-    "reminderBody": "After your purchase, please don't forget to snap a photo of your receipt! Your contribution helps the whole Sapporo community save money.",
-    "goToMaps": "Open Google Maps",
+    "calculating": "Comparing...",
+    "reminderTitle": "Kind Reminder",
+    "reminderBody": "After your purchase, please don't forget to snap a photo of your receipt! Your contribution helps the whole community.",
+    "goToMaps": "Navigate",
     "itemAdded": "Added to cart",
     "itemRemoved": "Removed from cart",
     "cartHelp": "Add items from the search bar above to see your estimated savings.",

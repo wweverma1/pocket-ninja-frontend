@@ -20,6 +20,7 @@ import {
 } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
+  faShoppingCart,
   faSearch,
   faCartPlus,
   faTrash,
@@ -27,6 +28,7 @@ import {
   faRoute,
   faChevronUp,
   faReceipt,
+  faHandsPraying,
   faStore,
   faShoppingBasket,
   faTimes,
@@ -264,162 +266,84 @@ const Compare = () => {
   };
 
   return (
-    <Box sx={globalStyles.pageContainer}>
-      <Container maxWidth="md" sx={{ pt: 4, pb: 12 }}>
-        
-        {/* Title Section */}
-        <Box sx={{ textAlign: 'center', mb: 5 }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 1 }}>
-            <Box sx={{ 
-              p: 1.5, 
-              borderRadius: '50%', 
-              bgcolor: alpha(theme.palette.secondary.main, 0.1), 
-              color: theme.palette.secondary.main,
-              mr: 2
-            }}>
-              <FontAwesomeIcon icon={faShoppingBasket} size="lg" />
-            </Box>
-            <Typography variant="h4" fontWeight={800} color="text.primary">
-              {t('compare.title')}
+    <Container maxWidth="md" sx={{ pt: 4, pb: 12 }}>
+    
+    {/* Title Section */}
+    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 5, textAlign: 'center' }}>
+        <Box sx={{ 
+            width: { xs: 40, sm: 50 }, 
+            height: { xs: 40, sm: 50 }, 
+            borderRadius: '50%', 
+            bgcolor: alpha(theme.palette.secondary.main, 0.1), 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'center', 
+            mr: 2 
+        }}>
+            <FontAwesomeIcon icon={faShoppingCart} style={{ color: theme.palette.secondary.main }} size="lg" />
+        </Box>
+        <Box sx={{ textAlign: 'left' }}>
+            <Typography variant="h4" fontWeight={800} color="text.primary" sx={{ fontSize: { xs: '1.5rem', sm: '2rem' } }}>
+                {t('compare.title')}
             </Typography>
-          </Box>
-          <Typography variant="body1" color="text.secondary">
-            {t('compare.subtitle')}
-          </Typography>
+            <Typography variant="body2" color="text.secondary">
+                {t('compare.subtitle')}
+            </Typography>
+        </Box>
+    </Box>
+
+    {/* Search & Cart Container */}
+    <Paper 
+        elevation={0}
+        sx={{ 
+        p: { xs: 3, md: 4 }, 
+        mb: 4, 
+        borderRadius: 4, 
+        background: `linear-gradient(135deg, ${alpha(theme.palette.primary.main, 0.02)} 0%, ${alpha(theme.palette.secondary.main, 0.1)} 100%)`,
+        border: `1px solid ${alpha(theme.palette.primary.main, 0.1)}`,
+        borderLeft: `6px solid ${theme.palette.secondary.main}`,
+        position: 'relative',
+        overflow: 'hidden'
+        }}
+    >
+        <Box sx={{ position: 'absolute', top: -20, right: -20, opacity: 0.05, transform: 'rotate(15deg)' }}>
+            <FontAwesomeIcon icon={faShoppingBasket} size="10x" />
         </Box>
 
-        {/* Search & Cart Container */}
-        <Paper 
-          elevation={0}
-          sx={{ 
-            p: { xs: 3, md: 4 }, 
-            mb: 4, 
-            borderRadius: 4, 
-            background: `linear-gradient(135deg, ${alpha(theme.palette.primary.main, 0.02)} 0%, ${alpha(theme.palette.secondary.main, 0.1)} 100%)`,
-            border: `1px solid ${alpha(theme.palette.primary.main, 0.1)}`,
-            borderLeft: `6px solid ${theme.palette.secondary.main}`,
-            position: 'relative',
-            overflow: 'hidden'
-          }}
-        >
-            <Box sx={{ position: 'absolute', top: -20, right: -20, opacity: 0.05, transform: 'rotate(15deg)' }}>
-              <FontAwesomeIcon icon={faShoppingBasket} size="10x" />
-            </Box>
+        {/* Search Bar */}
+        <Box sx={{ position: 'relative', zIndex: 1, mb: 3 }}>
+            <TextField
+                fullWidth
+                placeholder={placeholder}
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                InputProps={{
+                    startAdornment: (
+                        <InputAdornment position="start">
+                            <FontAwesomeIcon icon={faSearch} color={theme.palette.text.secondary} />
+                        </InputAdornment>
+                    ),
+                    sx: { 
+                        borderRadius: 3, 
+                        bgcolor: 'white',
+                        boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
+                        '& fieldset': { border: 'none' } 
+                    }
+                }}
+            />
+        </Box>
 
-            {/* Search Bar */}
-            <Box sx={{ position: 'relative', zIndex: 1, mb: 3 }}>
-                <TextField
-                    fullWidth
-                    placeholder={placeholder}
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    InputProps={{
-                        startAdornment: (
-                            <InputAdornment position="start">
-                                <FontAwesomeIcon icon={faSearch} color={theme.palette.text.secondary} />
-                            </InputAdornment>
-                        ),
-                        sx: { 
-                            borderRadius: 3, 
-                            bgcolor: 'white',
-                            boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
-                            '& fieldset': { border: 'none' } 
-                        }
-                    }}
-                />
-            </Box>
-
-            {/* Search Items */}
-            {searchQuery && (
-                <Box sx={{ mb: 3, position: 'relative', zIndex: 1 }}>
-                    <Grid container spacing={1}>
-                        {filteredProducts.slice(0, 4).map((product) => {
-                            const inCart = cart.some(i => i.id === product.id);
-                            return (
-                                <Grid item xs={12} sm={6} key={product.id}>
-                                    <Card 
-                                        elevation={0}
-                                        onClick={() => toggleCartItem(product)}
-                                        sx={{ 
-                                            display: 'flex', 
-                                            justifyContent: 'space-between', 
-                                            alignItems: 'center', 
-                                            p: 1.5,
-                                            borderRadius: 3,
-                                            bgcolor: 'white',
-                                            cursor: 'pointer',
-                                            border: inCart 
-                                                ? `2px solid ${theme.palette.success.main}` 
-                                                : '1px solid transparent',
-                                            transition: 'all 0.2s',
-                                            '&:hover': { 
-                                                bgcolor: alpha(theme.palette.primary.main, 0.05),
-                                                transform: 'translateY(-2px)'
-                                            }
-                                        }}
-                                    >
-                                        <Typography variant="subtitle2" fontWeight={700} sx={{ pl: 1 }}>
-                                            {isEnglish ? product.name : product.nameJa}
-                                        </Typography>
-                                        <Box sx={{ pr: 1 }}>
-                                             <FontAwesomeIcon 
-                                                icon={inCart ? faCheck : faCartPlus} 
-                                                color={inCart ? theme.palette.success.main : theme.palette.grey[400]}
-                                             />
-                                        </Box>
-                                    </Card>
-                                </Grid>
-                            );
-                        })}
-                    </Grid>
-                </Box>
-            )}
-
-            {/* Cart Display */}
-            <Box sx={{ position: 'relative', zIndex: 1 }}>
-                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
-                    <Typography variant="h6" fontWeight={700}>
-                        {t('compare.cartTitle')}
-                    </Typography>
-                    
-                    {/* Cart Icon with Overlaid Badge */}
-                    <Box sx={{ position: 'relative', display: 'inline-flex', mr: 1 }}>
-                        <FontAwesomeIcon icon={faShoppingBasket} color={theme.palette.primary.main} size="lg" />
-                        {cart.length > 0 && (
-                            <Box sx={{
-                                position: 'absolute',
-                                top: -8,
-                                right: -8,
-                                minWidth: 18,
-                                height: 18,
-                                borderRadius: '50%',
-                                bgcolor: theme.palette.secondary.main,
-                                color: 'white',
-                                fontSize: '0.7rem',
-                                fontWeight: 800,
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                border: '2px solid white',
-                                px: 0.5
-                            }}>
-                                {cart.length}
-                            </Box>
-                        )}
-                    </Box>
-                </Box>
-                
-                {cart.length === 0 ? (
-                    <Box sx={{ p: 3, textAlign: 'center', bgcolor: alpha(theme.palette.background.paper, 0.6), borderRadius: 2, color: 'text.secondary' }}>
-                        <Typography variant="body2">{t('compare.cartEmpty')}</Typography>
-                    </Box>
-                ) : (
-                    <Grid container spacing={1}>
-                        {cart.map((item) => (
-                            <Grid item xs={6} sm={4} md={3} key={item.id}>
-                                <Card
+        {/* Search Items */}
+        {searchQuery && (
+            <Box sx={{ mb: 3, position: 'relative', zIndex: 1 }}>
+                <Grid container spacing={1}>
+                    {filteredProducts.slice(0, 4).map((product) => {
+                        const inCart = cart.some(i => i.id === product.id);
+                        return (
+                            <Grid key={product.id}>
+                                <Card 
                                     elevation={0}
-                                    onClick={() => handleRemoveFromCart(item.id)}
+                                    onClick={() => toggleCartItem(product)}
                                     sx={{ 
                                         display: 'flex', 
                                         justifyContent: 'space-between', 
@@ -428,146 +352,219 @@ const Compare = () => {
                                         borderRadius: 3,
                                         bgcolor: 'white',
                                         cursor: 'pointer',
-                                        // Red Border for Cart Items
-                                        border: `1px solid ${theme.palette.error.main}`,
+                                        border: inCart 
+                                            ? `2px solid ${theme.palette.success.main}` 
+                                            : '1px solid transparent',
                                         transition: 'all 0.2s',
                                         '&:hover': { 
-                                            bgcolor: alpha(theme.palette.error.main, 0.05),
+                                            bgcolor: alpha(theme.palette.primary.main, 0.05),
                                             transform: 'translateY(-2px)'
                                         }
                                     }}
                                 >
-                                    {/* UPDATED: Matches search items style (no wrap, full width) */}
                                     <Typography variant="subtitle2" fontWeight={700} sx={{ pl: 1 }}>
-                                        {isEnglish ? item.name : item.nameJa}
+                                        {isEnglish ? product.name : product.nameJa}
                                     </Typography>
-                                    <FontAwesomeIcon icon={faTrash} color={theme.palette.error.main} size="sm" />
                                 </Card>
                             </Grid>
-                        ))}
-                    </Grid>
-                )}
-
-                <Button
-                    variant="contained"
-                    color="secondary"
-                    fullWidth
-                    size="large"
-                    onClick={handleCompare}
-                    disabled={!canCompare || loading}
-                    sx={{ mt: 3, borderRadius: 50, py: 1.5, fontWeight: 700, fontSize: '1.1rem', boxShadow: 4 }}
-                >
-                    {loading ? t('compare.calculating') : t('compare.findBestPrice')}
-                </Button>
+                        );
+                    })}
+                </Grid>
             </Box>
-        </Paper>
+        )}
 
-        {/* Results Section */}
-        {results && (
-            <Box id="compare-results" sx={{ animation: 'fadeInUp 0.5s ease-out' }}>
+        {/* Cart Display */}
+        <Box sx={{ position: 'relative', zIndex: 1 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
+                <Typography variant="h6" fontWeight={700}>
+                    {t('compare.cartTitle')}
+                </Typography>
                 
-                {/* Header with Title and Sorting */}
-                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 3, flexWrap: 'wrap', gap: 2 }}>
-                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-                       <Box sx={{ 
-                            width: { xs: 40, sm: 50 }, 
-                            height: { xs: 40, sm: 50 }, 
-                            borderRadius: '50%', 
-                            backgroundColor: alpha(theme.palette.secondary.main, 0.1), 
-                            display: 'flex', 
-                            alignItems: 'center', 
-                            justifyContent: 'center'
+                {cart.length > 0 && (
+                    <Box sx={{ position: 'relative', display: 'inline-flex', mr: 1 }}>
+                        <FontAwesomeIcon icon={faShoppingBasket} color={theme.palette.primary.main} size="lg" />
+                        <Box sx={{
+                            position: 'absolute',
+                            top: -8,
+                            right: -8,
+                            minWidth: 18,
+                            height: 18,
+                            borderRadius: '50%',
+                            bgcolor: theme.palette.secondary.main,
+                            color: 'white',
+                            fontSize: '0.7rem',
+                            fontWeight: 800,
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            border: '2px solid white',
+                            px: 0.5
                         }}>
-                         <FontAwesomeIcon icon={faStore} style={{ color: theme.palette.secondary.main }} size="lg" />
-                       </Box>
-                       <Typography variant="h5" fontWeight={700}>
-                         {t('compare.resultsTitle')}
-                       </Typography>
-                   </Box>
+                            {cart.length}
+                        </Box>
+                    </Box>
+                )}
+            </Box>
+            
+            {cart.length === 0 ? (
+                <Box sx={{ p: 3, textAlign: 'center', bgcolor: alpha(theme.palette.background.paper, 0.6), borderRadius: 2, color: 'text.secondary' }}>
+                    <Typography variant="body2">{t('compare.cartEmpty')}</Typography>
+                </Box>
+            ) : (
+                <Grid container spacing={1}>
+                    {cart.map((item) => (
+                        <Grid key={item.id}>
+                            <Card
+                                elevation={0}
+                                onClick={() => handleRemoveFromCart(item.id)}
+                                sx={{ 
+                                    display: 'flex', 
+                                    justifyContent: 'space-between', 
+                                    alignItems: 'center', 
+                                    p: 1.5,
+                                    borderRadius: 3,
+                                    bgcolor: 'white',
+                                    cursor: 'pointer',
+                                    // Red Border for Cart Items
+                                    border: `1px solid ${theme.palette.error.main}`,
+                                    transition: 'all 0.2s',
+                                    '&:hover': { 
+                                        bgcolor: alpha(theme.palette.error.main, 0.05),
+                                        transform: 'translateY(-2px)'
+                                    }
+                                }}
+                            >
+                                {/* UPDATED: Matches search items style (no wrap, full width) */}
+                                <Typography variant="subtitle2" fontWeight={700} sx={{ pl: 1 }}>
+                                    {isEnglish ? item.name : item.nameJa}
+                                </Typography>
+                            </Card>
+                        </Grid>
+                    ))}
+                </Grid>
+            )}
 
-                   <TextField
-                      select
-                      value={sortBy}
-                      onChange={(e) => setSortBy(e.target.value)}
-                      size="small"
-                      label={t('compare.sortBy')}
-                      InputLabelProps={{ shrink: true }}
-                      InputProps={{
-                          startAdornment: (
-                              <InputAdornment position="start">
-                                  <FontAwesomeIcon icon={faSortAmountDown} size="xs" />
-                              </InputAdornment>
-                          )
-                      }}
-                      sx={{ minWidth: 160, bgcolor: 'background.paper', borderRadius: 1 }}
-                   >
-                       <MenuItem value="savings">{t('compare.sortSavings')}</MenuItem>
-                       <MenuItem value="distance">{t('compare.sortDistance')}</MenuItem>
-                   </TextField>
+            <Button
+                variant="contained"
+                color="secondary"
+                fullWidth
+                size="large"
+                onClick={handleCompare}
+                disabled={!canCompare || loading}
+                sx={{ mt: 3, borderRadius: 50, py: 1.5, fontWeight: 700, fontSize: '1.1rem', boxShadow: 4 }}
+            >
+                {loading ? t('compare.calculating') : t('compare.findBestPrice')}
+            </Button>
+        </Box>
+    </Paper>
+
+    {/* Results Section */}
+    {results && (
+        <Box id="compare-results" sx={{ animation: 'fadeInUp 0.5s ease-out' }}>
+            
+            {/* Header with Title and Sorting */}
+            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 3, flexWrap: 'wrap', gap: 2 }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 5 }}>
+                    <Box sx={{ 
+                        width: { xs: 40, sm: 50 }, 
+                        height: { xs: 40, sm: 50 }, 
+                        borderRadius: '50%', 
+                        backgroundColor: alpha(theme.palette.secondary.main, 0.1), 
+                        display: 'flex', 
+                        alignItems: 'center', 
+                        justifyContent: 'center'
+                    }}>
+                        <FontAwesomeIcon icon={faStore} style={{ color: theme.palette.secondary.main }} size="lg" />
+                    </Box>
+                    <Typography variant="h5" fontWeight={700}>
+                        {t('compare.resultsTitle')}
+                    </Typography>
                 </Box>
 
-                {/* Results Container */}
-                <Paper 
-                    variant="outlined" 
-                    sx={{ 
-                      bgcolor: '#fafafa',
-                      borderRadius: 3,
-                      p: 2
+                <TextField
+                    select
+                    value={sortBy}
+                    onChange={(e) => setSortBy(e.target.value)}
+                    size="small"
+                    slotProps={{
+                        input: {
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                    <FontAwesomeIcon icon={faSortAmountDown} size="xs" />
+                                </InputAdornment>
+                            )
+                        }
                     }}
-                 >
-                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                        {results.map((store, index) => {
-                            // UPDATED: Logic for red border (Highest Savings visible in both sorts)
-                            const isHighestSavings = store.savings === maxSavings && maxSavings > 0;
-                            const isExpanded = expandedStoreId === store.id;
+                    sx={{ minWidth: 160, bgcolor: 'background.paper', borderRadius: 1 }}
+                >
+                    <MenuItem value="savings">{t('compare.sortSavings')}</MenuItem>
+                    <MenuItem value="distance">{t('compare.sortDistance')}</MenuItem>
+                </TextField>
+            </Box>
 
-                            // Border Color Logic
-                            let borderColor = '1px solid transparent';
-                            if (isExpanded) {
-                                borderColor = `2px solid ${theme.palette.primary.main}`;
-                            } else if (isHighestSavings) {
-                                borderColor = `2px solid ${theme.palette.secondary.main}`;
-                            }
+            {/* Results Container */}
+            <Paper 
+                variant="outlined" 
+                sx={{ 
+                    bgcolor: '#fafafa',
+                    borderRadius: 3,
+                    p: 2
+                }}
+                >
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                    {results.map((store, index) => {
+                        // UPDATED: Logic for red border (Highest Savings visible in both sorts)
+                        const isHighestSavings = store.savings === maxSavings && maxSavings > 0;
+                        const isExpanded = expandedStoreId === store.id;
 
-                            return (
-                                <Paper 
-                                    key={store.id} 
-                                    elevation={isExpanded ? 4 : (isHighestSavings ? 3 : 1)}
+                        // Border Color Logic
+                        let borderColor = '1px solid transparent';
+                        if (isExpanded) {
+                            borderColor = `2px solid ${theme.palette.primary.main}`;
+                        } else if (isHighestSavings) {
+                            borderColor = `2px solid #27AE60`;
+                        }
+
+                        return (
+                            <Paper 
+                                key={store.id} 
+                                elevation={isExpanded ? 4 : (isHighestSavings ? 3 : 1)}
+                                sx={{ 
+                                    borderRadius: 3, 
+                                    border: borderColor,
+                                    overflow: 'hidden',
+                                    transition: 'all 0.2s',
+                                    transform: isExpanded ? 'scale(1.01)' : 'scale(1)',
+                                    '&:hover': { transform: isExpanded ? 'scale(1.01)' : 'translateY(-2px)' }
+                                }}
+                            >
+                                <Box 
                                     sx={{ 
-                                        borderRadius: 3, 
-                                        border: borderColor,
-                                        overflow: 'hidden',
-                                        transition: 'all 0.2s',
-                                        transform: isExpanded ? 'scale(1.01)' : 'scale(1)',
-                                        '&:hover': { transform: isExpanded ? 'scale(1.01)' : 'translateY(-2px)' }
+                                        p: 2, 
+                                        display: 'flex',
+                                        flexDirection: {xs: 'column', sm: 'row'},
+                                        alignItems: { xs: 'stretch', md: 'center' },
+                                        justifyContent: 'space-between',
+                                        cursor: 'pointer',
+                                        bgcolor: isExpanded 
+                                            ? alpha(theme.palette.primary.main, 0.05) 
+                                            : (isHighestSavings ? alpha(theme.palette.secondary.main, 0.02) : 'white')
                                     }}
+                                    onClick={() => toggleExpand(store.id)}
                                 >
-                                    <Box 
-                                        sx={{ 
-                                            p: 2, 
-                                            display: 'grid',
-                                            gridTemplateColumns: { xs: '1fr', sm: '2fr 1fr 1fr' },
-                                            gap: 2,
-                                            alignItems: 'center',
-                                            cursor: 'pointer',
-                                            bgcolor: isExpanded 
-                                                ? alpha(theme.palette.primary.main, 0.05) 
-                                                : (isHighestSavings ? alpha(theme.palette.secondary.main, 0.02) : 'white')
-                                        }}
-                                        onClick={() => toggleExpand(store.id)}
-                                    >
-                                        {/* Store Info */}
-                                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                                            <Box sx={{ 
-                                                width: 44, height: 44, borderRadius: '12px', 
-                                                bgcolor: theme.palette.grey[100], 
-                                                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                                flexShrink: 0
-                                            }}>
-                                                <FontAwesomeIcon icon={faStore} color={theme.palette.primary.main} size="lg" />
-                                            </Box>
+                                    {/* Store Info */}
+                                    <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 1, sm: 2 }, width: { xs: '100%', sm: '60%' }, minWidth: { sm: '60%' } }}>
+                                        <Box sx={{ 
+                                            width: 44, height: 44, borderRadius: '12px', 
+                                            bgcolor: theme.palette.grey[100], 
+                                            display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                            flexShrink: 0
+                                        }}>
+                                            <FontAwesomeIcon icon={faStore} color={theme.palette.primary.main} size="lg" />
+                                        </Box>
+                                        <Box display='flex' alignItems='center' justifyContent='space-between' sx={{ gap: {xs: 1, sm: 2} }} width='100%' >
                                             <Box>
-                                                <Typography variant="h6" fontWeight={700} sx={{ lineHeight: 1.2 }}>
+                                                <Typography variant="h6" fontWeight={700} sx={{ lineHeight: 1.2, fontSize: { xs: '1.15rem', sm: '1.25rem' } }}>
                                                     {store.name}
                                                 </Typography>
                                                 <Typography variant="caption" sx={{ display: 'flex', alignItems: 'center', gap: 0.5, color: 'text.secondary' }}>
@@ -575,148 +572,131 @@ const Compare = () => {
                                                     {store.distance}{store.unit}
                                                 </Typography>
                                             </Box>
-                                        </Box>
-
-                                        {/* Availability */}
-                                        <Box sx={{ display: 'flex', justifyContent: { xs: 'flex-start', sm: 'center' }, pl: { xs: 7.5, sm: 0 } }}>
-                                            <Chip 
-                                                label={t('compare.productsAvailable', { available: store.availableCount, total: store.totalCartSize })} 
-                                                size="small"
-                                                color={store.availableCount === store.totalCartSize ? "success" : "default"}
-                                                sx={{ fontWeight: 600 }}
-                                            />
-                                        </Box>
-
-                                        {/* Savings & Action */}
-                                        <Box sx={{ 
-                                            display: 'flex', 
-                                            alignItems: 'center', 
-                                            justifyContent: { xs: 'space-between', sm: 'flex-end' },
-                                            gap: 2,
-                                            pl: { xs: 7.5, sm: 0 }
-                                        }}>
-                                            {store.savings > 0 ? (
-                                                <Typography variant="body1" color="error.main" fontWeight={800}>
-                                                    {t('compare.savings', { amount: store.savings.toLocaleString() })}
-                                                </Typography>
-                                            ) : (
-                                                <Typography variant="body2" color="text.secondary">
-                                                    -
-                                                </Typography>
+                                            {store.savings > 0 && (
+                                                <Chip 
+                                                    label={t('compare.savings', { amount: store.savings.toLocaleString() })}
+                                                    size="small"
+                                                    color="success"
+                                                    sx={{ fontWeight: 800, height: 28, color: '#ffffff' }} 
+                                                />
                                             )}
-                                            
-                                            <Button
-                                                variant="contained"
-                                                color="secondary"
-                                                size="small"
-                                                onClick={(e) => {
-                                                    e.stopPropagation();
-                                                    handleNavigateClick(store);
-                                                }}
-                                                startIcon={<FontAwesomeIcon icon={faRoute} />}
-                                                sx={{ borderRadius: 2, fontWeight: 700, minWidth: 100 }}
-                                            >
-                                                {t('compare.navigate')}
-                                            </Button>
                                         </Box>
                                     </Box>
 
-                                    {/* Expanded Details */}
-                                    <Collapse in={isExpanded}>
-                                        <Divider />
-                                        <Box sx={{ p: 2, bgcolor: alpha(theme.palette.primary.main, 0.02) }}>
-                                            {store.productsDetails.map((product) => (
-                                                <Box 
-                                                    key={product.id} 
-                                                    sx={{ 
-                                                        display: 'flex', 
-                                                        justifyContent: 'space-between', 
-                                                        py: 1, 
-                                                        borderBottom: '1px dashed #e0e0e0',
-                                                        '&:last-child': { borderBottom: 'none' },
-                                                        opacity: product.isAvailable ? 1 : 0.5
-                                                    }}
-                                                >
-                                                    <Typography variant="body2" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                                                        {!product.isAvailable && <FontAwesomeIcon icon={faTimes} color="red" />}
-                                                        {isEnglish ? product.name : product.nameJa}
-                                                    </Typography>
-                                                    <Typography variant="body2" fontWeight={600}>
-                                                        {product.isAvailable ? `¥${product.price}` : '-'}
-                                                    </Typography>
-                                                </Box>
-                                            ))}
-                                            
-                                            <Box sx={{ display: 'flex', justifyContent: 'center', mt: 1 }}>
-                                                <IconButton size="small" onClick={() => toggleExpand(store.id)}>
-                                                    <FontAwesomeIcon icon={faChevronUp} />
-                                                </IconButton>
-                                            </Box>
-                                        </Box>
-                                    </Collapse>
-                                </Paper>
-                            );
-                        })}
-                    </Box>
-                </Paper>
-            </Box>
-        )}
-
-        {/* Navigation Reminder Dialog */}
-        <Dialog.Root open={navDialogOpen} onOpenChange={setNavDialogOpen}>
-            <Dialog.Portal>
-                <Dialog.Overlay style={overlayStyle} />
-                <Dialog.Content style={contentStyle}>
-                    <Box sx={{ position: 'relative' }}>
-                         <Dialog.Title asChild>
-                            <Box sx={{ textAlign: 'center', pb: 1 }}>
-                                <Box sx={{ 
-                                    width: 60, height: 60, borderRadius: '50%', 
-                                    bgcolor: alpha(theme.palette.secondary.main, 0.1), 
-                                    color: theme.palette.secondary.main,
-                                    margin: '0 auto', mb: 2,
-                                    display: 'flex', alignItems: 'center', justifyContent: 'center'
-                                }}>
-                                    <FontAwesomeIcon icon={faReceipt} size="2x" />
+                                    {/* Savings & Action */}
+                                    <Box sx={{ 
+                                        display: 'flex', 
+                                        alignItems: 'center', 
+                                        justifyContent: { xs: 'space-evenly', sm: 'flex-end' },
+                                        gap: 2
+                                    }}>
+                                            <Chip 
+                                                label={t('compare.productsAvailable', { available: store.availableCount, total: store.totalCartSize })} 
+                                                size="small"
+                                                sx={{ fontSize: '0.75rem' }} 
+                                            />
+                                        
+                                        <Button
+                                            variant="contained"
+                                            color="primary"
+                                            size="small"
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                handleNavigateClick(store);
+                                            }}
+                                            startIcon={<FontAwesomeIcon icon={faRoute} />}
+                                            sx={{ borderRadius: 2, fontSize: { xs: '0.85rem', sm: '1rem' } }}
+                                        >
+                                            {t('compare.navigate')}
+                                        </Button>
+                                    </Box>
                                 </Box>
-                                <Typography variant="h5" fontWeight={800}>
-                                    {t('compare.reminderTitle')}
-                                </Typography>
-                            </Box>
-                         </Dialog.Title>
-                         
-                         <Dialog.Description asChild>
-                             <Typography variant="body1" color="text.secondary" align="center" sx={{ mb: 4, lineHeight: 1.5 }}>
-                                {t('compare.reminderBody')}
-                             </Typography>
-                         </Dialog.Description>
-                         
-                         <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2 }}>
-                             <Button 
-                                onClick={() => setNavDialogOpen(false)} 
-                                color="inherit"
-                                sx={{ fontWeight: 600, textTransform: 'none' }}
-                             >
-                                 {t('common.cancel')}
-                             </Button>
-                             <Button 
-                                variant="contained" 
-                                color="secondary" 
-                                onClick={confirmNavigation}
-                                startIcon={<FontAwesomeIcon icon={faRoute} />}
-                                sx={{ borderRadius: 2, fontWeight: 700, textTransform: 'none', px: 3 }}
-                             >
-                                 {t('compare.goToMaps')}
-                             </Button>
-                         </Box>
-                    </Box>
-                </Dialog.Content>
-            </Dialog.Portal>
-        </Dialog.Root>
 
-        <style>{`@keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } } @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } } @keyframes slideUp { from { opacity: 0; transform: translate(-50%, -45%); } to { opacity: 1; transform: translate(-50%, -50%); } }`}</style>
-      </Container>
-    </Box>
+                                {/* Expanded Details */}
+                                <Collapse in={isExpanded}>
+                                    <Divider />
+                                    <Box sx={{ p: 2, bgcolor: alpha(theme.palette.primary.main, 0.02) }}>
+                                        {store.productsDetails.map((product) => (
+                                            <Box 
+                                                key={product.id} 
+                                                sx={{ 
+                                                    display: 'flex', 
+                                                    justifyContent: 'space-between', 
+                                                    py: 1, 
+                                                    borderBottom: '1px dashed #e0e0e0',
+                                                    '&:last-child': { borderBottom: 'none' },
+                                                    opacity: product.isAvailable ? 1 : 0.5
+                                                }}
+                                            >
+                                                <Typography variant="body2" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                                    {isEnglish ? product.name : product.nameJa}
+                                                </Typography>
+                                                <Typography variant="body2" fontWeight={600}>
+                                                    {product.isAvailable ? `¥${product.price}` : '-'}
+                                                </Typography>
+                                            </Box>
+                                        ))}
+                                        
+                                        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 1 }}>
+                                            <IconButton size="small" onClick={() => toggleExpand(store.id)}>
+                                                <FontAwesomeIcon icon={faChevronUp} />
+                                            </IconButton>
+                                        </Box>
+                                    </Box>
+                                </Collapse>
+                            </Paper>
+                        );
+                    })}
+                </Box>
+            </Paper>
+        </Box>
+    )}
+
+    {/* Navigation Reminder Dialog */}
+    <Dialog.Root open={navDialogOpen} onOpenChange={setNavDialogOpen}>
+        <Dialog.Portal>
+            <Dialog.Overlay style={overlayStyle} />
+            <Dialog.Content style={contentStyle}>
+                <Box sx={{ position: 'relative' }}>
+                        <Dialog.Title asChild>
+                        <Box sx={{ textAlign: 'center', pb: 1 }}>
+                            <Typography variant="h5" fontWeight={800}>
+                                {t('compare.reminderTitle')}
+                            </Typography>
+                        </Box>
+                        </Dialog.Title>
+                        
+                        <Dialog.Description asChild>
+                            <Typography variant="body1" color="text.secondary" align="center" sx={{ mb: 4, lineHeight: 1.5 }}>
+                            {t('compare.reminderBody')}
+                            </Typography>
+                        </Dialog.Description>
+                        
+                        <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2 }}>
+                            <Button 
+                            onClick={() => setNavDialogOpen(false)} 
+                            color="inherit"
+                            sx={{ fontWeight: 600, textTransform: 'none' }}
+                            >
+                                {t('common.cancel')}
+                            </Button>
+                            <Button 
+                            variant="contained" 
+                            color="secondary" 
+                            onClick={confirmNavigation}
+                            startIcon={<FontAwesomeIcon icon={faRoute} />}
+                            sx={{ borderRadius: 2, fontWeight: 700, textTransform: 'none', px: 3 }}
+                            >
+                                {t('compare.goToMaps')}
+                            </Button>
+                        </Box>
+                </Box>
+            </Dialog.Content>
+        </Dialog.Portal>
+    </Dialog.Root>
+
+    <style>{`@keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } } @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } } @keyframes slideUp { from { opacity: 0; transform: translate(-50%, -45%); } to { opacity: 1; transform: translate(-50%, -50%); } }`}</style>
+    </Container>
   );
 };
 

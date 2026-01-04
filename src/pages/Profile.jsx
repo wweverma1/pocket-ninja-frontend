@@ -309,7 +309,8 @@ const Profile = () => {
             color="text.primary"
             noWrap
             sx={{ 
-              maxWidth: '90%' 
+              maxWidth: '90%',
+              fontSize: { xs: '1.5rem', sm: '2rem' }
             }}
           >
             {profileData.username}
@@ -416,9 +417,9 @@ const Profile = () => {
             alignItems: 'center', 
             justifyContent: 'center' 
           }}>
-            <FontAwesomeIcon icon={faMapMarkerAlt} style={{ color: theme.palette.secondary.main, fontSize: '1rem' }} />
+            <FontAwesomeIcon icon={faMapMarkerAlt} style={{ color: theme.palette.secondary.main }} size="lg" />
           </Box>
-          <Typography variant="h6" fontWeight="bold">{t('profile.proximity')}</Typography>
+          <Typography variant="h6" fontWeight="bold" sx={{ fontSize: { xs: '1.15rem', sm: '1.25rem' } }}>{t('profile.proximity')}</Typography>
         </Box>
         
         <Box sx={{ px: { xs: 3, sm: 5 }, py: 4, position: 'relative', zIndex: 1 }}>
@@ -616,7 +617,6 @@ const StatCard = ({ icon, color, title, value, subtitle, subtitleLabel, monthlyV
         flexDirection: 'column', 
         position: 'relative', 
         overflow: 'hidden', 
-        minHeight: '140px',
         transition: 'transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out',
         '&:hover': {
           transform: 'translateY(-4px)',
@@ -635,7 +635,7 @@ const StatCard = ({ icon, color, title, value, subtitle, subtitleLabel, monthlyV
       </Box>
       
       <Box sx={{ mt: 'auto' }}>
-        <Typography variant="h4" fontWeight="bold" sx={{ lineHeight: 1.2 }}>{value}</Typography>
+        <Typography variant="h4" fontWeight="bold" sx={{ lineHeight: 1.2, fontSize: { xs: '1.5rem', sm: '1.75rem', md: '2rem' } }}>{value}</Typography>
         
         {subtitle && (
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, mt: 0.5 }}>

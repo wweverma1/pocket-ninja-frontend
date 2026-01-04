@@ -15,7 +15,7 @@
   "home": {
     "welcome": "必需品を最安値で購入",
     "savingsPromise": "※ 最大30%の節約が可能",
-    "subtitle": "札幌の店舗間で価格を比較して、お買い物ごとに節約しましょう",
+    "subtitle": "札幌の全店舗の価格を比較して、毎回の買い物を節約しましょう",
     "startSaving": "節約を始める",
     "getStarted": "始める",
     "leaderboardTitle": "今日のベストセール",
@@ -95,7 +95,7 @@
     "update": "更新",
     "customUploadComingSoon": "カスタムアップロード機能は近日公開！",
     "points": "ポイント",
-    "noLeaderboard": "今月のリーダーボードが見つかりません。"
+    "noLeaderboard": "今月のリーダーボードは見つかりませんでした"
   },
   "feedback": {
     "title": "フィードバックを送信",
@@ -142,8 +142,8 @@
     }
   },
   "compare": {
-    "title": "スマートショッピング",
-    "subtitle": "カートを作成して、近くの最安値店舗を見つけましょう。",
+    "title": "カートを構築する",
+    "subtitle": "商品を追加して札幌の全店舗の価格を比較してください",
     "searchPlaceholder": "商品を検索...",
     "cartTitle": "買い物かご",
     "cartEmpty": "カートは空です。商品を追加して比較しましょう！",
@@ -152,10 +152,10 @@
     "productsAvailable": "{{available}} / {{total}} 点",
     "savings": "¥{{amount}} お得！",
     "navigate": "ルート案内",
-    "calculating": "計算中...",
-    "reminderTitle": "忍者からの任務",
-    "reminderBody": "買い物が終わったら、レシートの写真をアップロードすることを忘れないでください！あなたの貢献が札幌の節約を助けます。",
-    "goToMaps": "Googleマップを開く",
+    "calculating": "比較中...",
+    "reminderTitle": "親切なリマインダー",
+    "reminderBody": "購入後は、レシートの写真を撮ることを忘れないでください。あなたの貢献はコミュニティ全体に役立ちます。",
+    "goToMaps": "ルート案内",
     "itemAdded": "カートに追加しました",
     "itemRemoved": "カートから削除しました",
     "cartHelp": "上の検索バーから商品を追加して、推定節約額を確認してください。",

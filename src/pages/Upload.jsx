@@ -349,13 +349,13 @@ const Upload = () => {
             justifyContent: 'center', 
             mr: 2 
           }}>
-            <FontAwesomeIcon icon={faTrophy} style={{ fontSize: { xs: '1.25rem', sm: '1.5rem' }, color: theme.palette.secondary.main }} size="lg" />
+            <FontAwesomeIcon icon={faTrophy} style={{ color: theme.palette.secondary.main }} size="lg" />
           </Box>
           <Box sx={{ textAlign: 'left' }}>
             <Typography variant="h4" fontWeight={800} color="text.primary" sx={{ fontSize: { xs: '1.5rem', sm: '2rem' } }}>
               {t('upload.leaderboardTitle')}
             </Typography>
-            <Typography variant="body1" color="text.secondary">
+            <Typography variant="body2" color="text.secondary">
               {t('upload.leaderboardSubtitle')}
             </Typography>
           </Box>
@@ -598,7 +598,7 @@ const Upload = () => {
                     justifyContent: 'center', 
                     mr: 2 
                 }}>
-                 <FontAwesomeIcon icon={faReceipt} style={{ color: theme.palette.secondary.main, fontSize: { xs: '1.25rem', sm: '1.5rem' } }} size="lg" />
+                 <FontAwesomeIcon icon={faReceipt} style={{ color: theme.palette.secondary.main }} size="lg" />
                </Box>
                <Typography variant="h4" fontWeight={700} sx={{ fontSize: { xs: '1.5rem', sm: '2rem' }, textAlign: 'left' }}>
                  {t('upload.historyTitle')}
@@ -646,8 +646,8 @@ const Upload = () => {
                        borderLeft: `5px solid ${isSuccess ? theme.palette.success.main : theme.palette.error.main}`,
                        boxShadow: 1
                     }}>
-                      <CardContent sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, alignItems: { xs: 'stretch', md: 'center' }, justifyContent: 'space-between', py: 2, '&:last-child': { pb: 2 } }}>
-                         <Grid container spacing={2} alignItems="center" sx={{ width: { xs: '100%', md: '50%' }, minWidth: { md: '50%' }}}>
+                      <CardContent sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, alignItems: { xs: 'stretch', sm: 'center' }, justifyContent: 'space-between', py: 2, '&:last-child': { pb: 2 } }}>
+                         <Grid container spacing={2} alignItems="center" sx={{ width: { xs: '100%', sm: '50%' }, minWidth: { sm: '50%' }}}>
                             <Grid sx={{ textAlign: 'center' }}>
                                <FontAwesomeIcon 
                                  icon={isSuccess ? faCheckCircle : faExclamationCircle} 
@@ -668,7 +668,7 @@ const Upload = () => {
                             </Grid>
                           </Grid>
                           {isSuccess && (
-                            <Grid container spacing={2} alignItems="center" sx={{ mt: { xs: 1, md: 0 }, justifyContent: { xs: 'center', md: 'end' }, width: { xs: '100%', md: '50%' }, minWidth: { md: '50%' } }}>
+                            <Grid container spacing={2} alignItems="center" sx={{ mt: { xs: 1, md: 0 }, justifyContent: { xs: 'space-evenly', sm: 'end' }, width: { xs: '100%', sm: '50%' }, minWidth: { sm: '50%' } }}>
                               <Grid> 
                                 <Chip 
                                   label={t('upload.productsFound', { count: receipt.productsFound })} 

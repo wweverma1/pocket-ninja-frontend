@@ -328,7 +328,7 @@ const Home = () => {
               justifyContent: 'center', 
               mr: 2 
             }}>
-              <FontAwesomeIcon icon={faFireAlt} style={{ fontSize: isMobile ? '1.25rem' : '1.5rem', color: theme.palette.secondary.main }} />
+              <FontAwesomeIcon icon={faFireAlt} style={{ color: theme.palette.secondary.main }} size="lg" />
             </Box>
             <Box sx={{ textAlign: 'left' }}>
               <Typography variant="h2" fontWeight={700} sx={{ lineHeight: 1.1 }}>
@@ -456,8 +456,8 @@ const Home = () => {
                               <Chip 
                                 label={t('home.savePercent', { percent: item.savingsPercent.toFixed(0) })}
                                 size="small"
-                                color="secondary"
-                                sx={{ fontWeight: 800, height: 28 }} 
+                                color="success"
+                                sx={{ fontWeight: 800, height: 28, color: '#ffffff' }} 
                               />
                           </Box>
                           <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -497,7 +497,7 @@ const Home = () => {
                 justifyContent: 'center', 
                 mr: 2 
               }}>
-                <FontAwesomeIcon icon={faCircleQuestion} style={{ fontSize: isMobile ? '1.25rem' : '1.5rem', color: theme.palette.secondary.main }} />
+                <FontAwesomeIcon icon={faCircleQuestion} style={{ color: theme.palette.secondary.main }} size="lg" />
             </Box>
             <Box sx={{ textAlign: 'left' }}>
               <Typography variant="h2" fontWeight={700}>
