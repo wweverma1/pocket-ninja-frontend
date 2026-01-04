@@ -466,7 +466,7 @@ const Home = () => {
                                 size="small"
                                 color="primary"
                                 onClick={() => setLoginOpen(true)} 
-                                sx={{ borderRadius: 2, minWidth: '80px' }}
+                                sx={{ borderRadius: 2, minWidth: '80px', fontSize: { xs: '0.85rem', sm: '1rem' } }}
                               >
                                 <FontAwesomeIcon icon={faLock} style={{ marginRight: 6 }} />
                                 {t('home.joinNow')}
@@ -597,7 +597,7 @@ const Home = () => {
             
             <Grid container spacing={4} alignItems="center">
               <Grid>
-                <Typography variant="h4" fontWeight={800} gutterBottom sx={{ color: 'primary.main' }}>
+                <Typography variant="h4" fontWeight={800} gutterBottom sx={{ color: 'primary.main', fontSize: { xs: '1.625rem', sm: '2.125rem' } }}>
                   {t('developerNote.title')}
                 </Typography>
                 <Typography variant="body1" sx={{ 

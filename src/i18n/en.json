@@ -13,9 +13,9 @@
     "profile": "Profile"
   },
   "home": {
-    "welcome": "Find the Best Deals in Sapporo",
+    "welcome": "Buy Essentials at Best Prices",
     "savingsPromise": "* Save up to 30% on your bills",
-    "subtitle": "Compare prices across stores and make every yen count",
+    "subtitle": "Compare prices across stores in Sapporo and save on every purchase",
     "startSaving": "Start Saving",
     "getStarted": "Get Started",
     "leaderboardTitle": "Today's Best Deals",
@@ -40,12 +40,12 @@
     },
     "step3": {
       "title": "Save Money",
-      "description": "Shop smart and keep more money in your pocket"
+      "description": "Shop smart and maximize your savings on every purchase"
     }
   },
   "developerNote": {
     "title": "A Note From the Developer",
-    "content": "Pocket Ninja works best when we all contribute. Every receipt you upload helps everyone in Sapporo save money. Together, we can build a community where smart shopping is easy and accessible for all. Thank you for being part of this journey!",
+    "content": "Pocket Ninja is your shopping companion that helps you save on every purchase by showing you the nearest store offering the best price. Pocket Ninja works best when we all contribute. Every receipt you upload helps everyone in Sapporo save money. Together, we can build a community where smart shopping is easy and accessible for all. Thank you for being part of this journey!",
     "joinCommunity": "Join the Community"
   },
   "auth": {
