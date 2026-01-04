@@ -17,7 +17,7 @@ import {
 } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faTrophy,
+  faFireAlt,
   faYenSign,
   faStore,
   faShoppingCart,
@@ -251,7 +251,7 @@ const Home = () => {
       >
         <Snowfall />
         
-        <Container maxWidth="md" sx={{ position: 'relative', zIndex: 1 }}>
+        <Container sx={{ position: 'relative', zIndex: 1 }}>
           <Box className="hero-animate">
             <Typography variant="h1" sx={{ 
               mb: 3, 
@@ -328,7 +328,7 @@ const Home = () => {
               justifyContent: 'center', 
               mr: 2 
             }}>
-              <FontAwesomeIcon icon={faTrophy} style={{ fontSize: isMobile ? '1.25rem' : '1.5rem', color: theme.palette.secondary.main }} />
+              <FontAwesomeIcon icon={faFireAlt} style={{ fontSize: isMobile ? '1.25rem' : '1.5rem', color: theme.palette.secondary.main }} />
             </Box>
             <Box sx={{ textAlign: 'left' }}>
               <Typography variant="h2" fontWeight={700} sx={{ lineHeight: 1.1 }}>
