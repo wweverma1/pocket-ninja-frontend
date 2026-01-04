@@ -382,12 +382,12 @@ const Home = () => {
                       </Box>
                     )}
                     
-                    <CardContent sx={{ p: { xs: 2, sm: 2.5 }, '&:last-child': { pb: { xs: 2, sm: 2.5 } } }}>
+                    <CardContent sx={{ p: { xs: 2, sm: 2.5 } }}>
                       {/* Main Flex Container: Column on Mobile, Row on Desktop */}
                       <Box sx={{ 
                         display: 'flex', 
-                        flexDirection: { xs: 'column', md: 'row' },
-                        alignItems: { xs: 'stretch', md: 'center' },
+                        flexDirection: { xs: 'column', sm: 'row' },
+                        alignItems: { xs: 'stretch', sm: 'center' },
                         justifyContent: 'space-between',
                         gap: 2
                       }}>
@@ -583,7 +583,7 @@ const Home = () => {
             elevation={0}
             sx={{ 
               p: { xs: 4, md: 6 }, 
-              background: `linear-gradient(135deg, ${alpha(theme.palette.primary.main, 0.02)} 0%, ${alpha(theme.palette.secondary.main, 0.05)} 100%)`, 
+              background: `linear-gradient(135deg, ${alpha(theme.palette.primary.main, 0.02)} 0%, ${alpha(theme.palette.secondary.main, 0.1)} 100%)`, 
               border: `1px solid ${alpha(theme.palette.primary.main, 0.1)}`,
               borderLeft: `6px solid ${theme.palette.secondary.main}`,
               borderRadius: 4,
