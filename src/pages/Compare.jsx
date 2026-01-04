@@ -667,7 +667,7 @@ const Compare = () => {
                         </Dialog.Title>
                         
                         <Dialog.Description asChild>
-                            <Typography variant="body1" color="text.secondary" align="center" sx={{ mb: 4, lineHeight: 1.5 }}>
+                            <Typography variant="body1" color="text.secondary" align="center" sx={{ mb: 4, lineHeight: 1.5, whiteSpace: 'pre-line' }}>
                             {t('compare.reminderBody')}
                             </Typography>
                         </Dialog.Description>

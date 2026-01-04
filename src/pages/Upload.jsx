@@ -546,7 +546,7 @@ const Upload = () => {
           <Typography variant="h4" fontWeight={800} sx={{ fontSize: { xs: '1.5rem', sm: '2rem' } }} gutterBottom>
             {t('upload.contributeTitle')}
           </Typography>
-          <Typography variant="body1" sx={{ mb: 4, opacity: 0.9, lineHeight: 1.6 }}>
+          <Typography variant="body1" sx={{ mb: 4, opacity: 0.9, lineHeight: 1.6, whiteSpace: 'pre-line' }}>
             {t('upload.contributeSubtitle')}
           </Typography>
 
