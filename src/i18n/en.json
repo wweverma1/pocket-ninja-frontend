@@ -136,6 +136,7 @@
     "uploading": "Processing...",
     "points": "pts",
     "contributions": "products",
+    "totalAmount": "Total Amount",
     "status": {
       "success": "Success",
       "failed": "Failed"

@@ -25,6 +25,7 @@ import {
   faExclamationCircle,
   faCrown,
   faCropSimple,
+  faYenSign,
   faTimes,
   faGlassCheers
 } from '@fortawesome/free-solid-svg-icons';
@@ -249,6 +250,9 @@ const Upload = () => {
                        error.response?.data?.message?.en || 
                        t('common.error');
         toast.error(errorMsg, { duration: 3000, position: 'bottom-center' });
+        setTimeout(() => {
+          fetchReceipts(selectedMonth);
+        }, 500);
     } finally {
         setUploading(false);
     }
@@ -637,7 +641,7 @@ const Upload = () => {
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
                 {receipts.map((receipt, index) => {
                   const isSuccess = receipt.status === 'SUCCESS';
-                  const resultMsgObj = receipt.result?.message;
+                  const resultMsgObj = receipt.statusMessage;
                   const messageText = resultMsgObj?.[i18n.language] || resultMsgObj?.en || '';
                   
                   return (
@@ -647,44 +651,71 @@ const Upload = () => {
                        boxShadow: 1
                     }}>
                       <CardContent sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, alignItems: { xs: 'stretch', sm: 'center' }, justifyContent: 'space-between', py: 2, '&:last-child': { pb: 2 } }}>
-                         <Grid container spacing={2} alignItems="center" sx={{ width: { xs: '100%', sm: '50%' }, minWidth: { sm: '50%' }}}>
-                            <Grid sx={{ textAlign: 'center' }}>
+                         <Box container alignItems="center" sx={{ display: 'flex', width: { xs: '100%', sm: '50%' }, minWidth: { sm: '50%' }}}>
+                            <Box sx={{
+                              width: { xs: 40, sm: 50 }, 
+                              height: { xs: 40, sm: 50 }, 
+                              borderRadius: '50%', 
+                              display: 'flex',
+                              alignItems: 'center',
+                              alignContent: 'center',
+                              justifyContent: 'center',
+                              mr: 1
+                            }}>
                                <FontAwesomeIcon 
                                  icon={isSuccess ? faCheckCircle : faExclamationCircle} 
                                  size="lg"
                                  color={isSuccess ? theme.palette.success.main : theme.palette.error.main}
                                />
-                            </Grid>
-                            <Grid>
-                               <Typography variant="subtitle1" fontWeight={700}>
-                                 {receipt.storeName || t('upload.unknownStore')}
-                               </Typography>
+                            </Box>
+                            <Box sx={{ textAlign: 'left', minWidth: '90%' }}>
+                              <Typography 
+                                variant="subtitle1" 
+                                fontWeight={700}
+                                sx={{
+                                  whiteSpace: 'nowrap',
+                                  overflow: 'hidden',
+                                  textOverflow: 'ellipsis',
+                                  display: 'block'
+                                }}
+                              >
+                                {isSuccess 
+                                  ? receipt.storeName + ' ' + receipt.storeIdentifier?.[i18n.language]
+                                  : t('upload.unknownStore')}
+                              </Typography>
                                <Typography variant="caption" color="text.secondary" display="block">
-                                 {new Date(receipt.submittedAt).toLocaleString(i18n.language === 'en' ? 'en-GB' : i18n.language)}
+                                 {new Date(receipt.purchaseDate || receipt.submittedAt).toLocaleDateString(i18n.language === 'en' ? 'en-GB' : i18n.language)}
                                </Typography>
                                <Typography variant="body2" sx={{ mt: 0.5, color: isSuccess ? 'text.primary' : 'error.main' }}>
                                   {messageText}
                                </Typography>
-                            </Grid>
-                          </Grid>
+                            </Box>
+                          </Box>
                           {isSuccess && (
                             <Grid container spacing={2} alignItems="center" sx={{ mt: { xs: 1, md: 0 }, justifyContent: { xs: 'space-evenly', sm: 'end' }, width: { xs: '100%', sm: '50%' }, minWidth: { sm: '50%' } }}>
-                              <Grid> 
+                              <Grid sx={{ display: {xs: 'none', sm: 'block'}}}> 
                                 <Chip 
-                                  label={t('upload.productsFound', { count: receipt.productsFound })} 
+                                  label={t('upload.productsFound', { count: receipt.productsFound.length })} 
                                   size="small" 
                                   sx={{ fontSize: '0.75rem' }} 
                                 />
                               </Grid>
-                              <Grid>
+                              <Grid> 
                                 <Chip 
-                                  label={`¥${receipt.totalAmount?.toLocaleString()}`} 
-                                  color="success" 
-                                  variant="outlined" 
-                                  size="small" 
-                                  sx={{ fontWeight: 700, mr: 1 }} 
+                                  label={`+${receipt.productsUpdated * 5} ${t('profile.points')}`}
+                                  size="small"
+                                  color="success"
+                                  sx={{ fontWeight: 800, height: 28, color: '#ffffff' }} 
                                 />
                               </Grid>
+                              <Box sx={{ textAlign: 'right', mr: 1 }}>
+                                <Typography variant="caption" color="success.main" display="block" fontWeight={600}>
+                                  {t('upload.totalAmount')}
+                                </Typography>
+                                <Typography variant="h6" color="success.main" fontWeight={800} sx={{ lineHeight: 1, fontSize: {xs: '1rem', sm: '1.25rem'} }}>
+                                  <FontAwesomeIcon icon={faYenSign} size="xs" />{receipt.totalAmount.toLocaleString()}
+                                </Typography>
+                              </Box>
                             </Grid>
                           )}
                       </CardContent>

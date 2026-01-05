@@ -136,6 +136,7 @@
     "uploading": "処理...",
     "points": "pt",
     "contributions": "製品",
+    "totalAmount": "合計",
     "status": {
       "success": "成功",
       "failed": "失敗"
