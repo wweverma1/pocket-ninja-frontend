@@ -39,7 +39,7 @@ const FloatingIcons = () => {
   const floatingItems = useMemo(() => {
     const icons = [
       '🍞', '🍙', '🍱', '🧃', '🥬', '✧', 
-      '🍛', '🍜', '🍥', '🍡'
+      '🍣', '🍜', '🍥', '🍡', '🍤', '🍺'
     ];
 
     return icons.map((icon, i) => {
