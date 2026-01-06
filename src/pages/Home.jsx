@@ -38,16 +38,16 @@ const FloatingIcons = () => {
   // useMemo ensures these random values are calculated only once and persist across re-renders
   const floatingItems = useMemo(() => {
     const icons = [
-      '🍞', '🍙', '🍱', '🧃', '🥬', '✧', 
+      '🍞', '🍙', '🍱', '🧃', '🥬', 
       '🍣', '🍜', '🍥', '🍡', '🍤', '🍺'
     ];
 
     return icons.map((icon, i) => {
       return {
         icon,
-        // Calculate random values once
-        left: Math.floor(Math.random() * 80) + 10,
-        top: Math.floor(Math.random() * 80) + 10,
+        // CHANGED: Start from 0 (left/top of screen) instead of 10
+        left: Math.floor(Math.random() * 100),
+        top: Math.floor(Math.random() * 100),
         duration: 15 + Math.random() * 20,
         delay: Math.random() * -20,
         radius: 40 + Math.random() * 50,
@@ -401,20 +401,28 @@ const Home = () => {
                       boxShadow: isTop3 ? getRankGlow(index) : 1,
                       '&:hover': { 
                         transform: 'translateY(-4px)', 
-                        boxShadow: 4 
+                        boxShadow: 4,
+                        // CHANGED: Target the crown icon on hover for smooth rise effect
+                        '& .crown-icon': {
+                            transform: 'scale(1.2) translateY(-5px)',
+                        }
                       },
                     }}
                   >
                     {isTop3 && (
-                      <Box sx={{
-                        position: 'absolute',
-                        top: -10,
-                        right: 20,
-                        color: rankColor,
-                        fontSize: '1.2rem',
-                        filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.2))',
-                        animation: 'float 3s ease-in-out infinite'
-                      }}>
+                      <Box 
+                        className="crown-icon" // Added class for targeting
+                        sx={{
+                            position: 'absolute',
+                            top: -10,
+                            right: 20,
+                            color: rankColor,
+                            fontSize: '1.2rem',
+                            filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.2))',
+                            transition: 'transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)', // Smooth growing transition
+                            // Removed continuous animation
+                        }}
+                      >
                         <FontAwesomeIcon icon={faCrown} />
                       </Box>
                     )}
