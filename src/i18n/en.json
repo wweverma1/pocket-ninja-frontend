@@ -53,7 +53,7 @@
     "welcome": "Welcome",
     "subtitle": "Sign in to start saving today",
     "loginWith": "Continue with {{provider}}",
-    "terms": "By continuing, you allow us to access your email address so we can gather your feedback and improve your experience.\nYour email will never be shared with anyone.",
+    "terms": "By continuing, you allow us to access your email address so we can gather your feedback and improve your experience. Your email will never be shared with anyone.",
     "failureTitle": "Authentication Failed"
   },
   "common": {
