@@ -651,7 +651,7 @@ const Upload = () => {
                        boxShadow: 1
                     }}>
                       <CardContent sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, alignItems: { xs: 'stretch', sm: 'center' }, justifyContent: 'space-between', py: 2, '&:last-child': { pb: 2 } }}>
-                         <Box container alignItems="center" sx={{ display: 'flex', width: { xs: '100%', sm: '50%' }, minWidth: { sm: '50%' }}}>
+                         <Grid alignItems="center" sx={{ display: 'flex', width: { xs: '100%', sm: '50%' }, minWidth: { sm: '50%' }}}>
                             <Box sx={{
                               width: { xs: 40, sm: 50 }, 
                               height: { xs: 40, sm: 50 }, 
@@ -690,7 +690,7 @@ const Upload = () => {
                                   {messageText}
                                </Typography>
                             </Box>
-                          </Box>
+                          </Grid>
                           {isSuccess && (
                             <Grid container spacing={2} alignItems="center" sx={{ mt: { xs: 1, md: 0 }, justifyContent: { xs: 'space-evenly', sm: 'end' }, width: { xs: '100%', sm: '50%' }, minWidth: { sm: '50%' } }}>
                               <Grid sx={{ display: {xs: 'none', sm: 'block'}}}> 
