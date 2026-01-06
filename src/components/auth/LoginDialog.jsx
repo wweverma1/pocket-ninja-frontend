@@ -15,14 +15,6 @@ const LoginDialog = ({ open, onOpenChange }) => {
   const { login, isLoggedIn } = useAuth();
 
   const handleLogin = (provider) => {
-    if (provider === 'Yahoo') {
-      toast.error(t('auth.loginComingSoon', { provider: 'Yahoo' }), {
-        duration: 3000,
-        position: 'bottom-center',
-      });
-      return;
-    }
-
     const redirectPath = `${API_BASE_URL}/auth/redirect/${provider.toLowerCase()}`;
     const popup = window.open(
       redirectPath,
@@ -127,9 +119,6 @@ const LoginDialog = ({ open, onOpenChange }) => {
               </Button>
               <Button variant="contained" fullWidth onClick={() => handleLogin('LINE')} startIcon={<FontAwesomeIcon icon={faLine} />} sx={{ backgroundColor: '#00B900', color: 'white', py: 1.5, textTransform: 'none', fontWeight: 600, '&:hover': { backgroundColor: '#00A000' } }}>
                 {t('auth.loginWith', { provider: 'LINE' })}
-              </Button>
-              <Button variant="contained" fullWidth onClick={() => handleLogin('Yahoo')} startIcon={<FontAwesomeIcon icon={faYahoo} />} sx={{ backgroundColor: '#6001D2', color: 'white', py: 1.5, textTransform: 'none', fontWeight: 600, '&:hover': { backgroundColor: '#5001B2' } }}>
-                {t('auth.loginWith', { provider: 'Yahoo' })}
               </Button>
             </Box>
             <Divider sx={{ my: 3 }} />
