@@ -165,7 +165,13 @@
     "sortBy": "Sort by",
     "sortSavings": "Highest Savings",
     "sortDistance": "Nearest Store",
-    "locationError": "Could not get your location. Using default Sapporo center."
+    "locationError": "Could not get your location. Using default Sapporo center.",
+    "almostThere": {
+      "title": "Almost There",
+      "content": "This section is ready, but we don't have sufficient data to go live yet. Please contribute by submitting your shopping receipts with us to help us launch faster.",
+      "preview": "View Preview",
+      "contribute": "Contribute"
+    }
   },
   "pages": {
     "compare": "Shop Page",
