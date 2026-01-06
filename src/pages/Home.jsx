@@ -38,8 +38,8 @@ const FloatingIcons = () => {
   // useMemo ensures these random values are calculated only once and persist across re-renders
   const floatingItems = useMemo(() => {
     const icons = [
-      '🍞', '🍙', '🍱', '🧃', '🥬', 
-      '🍣', '🍜', '🍥', '🍡', '🍤', '🍺'
+      '🍙', '🍱', '🧃', '🥬', '🍺',
+      '🍣', '🍜', '🍥', '🍡', '🍤'
     ];
 
     return icons.map((icon, i) => {
