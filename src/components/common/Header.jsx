@@ -239,9 +239,27 @@ const Header = () => {
           
           <Box sx={{ mt: 'auto' }}>
             <Divider />
-            <Box sx={{ p: 2, textAlign: 'center' }}>
-              <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 500 }}>
+            <Box sx={{ p: 2, textAlign: 'left' }}>
+              <Typography 
+                variant="caption" 
+                color="text.secondary" 
+                sx={{ fontWeight: 700, display: 'block' }}
+              >
                 Pocket Ninja v0.9
+              </Typography>
+              <Typography 
+                variant="caption" 
+                color="text.secondary" 
+                sx={{ fontWeight: 400, textAlign: 'left', display: 'block' }}
+              >
+                {t('nav.upcomingTitle')}
+              </Typography>
+              <Typography 
+                variant="caption" 
+                color="text.secondary" 
+                sx={{ textAlign: 'left', display: 'block', whiteSpace: 'pre-line' }}
+              >
+                {t('nav.upcomingFeatures')}
               </Typography>
             </Box>
           </Box>

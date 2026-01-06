@@ -10,7 +10,9 @@
     "compare": "Shop",
     "upload": "Contribute",
     "campaigns": "Campaigns",
-    "profile": "Profile"
+    "profile": "Profile",
+    "upcomingTitle": "Upcoming Features",
+    "upcomingFeatures": "- Shop\n- Rewards\n- Community Buying"
   },
   "home": {
     "welcome": "Never Overpay for Groceries Again",

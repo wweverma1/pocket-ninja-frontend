@@ -122,7 +122,7 @@ const LoginDialog = ({ open, onOpenChange }) => {
               </Button>
             </Box>
             <Divider sx={{ my: 3 }} />
-            <Typography variant="caption" color="text.secondary" textAlign="center" display="block" sx={{ whiteSpace: 'pre-line' }}>{t('auth.terms')}</Typography>
+            <Typography variant="caption" color="text.secondary" textAlign="center" display="block">{t('auth.terms')}</Typography>
           </Box>
           <style>{`@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } } @keyframes slideUp { from { opacity: 0; transform: translate(-50%, -45%); } to { opacity: 1; transform: translate(-50%, -50%); } }`}</style>
         </Dialog.Content>
