@@ -24,10 +24,8 @@
     "leaderboardSubtitle": "See what's hot and where to save right now!",
     "leaderboardProductAvgPrice": "Avg Price",
     "leaderboardProductBestPrice": "Best Price",
-    "leaderboardProductDiscount": "OFF",
     "savePercent": "Save {{percent}}%",
-    "joinNow": "View Store",
-    "viewStore": "View Store"
+    "joinNow": "View Store"
   },
   "howItWorks": {
     "title": "How It Works",
@@ -51,7 +49,6 @@
     "joinCommunity": "Join the Community"
   },
   "auth": {
-    "loginComingSoon": "{{provider}} login coming soon!",
     "welcome": "Welcome",
     "subtitle": "Sign in to start saving today",
     "loginWith": "Continue with {{provider}}",
@@ -64,12 +61,8 @@
     "update": "Update",
     "updating": "Updating...",
     "error": "An error occurred",
-    "retry": "Retry",
     "cancel": "Cancel",
     "save": "Save",
-    "delete": "Delete",
-    "edit": "Edit",
-    "close": "Close",
     "share": "Share",
     "logout": "Logout",
     "switchLanguage": "Switch Language",
@@ -86,10 +79,6 @@
     "contributions": "Contributions",
     "expenditure": "Spent",
     "thisMonth": "this month",
-    "rating": "Rating",
-    "monthlyStats": "This Month",
-    "saved": "Saved",
-    "uploads": "Receipts",
     "editUsername": "Edit Ninja Name",
     "usernameLabel": "New Username",
     "proximity": "Preferred Store Proximity",
@@ -131,23 +120,16 @@
     "noReceipts": "No receipts found for this month.",
     "unknownStore": "Unknown Store",
     "imageOnlyError": "Please select an image file.",
-    "processing": "Processing receipt...",
     "success": "Receipt uploaded successfully!",
     "productsFound": "{{count}} products found",
     "edit": "Crop Receipt",
     "uploading": "Processing...",
-    "points": "pts",
     "contributions": "products",
-    "totalAmount": "Total Amount",
-    "status": {
-      "success": "Success",
-      "failed": "Failed"
-    }
+    "totalAmount": "Total Amount"
   },
   "compare": {
     "title": "Build Your Cart",
     "subtitle": "Add your items and compare prices across all stores in Sapporo",
-    "searchPlaceholder": "Search for products...",
     "cartTitle": "Your Shopping Cart",
     "cartEmpty": "Your cart is empty. Add items to compare prices!",
     "findBestPrice": "Compare Prices",
@@ -159,10 +141,6 @@
     "reminderTitle": "Kind Reminder",
     "reminderBody": "After your purchase, please don't forget to submit your receipt!\nYour contribution is highly appreciated.",
     "goToMaps": "Open Maps",
-    "itemAdded": "Added to cart",
-    "itemRemoved": "Removed from cart",
-    "cartHelp": "Add items from the search bar above to see your estimated savings.",
-    "sortBy": "Sort by",
     "sortSavings": "Highest Savings",
     "sortDistance": "Nearest Store",
     "locationError": "Could not get your location. Using default Sapporo center.",
@@ -172,11 +150,5 @@
       "preview": "View Preview",
       "contribute": "Contribute"
     }
-  },
-  "pages": {
-    "compare": "Shop Page",
-    "upload": "Upload Page",
-    "campaigns": "Campaigns Page",
-    "profile": "Profile Page"
   }
 }

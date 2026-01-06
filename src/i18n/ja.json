@@ -24,10 +24,8 @@
     "leaderboardSubtitle": "今すぐチェック！最新のお得情報はここ！",
     "leaderboardProductAvgPrice": "平均価格",
     "leaderboardProductBestPrice": "最安値",
-    "leaderboardProductDiscount": "割引",
     "savePercent": "{{percent}}% 節約",
-    "joinNow": "ストアを見る",
-    "viewStore": "店舗を見る"
+    "joinNow": "ストアを見る"
   },
   "howItWorks": {
     "title": "使い方",
@@ -51,7 +49,6 @@
     "joinCommunity": "コミュニティに参加"
   },
   "auth": {
-    "loginComingSoon": "{{provider}}ログイン機能は近日公開！",
     "welcome": "いらっしゃいませ",
     "subtitle": "サインインして節約を始めましょう",
     "loginWith": "{{provider}}で続ける",
@@ -64,12 +61,8 @@
     "update": "アップデート",
     "updating": "更新中...",
     "error": "エラーが発生しました",
-    "retry": "再試行",
     "cancel": "キャンセル",
     "save": "保存",
-    "delete": "削除",
-    "edit": "編集",
-    "close": "閉じる",
     "share": "シェア",
     "logout": "ログアウト",
     "switchLanguage": "言語を切り替える",
@@ -86,10 +79,6 @@
     "contributions": "貢献数",
     "expenditure": "支出額",
     "thisMonth": "今月",
-    "rating": "評価",
-    "monthlyStats": "今月の記録",
-    "saved": "節約額",
-    "uploads": "レシート数",
     "editUsername": "忍者ネームの変更",
     "usernameLabel": "新しいユーザー名",
     "proximity": "優先店舗の近さ",
@@ -131,23 +120,16 @@
     "noReceipts": "この月のレシートは見つかりませんでした。",
     "unknownStore": "不明な店舗",
     "imageOnlyError": "画像ファイルを選択してください。",
-    "processing": "レシートを処理中...",
     "success": "レシートがアップロードされました！",
     "productsFound": "{{count}} 件の商品が見つかりました",
     "edit": "作物の受領書",
     "uploading": "処理...",
-    "points": "pt",
     "contributions": "製品",
-    "totalAmount": "合計",
-    "status": {
-      "success": "成功",
-      "failed": "失敗"
-    }
+    "totalAmount": "合計"
   },
   "compare": {
     "title": "カートを構築する",
     "subtitle": "商品を追加して札幌の全店舗の価格を比較してください",
-    "searchPlaceholder": "商品を検索...",
     "cartTitle": "買い物かご",
     "cartEmpty": "カートは空です。商品を追加して比較しましょう！",
     "findBestPrice": "価格を比較する",
@@ -159,10 +141,6 @@
     "reminderTitle": "親切なリマインダー",
     "reminderBody": "ご購入後は、レシートの提出もお忘れなく！\nご協力をよろしくお願いいたします。",
     "goToMaps": "オープンマップ",
-    "itemAdded": "カートに追加しました",
-    "itemRemoved": "カートから削除しました",
-    "cartHelp": "上の検索バーから商品を追加して、推定節約額を確認してください。",
-    "sortBy": "並び替え",
     "sortSavings": "節約額順",
     "sortDistance": "近い順",
     "locationError": "位置情報を取得できませんでした。札幌中心部を使用します。",
@@ -172,11 +150,5 @@
       "preview": "プレビューを見る",
       "contribute": "貢献する"
     }
-  },
-  "pages": {
-    "compare": "ショップページ",
-    "upload": "アップロードページ",
-    "campaigns": "キャンペーンページ",
-    "profile": "プロフィールページ"
   }
 }
