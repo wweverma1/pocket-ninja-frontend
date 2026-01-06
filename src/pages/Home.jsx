@@ -19,7 +19,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faFireAlt,
   faYenSign,
-  faStore,
   faShoppingCart,
   faSearch,
   faCircleQuestion,
@@ -34,34 +33,57 @@ import { globalStyles } from '../theme/globalStyles';
 import LanguageSelectionDialog from '../components/common/LanguageSelectionDialog';
 import LoginDialog from '../components/auth/LoginDialog';
 
-// Snowfall Component
-const Snowfall = () => {
-  const snowflakes = Array.from({ length: 50 });
+// Updated: Floating Emojis Component
+const FloatingIcons = () => {
+  // Added requested items: 🍛, 🍜, 🍢, 🍥, 🍡
+  const icons = [
+    '🥛', '🍞', '🍙', '🍱', '🧃', '🍎', '🥩', '🥬', 
+    '⚡', '✧', '✦', 
+    '🍛', '🍜', '🍢', '🍥', '🍡'
+  ];
+  
   return (
-    <Box sx={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', overflow: 'hidden', pointerEvents: 'none', zIndex: 0 }}>
-      {snowflakes.map((_, i) => {
-        const left = Math.random() * 100;
-        const animationDuration = 5 + Math.random() * 10;
-        // Dimmed opacity: 0.05 to 0.25 range
-        const opacity = 0.05 + Math.random() * 0.2; 
-        const size = 2 + Math.random() * 2;
-        
+    <Box 
+      sx={{ 
+        position: 'absolute', 
+        inset: 0, 
+        overflow: 'hidden', 
+        pointerEvents: 'none', 
+        zIndex: 1,
+        // Radial Gradient Mask: 
+        // Makes icons transparent (0.1 opacity) in the center where text is,
+        // and fully visible (1 opacity) at the edges.
+        maskImage: 'radial-gradient(circle at 50% 50%, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.2) 20%, rgba(0,0,0,1) 70%)',
+        WebkitMaskImage: 'radial-gradient(circle at 50% 50%, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.2) 20%, rgba(0,0,0,1) 70%)'
+      }}
+    >
+      {icons.map((icon, i) => {
+        // Randomize orbit parameters
+        const left = Math.floor(Math.random() * 80) + 10;
+        const top = Math.floor(Math.random() * 80) + 10;
+        const duration = 15 + Math.random() * 20; // Slower, smoother circular motion
+        const delay = Math.random() * -20;
+        const radius = 30 + Math.random() * 50; // Radius of the circle
+        const direction = i % 2 === 0 ? 1 : -1; // Some rotate clockwise, others counter-clockwise
+
         return (
           <Box
             key={i}
             sx={{
               position: 'absolute',
               left: `${left}%`,
-              top: -20,
-              width: size,
-              height: size,
-              borderRadius: '50%',
-              backgroundColor: 'skyblue',
-              opacity: opacity,
-              animation: `snowfall ${animationDuration}s linear infinite`,
-              animationDelay: `-${Math.random() * 10}s`,
+              top: `${top}%`,
+              fontSize: { xs: '1.5rem', md: '3rem' },
+              opacity: 0.9, // Base opacity (natural colors)
+              // Custom CSS variable for the orbit radius to use in keyframes
+              '--orbit-radius': `${radius}px`,
+              '--orbit-dir': direction,
+              animation: `orbit ${duration}s linear infinite`,
+              animationDelay: `${delay}s`,
             }}
-          />
+          >
+            {icon}
+          </Box>
         );
       })}
     </Box>
@@ -153,6 +175,8 @@ const Home = () => {
   };
 
   const highlightColor = theme.palette.secondary.main;
+  
+  // Updated Styles: Orbit animation, Drawing animation
   const highlightCSS = `
     .circle-sketch-highlight {
       position: relative;
@@ -176,6 +200,10 @@ const Home = () => {
       opacity: 0.7;
       border-radius: 50%;
       padding: 0.1em 0.25em;
+      /* Animation */
+      clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+      animation: drawCircle 1s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+      animation-delay: 0.5s;
     }
     .circle-sketch-highlight:after {
       content: "";
@@ -194,20 +222,31 @@ const Home = () => {
       transform: rotate(-1deg);
       opacity: 0.7;
       border-radius: 50%;
+      /* Animation */
+      clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+      animation: drawCircle 1s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+      animation-delay: 0.8s; /* Start slightly after the top part */
+    }
+    @keyframes drawCircle {
+      0% { clip-path: polygon(0 0, 0 0, 0 100%, 0 100%); }
+      100% { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
     }
     @keyframes fadeInUp {
-      0% { 
-        opacity: 0; 
-        transform: translateY(30px); 
-      }
-      100% { 
-        opacity: 1; 
-        transform: translateY(0); 
-      }
+      0% { opacity: 0; transform: translateY(30px); }
+      100% { opacity: 1; transform: translateY(0); }
     }
-    @keyframes snowfall {
-      0% { transform: translateY(-10vh) translateX(0); opacity: 1; }
-      100% { transform: translateY(100vh) translateX(20px); opacity: 0.2; }
+    /* Circular Orbit Animation */
+    @keyframes orbit {
+      from { transform: rotate(0deg) translateX(var(--orbit-radius)) rotate(0deg); }
+      to   { transform: rotate(calc(360deg * var(--orbit-dir))) translateX(var(--orbit-radius)) rotate(calc(-360deg * var(--orbit-dir))); }
+    }
+    @keyframes spin-slow {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      100% { transform: translateY(-20px); }
     }
     .hero-animate {
       animation: fadeInUp 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
@@ -228,24 +267,26 @@ const Home = () => {
         sx={{
           background: heroGradient,
           color: 'white',
-          // Adjusted height to be 75% of viewport
-          minHeight: '60vh',
+          minHeight: '65vh',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           textAlign: 'center',
           position: 'relative',
           overflow: 'hidden',
-          // V-curve at the bottom
-          clipPath: 'polygon(0 0, 100% 0, 100% 80%, 50% 100%, 0 80%)',
+          clipPath: 'polygon(0 0, 100% 0, 100% 85%, 50% 100%, 0 85%)',
           mb: 6,
           pt: 0, 
           pb: 4
         }}
       >
-        <Snowfall />
+        {/* Dynamic Background Elements */}
         
-        <Container sx={{ position: 'relative', zIndex: 1 }}>
+        {/* Layer 1: Floating Icons (Masked to fade in center) */}
+        <FloatingIcons />
+        
+        {/* Layer 2: Content (Text/Buttons) */}
+        <Container sx={{ position: 'relative', zIndex: 2 }}>
           <Box className="hero-animate">
             <Typography variant="h1" sx={{ 
               mb: 3, 
