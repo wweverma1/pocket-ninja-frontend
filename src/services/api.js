@@ -49,11 +49,6 @@ export const userAPI = {
 };
 
 export const productAPI = {
-  getTopSavings: async () => {
-    const response = await api.get('/product/hot');
-    return response.data;
-  },
-
   uploadReceipt: async (imageFile) => {
     const formData = new FormData();
     // Append the file. We add 'receipt.webp' as the 3rd argument because 

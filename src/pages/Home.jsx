@@ -29,7 +29,6 @@ import {
   faCrown,
 } from '@fortawesome/free-solid-svg-icons';
 import { useTranslation } from 'react-i18next';
-import { productAPI } from '../services/api';
 import { ListSkeleton } from '../components/common/LoadingSkeleton';
 import { globalStyles } from '../theme/globalStyles';
 import LanguageSelectionDialog from '../components/common/LanguageSelectionDialog';
@@ -85,14 +84,10 @@ const Home = () => {
     fetchHotProducts();
   }, []);
 
-  const fetchHotProducts = async () => {
-    try {
-      setLoading(true);
-      const data = await productAPI.getTopSavings();
-      setLeaderboard(data.slice(0, 5));
-    } catch (error) {
-      console.error('Error fetching leaderboard:', error);
-      // Fallback data
+  const fetchHotProducts = () => {
+    setLoading(true);
+    // Directly set hardcoded data without API call
+    setTimeout(() => {
       setLeaderboard([
         {
           productName: '‐196 ストロングゼロ 500ml',
@@ -116,9 +111,8 @@ const Home = () => {
           savingsPercent: 27.3
         },
       ]);
-    } finally {
       setLoading(false);
-    }
+    }, 1000);
   };
 
   const howItWorksSteps = [
