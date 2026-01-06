@@ -651,6 +651,7 @@ const Home = () => {
                   color: 'text.secondary',
                   mb: 3,
                   position: 'relative',
+                  whiteSpace: 'pre-line',
                   zIndex: 1
                 }}>
                   {t('developerNote.content')}
