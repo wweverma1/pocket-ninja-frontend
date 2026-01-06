@@ -14,7 +14,9 @@ import {
   alpha,
   TextField,
   Chip,
-  IconButton
+  IconButton,
+  Collapse, // Added
+  Divider   // Added
 } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -27,7 +29,9 @@ import {
   faCropSimple,
   faYenSign,
   faTimes,
-  faGlassCheers
+  faGlassCheers,
+  faChevronDown, // Added
+  faChevronUp    // Added
 } from '@fortawesome/free-solid-svg-icons';
 import { useTranslation } from 'react-i18next';
 import { leaderboardAPI, productAPI, userAPI } from '../services/api';
@@ -79,6 +83,9 @@ const Upload = () => {
   const [completedCrop, setCompletedCrop] = useState(null);
   const [cropDialogOpen, setCropDialogOpen] = useState(false);
   const imgRef = useRef(null);
+
+  // Expanded Receipt State
+  const [expandedReceiptIndex, setExpandedReceiptIndex] = useState(null); // Added state for accordion
 
   useEffect(() => {
     fetchLeaderboard();
@@ -266,6 +273,26 @@ const Upload = () => {
   const handleOpenChangeWrapper = (isOpen) => {
     if (!isOpen && !uploading) {
       handleCloseDialog();
+    }
+  };
+
+  const toggleExpand = (index) => {
+    setExpandedReceiptIndex(expandedReceiptIndex === index ? null : index);
+  };
+
+  // Helper to determine display name for products based on language and availability
+  const getProductDisplayName = (product) => {
+    const isEnglish = i18n.language && i18n.language.startsWith('en');
+    
+    if (isEnglish) {
+      // Logic: updated_english_name > english_name > updated_name > name
+      return product.updated_english_name || 
+             product.english_name || 
+             product.updated_name || 
+             product.name;
+    } else {
+      // Logic: updated_name > name
+      return product.updated_name || product.name;
     }
   };
 
@@ -644,13 +671,32 @@ const Upload = () => {
                   const resultMsgObj = receipt.statusMessage;
                   const messageText = resultMsgObj?.[i18n.language] || resultMsgObj?.en || '';
                   
+                  const hasProducts = isSuccess && receipt.productsFound && receipt.productsFound.length > 0;
+                  const isExpanded = expandedReceiptIndex === index;
+
+                  // Define border and hover styles for clickable card
+                  const cardStyles = {
+                     borderRadius: 2, 
+                     borderLeft: `5px solid ${isSuccess ? theme.palette.success.main : theme.palette.error.main}`,
+                     boxShadow: 1,
+                     cursor: hasProducts ? 'pointer' : 'default',
+                     transition: 'all 0.2s',
+                     ...(hasProducts && {
+                       '&:hover': {
+                         transform: 'translateY(-2px)',
+                         boxShadow: 3
+                       }
+                     })
+                  };
+
                   return (
-                    <Card key={index} sx={{ 
-                       borderRadius: 2, 
-                       borderLeft: `5px solid ${isSuccess ? theme.palette.success.main : theme.palette.error.main}`,
-                       boxShadow: 1
-                    }}>
+                    <Card 
+                        key={index} 
+                        sx={cardStyles}
+                        onClick={() => hasProducts && toggleExpand(index)}
+                    >
                       <CardContent sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, alignItems: { xs: 'stretch', sm: 'center' }, justifyContent: 'space-between', py: 2, '&:last-child': { pb: 2 } }}>
+                         {/* Left Side: Icon & Store Info */}
                          <Grid alignItems="center" sx={{ display: 'flex', width: { xs: '100%', sm: '50%' }, minWidth: { sm: '50%' }}}>
                             <Box sx={{
                               width: { xs: 40, sm: 50 }, 
@@ -680,7 +726,7 @@ const Upload = () => {
                                 }}
                               >
                                 {isSuccess 
-                                  ? receipt.storeName + ' ' + receipt.storeIdentifier?.[i18n.language]
+                                  ? receipt.storeName + ' ' + (receipt.storeIdentifier?.[i18n.language] || receipt.storeIdentifier?.en || '')
                                   : t('upload.unknownStore')}
                               </Typography>
                                <Typography variant="caption" color="text.secondary" display="block">
@@ -691,6 +737,8 @@ const Upload = () => {
                                </Typography>
                             </Box>
                           </Grid>
+
+                          {/* Right Side: Stats & Toggle Icon */}
                           {isSuccess && (
                             <Grid container spacing={2} alignItems="center" sx={{ mt: { xs: 1, md: 0 }, justifyContent: { xs: 'space-evenly', sm: 'end' }, width: { xs: '100%', sm: '50%' }, minWidth: { sm: '50%' } }}>
                               <Grid sx={{ display: {xs: 'none', sm: 'block'}}}> 
@@ -708,7 +756,7 @@ const Upload = () => {
                                   sx={{ fontWeight: 800, height: 28, color: '#ffffff' }} 
                                 />
                               </Grid>
-                              <Box sx={{ textAlign: 'right', mr: 1 }}>
+                              <Box sx={{ textAlign: 'right', mr: 1, minWidth: 60 }}>
                                 <Typography variant="caption" color="success.main" display="block" fontWeight={600}>
                                   {t('upload.totalAmount')}
                                 </Typography>
@@ -716,9 +764,52 @@ const Upload = () => {
                                   <FontAwesomeIcon icon={faYenSign} size="xs" />{receipt.totalAmount.toLocaleString()}
                                 </Typography>
                               </Box>
+                              {/* Chevron Indicator */}
+                              {hasProducts && (
+                                  <Box sx={{ ml: 1 }}>
+                                    <FontAwesomeIcon icon={isExpanded ? faChevronUp : faChevronDown} color={theme.palette.action.active} />
+                                  </Box>
+                              )}
                             </Grid>
                           )}
                       </CardContent>
+
+                      {/* Expandable Product List */}
+                      {hasProducts && (
+                          <Collapse in={isExpanded} timeout="auto" unmountOnExit>
+                              <Divider />
+                              <Box sx={{ p: 2, bgcolor: alpha(theme.palette.primary.main, 0.02) }}>
+                                  {receipt.productsFound.map((product, pIndex) => (
+                                      <Box 
+                                          key={pIndex} 
+                                          sx={{ 
+                                              display: 'flex', 
+                                              justifyContent: 'space-between', 
+                                              py: 1, 
+                                              borderBottom: '1px dashed #e0e0e0',
+                                              '&:last-child': { borderBottom: 'none' }
+                                          }}
+                                      >
+                                          <Typography variant="body2" sx={{ display: 'flex', alignItems: 'center', gap: 1, flex: 1, mr: 2 }}>
+                                              {getProductDisplayName(product)}
+                                          </Typography>
+                                          <Typography variant="body2" fontWeight={600} sx={{ whiteSpace: 'nowrap' }}>
+                                              ¥{product.price?.toLocaleString()}
+                                          </Typography>
+                                      </Box>
+                                  ))}
+                                  
+                                  <Box sx={{ display: 'flex', justifyContent: 'center', mt: 1 }}>
+                                      <IconButton size="small" onClick={(e) => {
+                                          e.stopPropagation();
+                                          toggleExpand(index);
+                                      }}>
+                                          <FontAwesomeIcon icon={faChevronUp} />
+                                      </IconButton>
+                                  </Box>
+                              </Box>
+                          </Collapse>
+                      )}
                     </Card>
                   );
                 })}
