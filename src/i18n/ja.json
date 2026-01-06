@@ -73,7 +73,7 @@
     "share": "シェア",
     "logout": "ログアウト",
     "switchLanguage": "言語を切り替える",
-    "shareMessage": "やあ、Pocket Ninjaというアプリを使ってるんだけど、食料品で月10,000円も節約できてる😱\n近所のどの店がすべての品物に対して一番安い値段なのか表示してくれるんだ。\nこれはチェックしてみるべきだよ！",
+    "shareMessage": "やあ、Pocket Ninjaというアプリを使ってるんだけど、食料品で月10,000円も節約できてる😱\n近所のどの店がすべての品物に対して一番安い値段なのか表示してくれるんだ。\nこれはチェックしてみるべきだよ！\n",
     "loginSuccess": "おかえりなさい、{{username}}！",
     "loginSuccessNewUser": "ようこそ、{{username}}！",
     "developedWith": "Developed with",
