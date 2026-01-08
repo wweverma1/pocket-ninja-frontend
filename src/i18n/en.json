@@ -1,7 +1,7 @@
 {
   "app": {
     "name": "Pocket Ninja",
-    "tagline": "Small steps, big savings"
+    "tagline": "Small steps, Big savings"
   },
   "nav": {
     "bestDeals": "Best Deals",
@@ -9,19 +9,18 @@
     "about": "About",
     "compare": "Shop",
     "upload": "Contribute",
-    "campaigns": "Campaigns",
     "profile": "Profile",
     "upcomingTitle": "Upcoming Features",
     "upcomingFeatures": "- Shop\n- Rewards\n- Community Buying"
   },
   "home": {
     "welcome": "Never Overpay for Groceries Again",
-    "savingsPromise": "* Save up to 30% on your bills",
+    "savingsPromise": "Save up to 30% on your grocery bills",
     "subtitle": "Compare prices across all stores in Sapporo and save on every purchase",
     "startSaving": "Start Saving",
     "getStarted": "Get Started",
     "leaderboardTitle": "Today's Best Deals",
-    "leaderboardSubtitle": "See what's hot and where to save right now!",
+    "leaderboardSubtitle": "See what's hot and where to save right now",
     "leaderboardProductAvgPrice": "Avg Price",
     "leaderboardProductBestPrice": "Best Price",
     "savePercent": "Save {{percent}}%",
@@ -31,21 +30,21 @@
     "title": "How It Works",
     "subtitle": "Three simple steps to start saving on everyday items",
     "step1": {
-      "title": "Add Your Items",
-      "description": "Create your shopping cart with the products you need"
+      "title": "Create Your Cart",
+      "description": "Add the products you need to your shopping cart"
     },
     "step2": {
       "title": "Compare Prices",
-      "description": "Instantly see which nearby store offers the best price"
+      "description": "Instantly see which nearby store offers the maximum savings"
     },
     "step3": {
       "title": "Save Money",
-      "description": "Shop smart and maximize your savings on every purchase"
+      "description": "Shop smart and maximize your savings on every purchase. Please don't forget to submit your shopping receipts."
     }
   },
   "developerNote": {
     "title": "A Note From the Developer",
-    "content": "Pocket Ninja is your shopping companion that helps you save on every purchase by showing you the nearest store offering the best price. Pocket Ninja works best when we all contribute. Every receipt you upload helps everyone in Sapporo save money. Together, we can build a community where smart shopping is easy and accessible for all.\nSmall steps, big savings!",
+    "content": "Pocket Ninja is your shopping companion that helps you save on every purchase by showing you the nearest store offering the maximum savings. Pocket Ninja works best when we all contribute. Every receipt you upload helps everyone in Sapporo save money. Together, we can build a community where smart shopping is easy and accessible for all.\nSmall steps, Big savings",
     "joinCommunity": "Join the Community"
   },
   "auth": {
@@ -53,22 +52,22 @@
     "subtitle": "Sign in to start saving today",
     "loginWith": "Continue with {{provider}}",
     "terms": "By continuing, you allow us to access your email address so we can request your feedback and improve your experience. Your details will never be shared with anyone.",
-    "failureTitle": "Authentication Failed"
+    "failureTitle": "We couldn’t sign you in. Please try again or choose a different login method."
   },
   "common": {
     "loading": "Loading...",
     "submitting": "Submitting...",
     "update": "Update",
     "updating": "Updating...",
-    "error": "An error occurred",
+    "error": "Something went wrong. Please try again in a moment.",
     "cancel": "Cancel",
     "save": "Save",
     "share": "Share",
     "logout": "Logout",
     "switchLanguage": "Switch Language",
     "shareMessage": "Yo, I've been using this app called Pocket Ninja and I'm literally saving like ¥10,000/month on groceries 😱\nIt shows which store near you has the cheapest price for everything.\nYou need to check this out!\n",
-    "loginSuccess": "Welcome back {{username}}!",
-    "loginSuccessNewUser": "Welcome {{username}}!",
+    "loginSuccess": "Welcome back, {{username}}!",
+    "loginSuccessNewUser": "Welcome, {{username}}! Let’s start saving.",
     "developedWith": "Developed with",
     "inSapporo": "in Sapporo"
   },
@@ -80,23 +79,23 @@
     "expenditure": "Spent",
     "thisMonth": "this month",
     "editUsername": "Edit Ninja Name",
-    "usernameLabel": "New Username",
+    "usernameLabel": "New Ninja Name",
     "proximity": "Preferred Store Proximity",
     "selectAvatar": "Select Avatar",
     "update": "Update",
     "customUploadComingSoon": "Custom upload coming soon!",
     "points": "points",
-    "noLeaderboard": "No leaderboard found for this month"
+    "noLeaderboard": "No leaderboard found for this month."
   },
   "feedback": {
     "title": "Submit Feedback",
-    "subtitle": "Your feedback is important for us to improve.",
+    "subtitle": "Your feedback directly helps us to improve Pocket Ninja.",
     "averageRating": "Average App Rating",
     "yourRating": "Your Rating",
-    "placeholder": "Tell us what you think (optional)...",
-    "submit": "Submit",
-    "success": "Feedback submitted successfully!",
-    "validationError": "Please provide a rating or a message.",
+    "placeholder": "Tell us what you like or what we can improve...",
+    "submit": "Send Feedback",
+    "success": "Thanks! Your feedback was submitted successfully.",
+    "validationError": "Please provide a rating or a short feedback so we can work on it.",
     "labels": {
       "useless": "Useless",
       "poor": "Poor",
@@ -111,7 +110,7 @@
     "yourRank": "Your Ninja Rank",
     "unranked": "You're currently unranked",
     "contributeTitle": "Help Sapporo Save",
-    "contributeSubtitle": "Share a clear photo of your recent shopping receipt, we will handle the math and unlock savings for the community. Small steps, big impact!",
+    "contributeSubtitle": "Share a clear photo of your recent shopping receipt, we will handle the math and unlock savings for the community. Small steps, Big savings",
     "snap": "Scan Receipt",
     "submit": "Submit",
     "thankYouNote": "Every receipt helps in finding a better deal. We appreciate your effort!",
@@ -121,7 +120,7 @@
     "unknownStore": "Unknown Store",
     "imageOnlyError": "Please select an image file.",
     "success": "Receipt uploaded successfully!",
-    "productsFound": "{{count}} products found",
+    "productsFound": "{{count}} products",
     "edit": "Crop Receipt",
     "uploading": "Processing...",
     "contributions": "products",
@@ -129,26 +128,26 @@
   },
   "compare": {
     "title": "Build Your Cart",
-    "subtitle": "Add your items and compare prices across all stores in Sapporo",
+    "subtitle": "Add your items and instantly compare prices across all stores in Sapporo",
     "cartTitle": "Your Shopping Cart",
-    "cartEmpty": "Your cart is empty. Add items to compare prices!",
+    "cartEmpty": "Your cart is empty. Add items to compare prices and see potential savings!",
     "findBestPrice": "Compare Prices",
     "resultsTitle": "Best Stores Near You",
-    "productsAvailable": "{{available}} products found",
+    "productsAvailable": "{{available}} products available",
     "savings": "Save ¥{{amount}}",
     "navigate": "Directions",
-    "calculating": "Comparing...",
+    "calculating": "Comparing prices...",
     "reminderTitle": "Kind Reminder",
     "reminderBody": "After your purchase, please don't forget to submit your receipt!\nYour contribution is highly appreciated.",
     "goToMaps": "Open Maps",
     "sortSavings": "Highest Savings",
     "sortDistance": "Nearest Store",
-    "locationError": "Could not get your location. Using default Sapporo center.",
+    "locationError": "Could not get your location. Using central Sapporo instead.",
     "almostThere": {
       "title": "Almost There",
       "content": "This section is ready, but we don't have sufficient data to go live yet. Please contribute by submitting your shopping receipts with us to help us launch faster.",
       "preview": "View Preview",
-      "contribute": "Contribute"
+      "contribute": "Upload a Receipt"
     }
   }
 }

@@ -1,154 +1,153 @@
 {
   "app": {
     "name": "Pocket Ninja",
-    "tagline": "小さな一歩、大きな節約"
+    "tagline": "小さな一歩で、大きな節約"
   },
   "nav": {
     "bestDeals": "お得情報",
     "howItWorks": "使い方",
-    "about": "について",
-    "compare": "店",
-    "upload": "貢献する",
-    "campaigns": "キャンペーン",
+    "about": "Pocket Ninja とは",
+    "compare": "ショップ",
+    "upload": "投稿する",
     "profile": "プロフィール",
     "upcomingTitle": "今後の機能",
-    "upcomingFeatures": "- ショップ\n- 報酬\n- コミュニティ購入"
+    "upcomingFeatures": "- ショップ\n- リワード\n- 共同購入"
   },
   "home": {
-    "welcome": "もう食料品に余計なお金をかける必要はありません",
-    "savingsPromise": "※ 最大30%の節約が可能",
-    "subtitle": "札幌の全店舗の価格を比較して、毎回の買い物を節約しましょう",
-    "startSaving": "節約を始める",
-    "getStarted": "始める",
-    "leaderboardTitle": "今日のベストセール",
-    "leaderboardSubtitle": "今すぐチェック！最新のお得情報はここ！",
+    "welcome": "もう食費で損をしない",
+    "savingsPromise": "食費を最大30％まで節約できます",
+    "subtitle": "札幌中のお店の価格を比較して、毎回の買い物でおトクに",
+    "startSaving": "今すぐ節約を始める",
+    "getStarted": "はじめる",
+    "leaderboardTitle": "本日のお買い得",
+    "leaderboardSubtitle": "いま安いものと、おトクに買えるお店をチェック",
     "leaderboardProductAvgPrice": "平均価格",
     "leaderboardProductBestPrice": "最安値",
-    "savePercent": "{{percent}}% 節約",
-    "joinNow": "ストアを見る"
+    "savePercent": "{{percent}}％おトク",
+    "joinNow": "店舗を見る"
   },
   "howItWorks": {
     "title": "使い方",
-    "subtitle": "3つの簡単なステップで日用品の節約を始めましょう",
+    "subtitle": "毎日の買い物を節約する、かんたん3ステップ",
     "step1": {
-      "title": "商品を追加",
-      "description": "必要な商品でショッピングカートを作成"
+      "title": "カートを作成",
+      "description": "買いたい商品をショッピングカートに追加します"
     },
     "step2": {
       "title": "価格を比較",
-      "description": "近くのどの店舗が最安値か瞬時に確認"
+      "description": "近くのお店の中から、もっともおトクなお店がすぐに分かります"
     },
     "step3": {
-      "title": "お金を節約",
-      "description": "賢く買い物をして、あらゆる購入で節約を最大限にしましょう"
+      "title": "しっかり節約",
+      "description": "かしこく買い物して毎回の支出を節約しましょう。お買い物後はレシート投稿もお忘れなく。"
     }
   },
   "developerNote": {
-    "title": "開発者からのメッセージ",
-    "content": "Pocket Ninjaは、お買い物のあらゆる場面で、最寄りの最安値のお店をご案内し、節約をサポートするお買い物パートナーです。Pocket Ninjaは、みんなで協力することで最大の効果を発揮します。レシートをアップロードするだけで、札幌のみんなが節約できます。みんなで力を合わせれば、誰もが簡単にスマートな買い物ができるコミュニティを築けます。\n小さな一歩で、大きな節約を！",
-    "joinCommunity": "コミュニティに参加"
+    "title": "開発者からのひとこと",
+    "content": "Pocket Ninja は、「今どのお店で買うのが一番おトクか」を教えてくれる、あなたの買い物パートナーです。みんなでレシートを投稿してくれるほど、札幌中の人がもっと安く買えるようになります。あなたの1枚のレシートが、だれかの節約につながります。いっしょに、もっとかしこく買い物できるコミュニティをつくっていきましょう。\n小さな一歩で、大きな節約。",
+    "joinCommunity": "コミュニティに参加する"
   },
   "auth": {
-    "welcome": "いらっしゃいませ",
-    "subtitle": "サインインして節約を始めましょう",
-    "loginWith": "{{provider}}で続ける",
-    "terms": "続行すると、お客様のメールアドレスへのアクセスを許可したことになります。これにより、お客様からのフィードバックを伺い、サービスの向上に努めさせていただきます。お客様の個人情報は第三者に開示されることはありません。",
-    "failureTitle": "認証に失敗しました"
+    "welcome": "ようこそ",
+    "subtitle": "ログインして、今日から節約を始めましょう",
+    "loginWith": "{{provider}} で続行",
+    "terms": "続行すると、Pocket Ninja がお客様のメールアドレスにアクセスすることを許可したものとみなされます。これは、フィードバックのお願いやサービス向上のためのみに使用され、第三者と共有されることはありません。",
+    "failureTitle": "サインインできませんでした。もう一度お試しいただくか、別のログイン方法をお選びください。"
   },
   "common": {
     "loading": "読み込み中...",
     "submitting": "送信中...",
-    "update": "アップデート",
+    "update": "更新",
     "updating": "更新中...",
-    "error": "エラーが発生しました",
+    "error": "エラーが発生しました。しばらくしてからもう一度お試しください。",
     "cancel": "キャンセル",
     "save": "保存",
-    "share": "シェア",
+    "share": "共有",
     "logout": "ログアウト",
     "switchLanguage": "言語を切り替える",
-    "shareMessage": "やあ、Pocket Ninjaというアプリを使ってるんだけど、食料品で月10,000円も節約できてる😱\n近所のどの店がすべての品物に対して一番安い値段なのか表示してくれるんだ。\nこれはチェックしてみるべきだよ！\n",
-    "loginSuccess": "おかえりなさい、{{username}}！",
-    "loginSuccessNewUser": "ようこそ、{{username}}！",
+    "shareMessage": "最近 Pocket Ninja っていうアプリを使い始めたんだけど、食費が月1万円くらい浮いてる。\n近くのどの店が一番安いか一発で分かるからマジで便利。\n一回使ってみて！\n",
+    "loginSuccess": "{{username}} さん、おかえりなさい！",
+    "loginSuccessNewUser": "{{username}} さん、ようこそ！今日から一緒に節約しましょう。",
     "developedWith": "Developed with",
     "inSapporo": "in Sapporo"
   },
   "profile": {
-    "joinedAt": "参加日",
-    "rankScore": "忍者スコア",
+    "joinedAt": "Ninja 開始日",
+    "rankScore": "Ninja スコア",
     "estimatedSavings": "推定節約額",
-    "contributions": "貢献数",
+    "contributions": "投稿数",
     "expenditure": "支出額",
     "thisMonth": "今月",
-    "editUsername": "忍者ネームの変更",
-    "usernameLabel": "新しいユーザー名",
-    "proximity": "優先店舗の近さ",
+    "editUsername": "Ninja 名を編集",
+    "usernameLabel": "新しい Ninja 名",
+    "proximity": "よく行くエリアの距離",
     "selectAvatar": "アバターを選択",
-    "update": "更新",
-    "customUploadComingSoon": "カスタムアップロード機能は近日公開！",
+    "update": "更新する",
+    "customUploadComingSoon": "画像アップロードは近日対応予定です！",
     "points": "ポイント",
-    "noLeaderboard": "今月のリーダーボードは見つかりませんでした"
+    "noLeaderboard": "今月のランキングはまだありません。レシートを投稿して、Ninja ランクを上げましょう。"
   },
   "feedback": {
-    "title": "フィードバックを送信",
-    "subtitle": "皆様からのフィードバックは、私たちが改善していく上で重要です。",
-    "averageRating": "平均アプリ評価",
+    "title": "フィードバックを送る",
+    "subtitle": "あなたの声が Pocket Ninja をより良くします。",
+    "averageRating": "アプリの平均評価",
     "yourRating": "あなたの評価",
-    "placeholder": "ご意見をお聞かせください (任意)",
-    "submit": "送信",
-    "success": "フィードバックが正常に送信されました！",
-    "validationError": "評価またはメッセージを入力してください。",
+    "placeholder": "気に入っている点や、改善してほしい点があれば教えてください...",
+    "submit": "フィードバックを送信",
+    "success": "ありがとうございます！フィードバックが送信されました。",
+    "validationError": "改善のために、評価または一言コメントのどちらかを入力してください。",
     "labels": {
       "useless": "役に立たない",
-      "poor": "悪い",
-      "ok": "普通",
+      "poor": "いまいち",
+      "ok": "ふつう",
       "good": "良い",
-      "excellent": "素晴らしい"
+      "excellent": "とても良い"
     }
   },
   "upload": {
-    "leaderboardTitle": "忍者マスター",
-    "leaderboardSubtitle": "みんなの節約に貢献しているトップユーザー！",
-    "yourRank": "あなたのランク",
-    "unranked": "現在ランク外です",
-    "contributeTitle": "札幌の節約を助ける",
-    "contributeSubtitle": "最近の買い物レシートの鮮明な写真を共有してください。計算は私たちが行い、コミュニティのために節約を促します。小さな一歩が大きな影響を与えます！",
+    "leaderboardTitle": "Ninja Masters",
+    "leaderboardSubtitle": "みんなの節約を最大化してくれているトップ投稿者",
+    "yourRank": "あなたの Ninja ランク",
+    "unranked": "現在ランキング外です",
+    "contributeTitle": "札幌のみんなの節約を手伝う",
+    "contributeSubtitle": "最近のレシートの写真をはっきり撮って送るだけでOK。あとは Pocket Ninja が計算して、みんなの節約につなげます。小さな一歩で、大きな節約。",
     "snap": "レシートを撮影",
-    "submit": "提出する",
-    "thankYouNote": "領収書はどれも、より良い取引を見つけるのに役立ちます。ご協力に感謝いたします！",
-    "historyTitle": "過去の貢献",
+    "submit": "送信",
+    "thankYouNote": "あなたの1枚のレシートが、より良いお買い得情報の発見につながります。ご協力ありがとうございます！",
+    "historyTitle": "これまでの投稿履歴",
     "selectMonth": "月を選択",
-    "noReceipts": "この月のレシートは見つかりませんでした。",
-    "unknownStore": "不明な店舗",
+    "noReceipts": "この月のレシートはまだ登録されていません。",
+    "unknownStore": "店舗名不明",
     "imageOnlyError": "画像ファイルを選択してください。",
-    "success": "レシートがアップロードされました！",
-    "productsFound": "{{count}} 件の商品が見つかりました",
-    "edit": "作物の受領書",
-    "uploading": "処理...",
-    "contributions": "製品",
-    "totalAmount": "合計"
+    "success": "レシートをアップロードしました！",
+    "productsFound": "{{count}} 件の商品を検出しました",
+    "edit": "レシートをトリミング",
+    "uploading": "処理中...",
+    "contributions": "商品",
+    "totalAmount": "合計金額"
   },
   "compare": {
-    "title": "カートを構築する",
-    "subtitle": "商品を追加して札幌の全店舗の価格を比較してください",
-    "cartTitle": "買い物かご",
-    "cartEmpty": "カートは空です。商品を追加して比較しましょう！",
+    "title": "カートを作成",
+    "subtitle": "欲しい商品を追加して、札幌中のお店の価格を一気に比較",
+    "cartTitle": "あなたのショッピングカート",
+    "cartEmpty": "カートが空です。商品を追加して、どれくらい節約できるか見てみましょう！",
     "findBestPrice": "価格を比較する",
-    "resultsTitle": "近くの最適店舗",
-    "productsAvailable": "{{available}} / {{total}} 点",
-    "savings": "¥{{amount}} お得！",
-    "navigate": "方向",
-    "calculating": "比較中...",
-    "reminderTitle": "親切なリマインダー",
-    "reminderBody": "ご購入後は、レシートの提出もお忘れなく！\nご協力をよろしくお願いいたします。",
-    "goToMaps": "オープンマップ",
-    "sortSavings": "節約額順",
-    "sortDistance": "近い順",
-    "locationError": "位置情報を取得できませんでした。札幌中心部を使用します。",
+    "resultsTitle": "近くのおトクなお店",
+    "productsAvailable": "{{available}} 件の商品が見つかりました",
+    "savings": "¥{{amount}} おトク",
+    "navigate": "行き方を見る",
+    "calculating": "価格を比較しています...",
+    "reminderTitle": "ちょっとしたお願い",
+    "reminderBody": "お買い物のあとに、レシートの投稿をお忘れなく！\nあなたの協力が、次の節約につながります。",
+    "goToMaps": "地図アプリを開く",
+    "sortSavings": "節約額が大きい順",
+    "sortDistance": "近いお店順",
+    "locationError": "現在地を取得できなかったため、札幌中心部を基準に表示しています。",
     "almostThere": {
-      "title": "公開まであと少し！",
-      "content": "この機能は準備が整っていますが、公開するにはまだデータが不足しています。レシートを投稿して、サービスの早期開始にご協力ください。",
+      "title": "もう少しで完成",
+      "content": "この機能は準備できていますが、まだ公開するだけのデータが足りません。お買い物レシートを投稿していただけると、正式リリースが早まります。",
       "preview": "プレビューを見る",
-      "contribute": "貢献する"
+      "contribute": "レシートをアップロード"
     }
   }
 }
