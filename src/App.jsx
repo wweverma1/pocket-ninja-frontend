@@ -12,10 +12,16 @@ import AuthFailureHandler from './pages/AuthFailureHandler';
 import { useAuth } from './context/AuthContext';
 import { useTranslation } from 'react-i18next';
 import Compare from './pages/Compare';
+import { initGA } from './services/analytics';
+import AnalyticsTracker from './components/common/AnalyticsTracker';
 
 function App() {
   const { isLoggedIn, loading } = useAuth();
   const { t } = useTranslation();
+
+  useEffect(() => {
+    initGA();
+  }, []);
 
   if (loading) {
     return (
@@ -27,6 +33,7 @@ function App() {
 
   return (
     <Router>
+      <AnalyticsTracker />
       <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
         <Header />
         <Box component="main" sx={{ flexGrow: 1, pb: 8 }}>
