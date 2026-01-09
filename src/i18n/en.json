@@ -65,7 +65,7 @@
     "share": "Share",
     "logout": "Logout",
     "switchLanguage": "Switch Language",
-    "shareMessage": "Yo, I've been using this app called Pocket Ninja and I'm literally saving like ¥10,000/month on groceries 😱\nIt shows which store near you has the cheapest price for everything.\nYou need to check this out!\n",
+    "shareMessage": "Yo! I've been using this app called Pocket Ninja and I'm literally saving like ¥10,000/month on groceries 😱\nIt shows which store near you has the cheapest price for everything.\nYou need to check this out!\n",
     "loginSuccess": "Welcome back, {{username}}!",
     "loginSuccessNewUser": "Welcome, {{username}}! Let’s start saving.",
     "developedWith": "Developed with",
