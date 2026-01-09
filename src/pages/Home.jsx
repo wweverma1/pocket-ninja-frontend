@@ -32,6 +32,7 @@ import { ListSkeleton } from '../components/common/LoadingSkeleton';
 import { globalStyles } from '../theme/globalStyles';
 import LanguageSelectionDialog from '../components/common/LanguageSelectionDialog';
 import LoginDialog from '../components/auth/LoginDialog';
+import { trackEvent } from '../services/analytics';
 
 // Updated: Floating Emojis Component with stable positions
 const FloatingIcons = () => {
@@ -326,7 +327,10 @@ const Home = () => {
           <Button
             variant="contained"
             size="large"
-            onClick={() => setLoginOpen(true)}
+            onClick={() => {
+              trackEvent('Engagement', 'Click Start Saving', 'Home Hero');
+              setLoginOpen(true);
+            }}
             sx={{
               backgroundColor: theme.palette.secondary.main,
               color: 'white',
@@ -391,7 +395,10 @@ const Home = () => {
                 return (
                   <Card
                     key={index}
-                    onClick={() => setLoginOpen(true)}
+                    onClick={() => {
+                      trackEvent('Engagement', 'Click Best Deals Item', 'Home Leaderboard');
+                      setLoginOpen(true);
+                    }}
                     sx={{
                       cursor: 'pointer',
                       position: 'relative',
@@ -662,7 +669,10 @@ const Home = () => {
                   variant="contained" 
                   color="secondary" 
                   size="large" 
-                  onClick={() => setLoginOpen(true)} 
+                  onClick={() => {
+                    trackEvent('Engagement', 'Click Join Community', 'Home Community Message');
+                    setLoginOpen(true);
+                  }} 
                   startIcon={<FontAwesomeIcon icon={faHandshake} />} 
                   sx={{ 
                     px: 4, 

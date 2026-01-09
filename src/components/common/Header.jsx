@@ -23,6 +23,7 @@ import { useAuth } from '../../context/AuthContext';
 import LanguageToggle from './LanguageToggle';
 import LoginDialog from '../auth/LoginDialog';
 import FeedbackDialog from './FeedbackDialog';
+import { trackEvent } from '../../services/analytics';
 
 const Header = () => {
   const { t, i18n } = useTranslation();
@@ -142,7 +143,7 @@ const Header = () => {
                   {t('common.logout')}
                 </Button>
               ) : (
-                <Button variant="contained" color="secondary" onClick={() => setLoginOpen(true)} sx={{ ml: 1, fontWeight: 600, textTransform: 'none' }}>
+                <Button variant="contained" color="secondary" onClick={() => {trackEvent('Engagement', 'Click Get Started', 'Header'); setLoginOpen(true);}} sx={{ ml: 1, fontWeight: 600, textTransform: 'none' }}>
                   {t('home.getStarted')}
                 </Button>
               )}
@@ -150,7 +151,7 @@ const Header = () => {
           )}
 
           {isMobile && !isLoggedIn && (
-            <Button variant="contained" color="secondary" onClick={() => setLoginOpen(true)} size="small" sx={{ fontWeight: 600, textTransform: 'none', fontSize: '0.8rem', px: 2 }}>
+            <Button variant="contained" color="secondary" onClick={() => {trackEvent('Engagement', 'Click Get Started', 'Header'); setLoginOpen(true);}} size="small" sx={{ fontWeight: 600, textTransform: 'none', fontSize: '0.8rem', px: 2 }}>
               {t('home.getStarted')}
             </Button>
           )}

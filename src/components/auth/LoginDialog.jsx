@@ -7,6 +7,7 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../context/AuthContext';
 import toast from 'react-hot-toast';
+import { trackEvent } from '../../services/analytics'; // 1. Import tracker
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
@@ -15,6 +16,9 @@ const LoginDialog = ({ open, onOpenChange }) => {
   const { login, isLoggedIn } = useAuth();
 
   const handleLogin = (provider) => {
+    // 2. Track the button click (Intent)
+    trackEvent('Auth', 'Login Attempt', provider);
+
     const redirectPath = `${API_BASE_URL}/auth/redirect/${provider.toLowerCase()}`;
     const popup = window.open(
       redirectPath,
@@ -27,6 +31,10 @@ const LoginDialog = ({ open, onOpenChange }) => {
       if (event.origin !== window.location.origin) return;
       if (event.data?.type === 'AUTH_COMPLETE') {
         const { token, username, isNewUser } = event.data;
+        
+        // 3. Track Success (Segment by User Type)
+        trackEvent('Auth', 'Login Success', isNewUser ? 'New User' : 'Returning User');
+
         login(username, token);
         onOpenChange(false);
 
@@ -45,6 +53,9 @@ const LoginDialog = ({ open, onOpenChange }) => {
         window.removeEventListener('message', handleMessage);
         channel.close();
       } else if (event.data?.type === 'AUTH_ERROR') {
+        // 4. Track Error
+        trackEvent('Auth', 'Login Error', event.data.message || 'Unknown Error');
+
         toast.error(event.data.message, { duration: 3000, position: 'bottom-center' });
         window.removeEventListener('message', handleMessage);
         channel.close();
@@ -56,6 +67,10 @@ const LoginDialog = ({ open, onOpenChange }) => {
     channel.onmessage = (event) => {
       if (event.data?.type === 'AUTH_COMPLETE') {
         const { token, username, isNewUser } = event.data;
+
+        // 5. Track Success (Broadcast Channel)
+        trackEvent('Auth', 'Login Success', isNewUser ? 'New User' : 'Returning User');
+
         login(username, token);
         onOpenChange(false);
 
@@ -74,6 +89,9 @@ const LoginDialog = ({ open, onOpenChange }) => {
         window.removeEventListener('message', handleMessage);
         channel.close();
       } else if (event.data?.type === 'AUTH_ERROR') {
+        // 6. Track Error (Broadcast Channel)
+        trackEvent('Auth', 'Login Error', event.data.message || 'Unknown Error');
+
         toast.error(event.data.message, { duration: 3000, position: 'bottom-center' });
         window.removeEventListener('message', handleMessage);
         channel.close();

@@ -46,6 +46,8 @@ import * as Dialog from '@radix-ui/react-dialog';
 import ReactCrop, { centerCrop, makeAspectCrop } from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 
+import { trackEvent } from '../services/analytics';
+
 // Helper to create the initial crop area (centered, 90% of image)
 function centerAspectCrop(mediaWidth, mediaHeight, aspect) {
   return centerCrop(
@@ -128,6 +130,7 @@ const Upload = () => {
   };
 
   const handleCameraClick = () => {
+    trackEvent('Contribution', 'Open Camera/Upload', 'Upload Page');
     if (fileInputRef.current) {
       fileInputRef.current.click();
     }
@@ -237,6 +240,7 @@ const Upload = () => {
         const response = await productAPI.uploadReceipt(compressedFile);
 
         if (response.errorStatus === 0) {
+            trackEvent('Contribution', 'Upload Success', 'Receipt');
             const successMsg = response.message?.[i18n.language] || response.message?.en || t('upload.success');
             toast.success(successMsg, { duration: 3000, position: 'bottom-center' });
             setTimeout(() => {
@@ -244,6 +248,7 @@ const Upload = () => {
                 fetchLeaderboard();
             }, 500);
         } else {
+            trackEvent('Contribution', 'Upload Error', response.message?.en || 'Unknown');
             const errorMsg = response.message?.[i18n.language] || response.message?.en || t('common.error');
             toast.error(errorMsg, { duration: 3000, position: 'bottom-center' });
             setTimeout(() => {
