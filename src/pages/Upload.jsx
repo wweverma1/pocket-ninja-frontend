@@ -755,7 +755,7 @@ const Upload = () => {
                               </Grid>
                               <Grid> 
                                 <Chip 
-                                  label={`+${receipt.productsUpdated * 5} ${t('profile.points')}`}
+                                  label={`+${receipt.productsFound.length * 5} ${t('profile.points')}`}
                                   size="small"
                                   color="success"
                                   sx={{ fontWeight: 800, height: 28, color: '#ffffff' }} 
