@@ -598,7 +598,7 @@ const Compare = () => {
                                         gap: 2
                                     }}>
                                             <Chip 
-                                                label={t('compare.productsAvailable', { available: store.availableCount, total: store.totalCartSize })} 
+                                                label={t('compare.productsAvailable', { available: store.availableCount })} 
                                                 size="small"
                                                 sx={{ fontSize: '0.75rem' }} 
                                             />
