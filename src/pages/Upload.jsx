@@ -478,7 +478,7 @@ const Upload = () => {
                             whiteSpace: 'nowrap'
                           }}>
                             <Typography variant="caption" fontWeight={800} color="text.secondary">
-                              {user.contributions} <Typography component="span" variant="caption" sx={{ fontSize: '0.7em' }}>{t('upload.contributions')}</Typography>
+                              {user.points} <Typography component="span" variant="caption" sx={{ fontSize: '0.7em' }}>{t('upload.points')}</Typography>
                             </Typography>
                           </Box>
                       </Box>
