@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Box,
@@ -16,29 +16,21 @@ import {
   useTheme,
   alpha,
   Divider,
-  keyframes,
   MenuItem
 } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faShoppingCart,
   faSearch,
-  faCartPlus,
-  faTrash,
   faMapMarkerAlt,
   faRoute,
   faChevronUp,
-  faReceipt,
-  faHandsPraying,
   faStore,
   faShoppingBasket,
-  faTimes,
-  faCheck,
   faSortAmountDown
 } from '@fortawesome/free-solid-svg-icons';
 import { useTranslation } from 'react-i18next';
 import * as Dialog from '@radix-ui/react-dialog';
-import toast from 'react-hot-toast';
 import { globalStyles } from '../theme/globalStyles';
 
 // --- MOCK DATA ---
@@ -78,7 +70,6 @@ const Compare = () => {
   const [loading, setLoading] = useState(false);
   const [expandedStoreId, setExpandedStoreId] = useState(null);
   const [lastComparedCart, setLastComparedCart] = useState([]); 
-//   const [userLocation, setUserLocation] = useState(null);
   const [sortBy, setSortBy] = useState('savings'); 
 
   // Typing Animation State
@@ -90,30 +81,27 @@ const Compare = () => {
   const [navDialogOpen, setNavDialogOpen] = useState(false);
   const [selectedStore, setSelectedStore] = useState(null);
 
-  // Almost There Dialog State - Opens on mount
-  const [almostThereOpen, setAlmostThereOpen] = useState(true);
-
-  // --- Geolocation (Run on mount) ---
+  // --- Geolocation ---
 //   useEffect(() => {
-    // if (!navigator.geolocation) {
-    //   console.log("Geolocation not supported");
-    //   return;
-    // }
+//     if (!navigator.geolocation) {
+//       console.log("Geolocation not supported");
+//       return;
+//     }
 
-    // navigator.geolocation.getCurrentPosition(
-    //   (position) => {
-    //     const loc = {
-    //       lat: position.coords.latitude,
-    //       lng: position.coords.longitude
-    //     };
-    //     setUserLocation(loc);
-    //     console.log("High precision location acquired:", loc);
-    //   },
-    //   (error) => {
-    //     console.warn("Location error:", error);
-    //   },
-    //   { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
-    // );
+//     navigator.geolocation.getCurrentPosition(
+//       (position) => {
+//         const loc = {
+//           lat: position.coords.latitude,
+//           lng: position.coords.longitude
+//         };
+//         setUserLocation(loc);
+//         console.log("High precision location acquired:", loc);
+//       },
+//       (error) => {
+//         console.warn("Location error:", error);
+//       },
+//       { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+//     );
 //   }, []);
 
   // --- Typing Animation Logic ---
@@ -233,10 +221,6 @@ const Compare = () => {
           document.getElementById('compare-results')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }, 100);
     }, 1200);
-  };
-
-  const handleProceedToPreview = () => {
-    setAlmostThereOpen(false);
   };
 
   const handleNavigateClick = (store) => {
@@ -697,46 +681,6 @@ const Compare = () => {
                                 {t('compare.goToMaps')}
                             </Button>
                         </Box>
-                </Box>
-            </Dialog.Content>
-        </Dialog.Portal>
-    </Dialog.Root>
-
-    {/* Almost There Dialog */}
-    <Dialog.Root open={almostThereOpen} onOpenChange={setAlmostThereOpen}>
-        <Dialog.Portal>
-            <Dialog.Overlay style={overlayStyle} />
-            <Dialog.Content aria-describedby={undefined} style={{ ...contentStyle, maxWidth: '444px' }}>
-                <Dialog.Title asChild>
-                    <Typography variant="h6" fontWeight="bold" textAlign="center" gutterBottom>
-                        {t('compare.almostThere.title')}
-                    </Typography>
-                </Dialog.Title>
-                
-                <Dialog.Description asChild>
-                    <Box sx={{ pt: 2, pb: 2 }}>
-                        <Typography variant="body1" color="text.secondary" align="center" sx={{ lineHeight: 1.5 }}>
-                            {t('compare.almostThere.content')}
-                        </Typography>
-                    </Box>
-                </Dialog.Description>
-                
-                <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, mt: 2 }}>
-                    <Button 
-                        onClick={handleProceedToPreview} 
-                        color="inherit"
-                        sx={{ fontWeight: 600, textTransform: 'none' }}
-                    >
-                        {t('compare.almostThere.preview')}
-                    </Button>
-                    <Button 
-                        variant="contained" 
-                        color="secondary" 
-                        onClick={() => navigate('/contribute')}
-                        sx={{ borderRadius: 2, fontWeight: 700, textTransform: 'none', px: 3 }}
-                    >
-                        {t('compare.almostThere.contribute')}
-                    </Button>
                 </Box>
             </Dialog.Content>
         </Dialog.Portal>
