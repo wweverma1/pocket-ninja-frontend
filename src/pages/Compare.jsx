@@ -81,29 +81,6 @@ const Compare = () => {
   const [navDialogOpen, setNavDialogOpen] = useState(false);
   const [selectedStore, setSelectedStore] = useState(null);
 
-  // --- Geolocation ---
-//   useEffect(() => {
-//     if (!navigator.geolocation) {
-//       console.log("Geolocation not supported");
-//       return;
-//     }
-
-//     navigator.geolocation.getCurrentPosition(
-//       (position) => {
-//         const loc = {
-//           lat: position.coords.latitude,
-//           lng: position.coords.longitude
-//         };
-//         setUserLocation(loc);
-//         console.log("High precision location acquired:", loc);
-//       },
-//       (error) => {
-//         console.warn("Location error:", error);
-//       },
-//       { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
-//     );
-//   }, []);
-
   // --- Typing Animation Logic ---
   useEffect(() => {
     const currentWord = PLACEHOLDERS[placeholderIndex];
